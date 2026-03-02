@@ -44,7 +44,7 @@ const ServiceAreas: React.FC<ServiceAreasProps> = ({ onRequestQuote, city }) => 
             Join the hundreds of {city ? `${city} ` : 'Hamilton '}drivers who trust ShowRoom AutoCare for a flawless, protective finish.
           </p>
           <p className="text-brand-yellow font-bold text-sm uppercase tracking-wider mb-8">
-            Interior revival from $199 — Ceramic coating from $799. Transparent pricing, no surprises.
+            Detailing packages starting at $130 — Ceramic coating from $300.<br />Transparent pricing, no surprises.
           </p>
           <button type="button" onClick={() => onRequestQuote?.()} className="bg-brand-yellow text-brand-black px-12 py-5 font-black uppercase tracking-widest text-sm magnetic-cta inline-flex items-center gap-2 group">
             Claim Your Free Consultation
