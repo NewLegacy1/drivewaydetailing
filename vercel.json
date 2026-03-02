@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    { "source": "/contact", "destination": "/#contact", "permanent": true },
+    { "source": "/contact/", "destination": "/#contact", "permanent": true },
+    { "source": "/about", "destination": "/#about", "permanent": true },
+    { "source": "/about/", "destination": "/#about", "permanent": true }
+  ],
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+}

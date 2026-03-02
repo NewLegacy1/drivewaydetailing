@@ -1,0 +1,129 @@
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Max-Age': '86400',
+};
+
+interface LeadBody {
+  name: string;
+  email: string;
+  phone: string;
+  car_make_model?: string;
+  service_notes?: string;
+}
+
+Deno.serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { status: 204, headers: corsHeaders });
+  }
+
+  if (req.method !== 'POST') {
+    return new Response(
+      JSON.stringify({ error: 'Method not allowed' }),
+      { status: 405, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  let body: LeadBody;
+  try {
+    const raw = await req.text();
+    if (!raw?.trim()) {
+      return new Response(
+        JSON.stringify({ error: 'Request body is required (JSON).' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    body = JSON.parse(raw) as LeadBody;
+  } catch {
+    return new Response(
+      JSON.stringify({ error: 'Invalid JSON in request body.' }),
+      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  try {
+    const { name, email, phone, car_make_model, service_notes } = body;
+
+    if (!name?.trim() || !email?.trim() || !phone?.trim()) {
+      return new Response(
+        JSON.stringify({ error: 'Name, email, and phone are required.' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, serviceRoleKey);
+
+    const { error: insertError } = await supabase.from('leads').insert({
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      car_make_model: car_make_model?.trim() ?? null,
+      service_notes: service_notes?.trim() ?? null,
+    });
+
+    if (insertError) {
+      return new Response(
+        JSON.stringify({ error: insertError.message }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const resendKey = Deno.env.get('RESEND_API_KEY');
+    const leadEmailTo = Deno.env.get('LEAD_EMAIL_TO');
+    const leadEmailFrom = Deno.env.get('LEAD_EMAIL_FROM');
+
+    if (resendKey && leadEmailTo && leadEmailFrom) {
+      const html = `
+        <h2>New lead from website</h2>
+        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+        <p><strong>Car make/model:</strong> ${escapeHtml(car_make_model || '—')}</p>
+        <p><strong>Service notes:</strong></p>
+        <p>${escapeHtml(service_notes || '—')}</p>
+      `;
+      const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${resendKey}`,
+        },
+        body: JSON.stringify({
+          from: leadEmailFrom,
+          to: [leadEmailTo],
+          subject: `New lead: ${name.trim()}`,
+          html,
+        }),
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        console.error('Resend error:', res.status, errText);
+        // Don't fail the request – lead is already saved
+      }
+    }
+
+    return new Response(
+      JSON.stringify({ ok: true }),
+      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
+  } catch (e) {
+    console.error(e);
+    return new Response(
+      JSON.stringify({ error: String(e) }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
+  }
+});
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
