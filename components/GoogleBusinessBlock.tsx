@@ -7,30 +7,17 @@ import {
   isAllowedMapEmbedSrc,
 } from '../lib/google-business';
 
-type Variant = 'reviews' | 'footer';
-
-const GoogleBusinessBlock: React.FC<{ variant?: Variant }> = ({ variant = 'reviews' }) => {
+const GoogleBusinessBlock: React.FC = () => {
   if (!hasGoogleBusinessIntegration()) return null;
 
   const showMap = GMB_MAP_EMBED_SRC && isAllowedMapEmbedSrc(GMB_MAP_EMBED_SRC);
 
-  const wrap =
-    variant === 'footer'
-      ? 'rounded border border-white/10 bg-brand-gray/30 p-5'
-      : 'mb-8 max-w-4xl mx-auto px-4 sm:px-6 text-center';
-
   return (
-    <div className={wrap}>
+    <div className="rounded border border-white/10 bg-brand-gray/30 p-5 text-center">
       <p className="font-display font-black uppercase text-brand-yellow text-[10px] tracking-[0.25em] mb-2">
         Google Business Profile
       </p>
-      <h2
-        className={
-          variant === 'footer'
-            ? 'font-display font-black text-white text-lg uppercase tracking-tight mb-3'
-            : 'font-display font-black text-white text-xl sm:text-2xl uppercase tracking-tight mb-2'
-        }
-      >
+      <h2 className="font-display font-black text-white text-lg uppercase tracking-tight mb-3">
         See verified reviews &amp; updates on Google
       </h2>
       <p className="text-white/55 text-sm leading-relaxed mb-5 max-w-xl mx-auto">

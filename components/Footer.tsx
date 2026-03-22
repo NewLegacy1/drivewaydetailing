@@ -62,10 +62,6 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="mb-12 max-w-3xl mx-auto">
-          <GoogleBusinessBlock variant="footer" />
-        </div>
-
         <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold uppercase tracking-widest text-white/30">
           <p>© 2021–2025 ShowRoom AutoCare. All Rights Reserved.</p>
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
@@ -73,6 +69,10 @@ const Footer: React.FC = () => {
             <a href="#" className="hover:text-brand-yellow transition-colors">Terms of Service</a>
             <a href="https://newlegacyai.ca" target="_blank" rel="noopener noreferrer" className="hover:text-brand-yellow transition-colors">Site by New Legacy AI</a>
           </div>
+        </div>
+
+        <div className="mt-12 pt-10 border-t border-white/5 max-w-3xl mx-auto pb-2">
+          <GoogleBusinessBlock />
         </div>
       </div>
     </footer>
