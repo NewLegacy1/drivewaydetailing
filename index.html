@@ -149,21 +149,28 @@
     }
   </style>
 
-  <!-- JSON-LD: LocalBusiness schema for rich results -->
+  <!-- JSON-LD: LocalBusiness (no-JS crawlers); dynamic WebSite/WebPage/FAQ via SeoHead -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "AutoWash"],
+    "@type": ["LocalBusiness", "ProfessionalService"],
+    "@id": "https://showroomautocare.com/#business",
     "name": "ShowRoom AutoCare",
     "description": "Premium mobile car detailing and ceramic coating. We come to you in Hamilton, Ancaster, Burlington, Oakville, Mississauga and the Greater Toronto Area. Services include nano ceramic coating, paint correction, and deep interior revival.",
     "url": "https://showroomautocare.com",
     "image": "https://showroomautocare.com/og-image.jpg",
-    "telephone": "+1-XXX-XXX-XXXX",
+    "telephone": "+19053794820",
+    "email": "contact@showroomautocare.ca",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Hamilton",
       "addressRegion": "ON",
       "addressCountry": "CA"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 43.2557,
+      "longitude": -79.8711
     },
     "areaServed": [
       { "@type": "City", "name": "Hamilton",    "containedInPlace": { "@type": "State", "name": "Ontario" } },

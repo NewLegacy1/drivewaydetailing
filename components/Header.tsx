@@ -13,9 +13,17 @@ const Header: React.FC<HeaderProps> = ({ onRequestQuote }) => {
           <img src="/logo.png" alt="ShowRoom AutoCare" className="h-11 md:h-12 w-auto" />
         </a>
 
+        <a
+          href="/blog"
+          className="md:hidden ml-auto mr-3 text-[10px] font-black uppercase tracking-[0.2em] text-white/70 hover:text-brand-yellow transition-colors"
+        >
+          Blog
+        </a>
+
         <nav className="hidden md:flex items-center gap-8 text-sm font-semibold uppercase tracking-widest text-white/70">
           <a href="/" className="hover:text-brand-yellow transition-colors">Home</a>
           <a href="/jetdetailing" className="hover:text-brand-yellow transition-colors">Jet Detailing</a>
+          <a href="/blog" className="hover:text-brand-yellow transition-colors">Blog</a>
           <a href="/#services" className="hover:text-brand-yellow transition-colors">Services</a>
           <a href="/#about" className="hover:text-brand-yellow transition-colors">About</a>
           <a href="/#areas" className="hover:text-brand-yellow transition-colors">Areas</a>

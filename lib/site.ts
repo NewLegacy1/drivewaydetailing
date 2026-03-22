@@ -1,0 +1,157 @@
+import { CITY_NAMES, CITY_SLUGS, type CitySlug } from './cities';
+
+/** Canonical marketing origin (matches index.html & robots.txt). */
+export const SITE_ORIGIN = 'https://showroomautocare.com';
+
+export const BUSINESS = {
+  /** Stable id for JSON-LD @id references */
+  jsonLdId: `${SITE_ORIGIN}/#business`,
+  name: 'ShowRoom AutoCare',
+  telephone: '+19053794820',
+  email: 'contact@showroomautocare.ca',
+  description:
+    'Premium mobile car detailing and ceramic coating. We come to you in Hamilton, Ancaster, Burlington, Oakville, Mississauga and the Greater Toronto Area. Services include nano ceramic coating, paint correction, and deep interior revival.',
+} as const;
+
+/** Cities named in copy and city landing routes (Ontario). */
+export const AREA_SERVED = [
+  'Hamilton',
+  'Ancaster',
+  'Burlington',
+  'Oakville',
+  'Mississauga',
+  'Waterdown',
+  'Caledonia',
+  'Brantford',
+] as const;
+
+export const GEO = { latitude: 43.2557, longitude: -79.8711 } as const;
+
+export const WEBSITE_JSONLD_ID = `${SITE_ORIGIN}/#website`;
+
+export function normalizePath(pathname: string): string {
+  const p = pathname.trim() || '/';
+  if (p !== '/' && p.endsWith('/')) return p.slice(0, -1) || '/';
+  return p;
+}
+
+export function canonicalUrl(pathname: string): string {
+  const p = normalizePath(pathname);
+  return p === '/' ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}${p}`;
+}
+
+function isCityPath(p: string): p is `/${CitySlug}` {
+  if (!p.startsWith('/') || p === '/') return false;
+  const slug = p.slice(1);
+  return CITY_SLUGS.includes(slug as CitySlug);
+}
+
+export function pageWebMeta(pathname: string): { name: string; description: string } {
+  const p = normalizePath(pathname);
+  if (p === '/') {
+    return {
+      name: 'Mobile Car Detailing Hamilton & GTA | ShowRoom AutoCare',
+      description:
+        'Professional mobile detailing, ceramic coating & paint correction across Hamilton, Burlington, Oakville & Mississauga. We come to you. Get a free quote.',
+    };
+  }
+  if (p === '/jetdetailing') {
+    return {
+      name: 'Jet Detailing Toronto & Hamilton | Luxury Aircraft Cleaning | ShowRoom AutoCare',
+      description:
+        'Discover premier jet detailing services in Toronto and Hamilton. We specialize in exterior cleaning, interior cabin detailing, and brightwork polishing for private jets and turboprops.',
+    };
+  }
+  if (p === '/blog') {
+    return {
+      name: 'Car Detailing & Ceramic Coating Blog | Hamilton, GTA | ShowRoom AutoCare',
+      description:
+        'Mobile detailing and ceramic coating tips for Hamilton, Ancaster, Burlington, Oakville, Mississauga and the GTA. ShowRoom AutoCare.',
+    };
+  }
+  if (isCityPath(p)) {
+    const slug = p.slice(1) as CitySlug;
+    const city = CITY_NAMES[slug];
+    return {
+      name: `Mobile Detailing ${city} | Ceramic Coating & Paint Correction | ShowRoom AutoCare`,
+      description: `Mobile car detailing ${city}. We come to you for ceramic coating, paint correction & interior detailing. Premium mobile detailing ${city} and GTA. Free quote.`,
+    };
+  }
+  return {
+    name: 'ShowRoom AutoCare',
+    description: BUSINESS.description,
+  };
+}
+
+/** Visible + schema-aligned FAQs (homepage). */
+export const HOME_FAQ = [
+  {
+    question: 'What cities does ShowRoom AutoCare serve for mobile detailing?',
+    answer:
+      'We provide mobile car detailing across Hamilton, Ancaster, Burlington, Oakville, Mississauga, and surrounding GTA communities. We come to your home, office, or hangar.',
+  },
+  {
+    question: 'Do you offer ceramic coating as a mobile service?',
+    answer:
+      'Yes. We apply nano ceramic coating on location with the same prep and finish standards as a fixed shop—wash, decontamination, paint correction where needed, then coating cure guidance.',
+  },
+  {
+    question: 'How do I get a quote?',
+    answer:
+      'Request a quote through our website form, call (905) 379-4820, or email contact@showroomautocare.ca. Tell us your vehicle and location and we will respond with options.',
+  },
+  {
+    question: 'What services do you offer besides detailing?',
+    answer:
+      'We focus on premium mobile detailing: interior revival, exterior correction, ceramic coating, and specialty services such as jet detailing for private aircraft in select markets.',
+  },
+] as const;
+
+export function buildDynamicJsonLd(pathname: string): Record<string, unknown> {
+  const p = normalizePath(pathname);
+  const url = canonicalUrl(p);
+  const { name, description } = pageWebMeta(p);
+  const webpageId = `${url}#webpage`;
+
+  const website: Record<string, unknown> = {
+    '@type': 'WebSite',
+    '@id': WEBSITE_JSONLD_ID,
+    url: SITE_ORIGIN,
+    name: BUSINESS.name,
+    publisher: { '@id': BUSINESS.jsonLdId },
+  };
+
+  const webPage: Record<string, unknown> = {
+    '@type': 'WebPage',
+    '@id': webpageId,
+    url,
+    name,
+    description,
+    isPartOf: { '@id': WEBSITE_JSONLD_ID },
+    about: { '@id': BUSINESS.jsonLdId },
+  };
+
+  if (p === '/') {
+    const faqPage: Record<string, unknown> = {
+      '@type': 'FAQPage',
+      '@id': `${url}#faq`,
+      mainEntity: HOME_FAQ.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
+    };
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [website, webPage, faqPage],
+    };
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [website, webPage],
+  };
+}

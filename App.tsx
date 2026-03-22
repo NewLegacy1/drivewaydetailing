@@ -6,6 +6,9 @@ import LeadForm from './components/LeadForm';
 import HomePage from './components/HomePage';
 import JetDetailingPage from './components/JetDetailingPage';
 import CityPage from './components/CityPage';
+import BlogListPage from './components/BlogListPage';
+import BlogPostPage from './components/BlogPostPage';
+import SeoHead from './components/SeoHead';
 
 const OPEN_QUOTE_EVENT = 'showroom-open-quote';
 
@@ -47,6 +50,7 @@ const App: React.FC = () => {
 
   return (
     <BrowserRouter>
+      <SeoHead />
       <div className="min-h-screen bg-brand-black font-sans selection:bg-brand-yellow selection:text-brand-black">
         <RevealEffect />
         <LeadForm isOpen={showLeadForm} onClose={closeQuote} />
@@ -55,6 +59,8 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<HomePage onRequestQuote={openQuote} />} />
             <Route path="/jetdetailing" element={<JetDetailingPage onRequestQuote={openQuote} />} />
+            <Route path="/blog" element={<BlogListPage />} />
+            <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/:city" element={<CityPage onRequestQuote={openQuote} />} />
           </Routes>
         </main>

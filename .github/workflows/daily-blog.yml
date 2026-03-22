@@ -1,0 +1,38 @@
+# Generates one text-only blog post per calendar day (America/Toronto) and commits public/blog/data.json.
+#
+# Repo → Settings → Secrets and variables → Actions:
+#   OPENAI_API_KEY
+#
+# Schedule: 12:00 & 13:00 UTC ≈ 8:00 Eastern across EST/EDT. workflow_dispatch = run manually.
+
+name: Daily blog post
+
+on:
+  schedule:
+    - cron: '0 12 * * *'
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Generate post
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: node scripts/generate-daily-blog.mjs
+
+      - name: Commit if data changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(blog): daily detailing post'
+          file_pattern: public/blog/data.json

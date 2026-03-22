@@ -8,6 +8,7 @@ import Services from './Services';
 import WhyChooseUs from './WhyChooseUs';
 import ServiceAreas from './ServiceAreas';
 import Gallery from './Gallery';
+import FaqSection from './FaqSection';
 
 interface HomePageProps {
   onRequestQuote?: () => void;
@@ -23,6 +24,7 @@ const HomePage: React.FC<HomePageProps> = ({ onRequestQuote }) => (
     <Services onRequestQuote={onRequestQuote} />
     <WhyChooseUs />
     <ServiceAreas onRequestQuote={onRequestQuote} />
+    <FaqSection />
     <Gallery />
   </>
 );

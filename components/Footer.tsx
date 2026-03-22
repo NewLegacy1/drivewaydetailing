@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
   return (
     <footer id="contact" className="bg-brand-black border-t border-white/5 pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-12 mb-16">
           <div className="space-y-6">
             <div className="flex items-center gap-2">
               <img src="/logo.png" alt="ShowRoom AutoCare" className="h-8 w-auto" />
@@ -13,6 +13,16 @@ const Footer: React.FC = () => {
             <p className="text-white/50 text-sm leading-relaxed uppercase tracking-wider font-semibold">
               Hamilton's #1 Choice for Mobile Ceramic Coating & Paint Restoration.
             </p>
+          </div>
+
+          <div>
+            <h4 className="font-display font-black uppercase text-brand-yellow text-sm tracking-[0.2em] mb-6">Blog</h4>
+            <p className="text-white/50 text-sm leading-relaxed mb-4">
+              Detailing tips, ceramic coating care, and local guides for Hamilton and the GTA.
+            </p>
+            <a href="/blog" className="text-white font-bold hover:text-brand-yellow transition-colors text-sm uppercase tracking-wider">
+              Read the blog
+            </a>
           </div>
 
           <div>

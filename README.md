@@ -39,6 +39,16 @@ The lead form saves submissions to Supabase and sends a notification email via R
 
 If you see **"Failed to send a request to the Edge Function"**, the `resend-email` function is not deployed or not reachable—complete step 3 above.
 
+## Blog (no database)
+
+Posts are stored in [public/blog/data.json](public/blog/data.json). A GitHub Action runs twice daily and commits a new article when needed.
+
+1. Add **Actions secret** on the repo: `OPENAI_API_KEY` (see [.env.example](.env.example)).
+2. Enable **Actions** and allow workflows to push (default `GITHUB_TOKEN` with `contents: write` is configured in [.github/workflows/daily-blog.yml](.github/workflows/daily-blog.yml)).
+3. Optional: run locally with `npm run blog:generate` (same env vars in your shell).
+
+If you skip GitHub Actions, the blog stays empty until you run the script or edit `data.json` by hand.
+
 ## SEO (mobile car detailing – Hamilton, GTA)
 
 The site is set up for local SEO and social sharing:
