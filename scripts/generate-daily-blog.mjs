@@ -1,6 +1,8 @@
 /**
  * Daily blog generator — text only, writes to public/blog/data.json (no database).
  * Run locally: OPENAI_API_KEY=... node scripts/generate-daily-blog.mjs
+ * Backfill: OPENAI_API_KEY=... node scripts/generate-daily-blog.mjs --seed 5
+ *   (creates up to 5 posts for today and previous calendar days; skips dates that already exist)
  * Scheduled: .github/workflows/daily-blog.yml
  */
 import fs from 'node:fs';
@@ -50,6 +52,30 @@ function getTorontoYmd(now = new Date()) {
 function dayNumberFromYmd(ymd) {
   const [y, m, d] = ymd.split('-').map(Number);
   return Math.floor(Date.UTC(y, m - 1, d) / 86400000);
+}
+
+/** Civil YYYY-MM-DD plus/minus days (UTC calendar math). */
+function ymdAddDays(ymd, deltaDays) {
+  const [y, m, d] = ymd.split('-').map(Number);
+  const t = Date.UTC(y, m - 1, d) + deltaDays * 86400000;
+  const nd = new Date(t);
+  const yy = nd.getUTCFullYear();
+  const mm = String(nd.getUTCMonth() + 1).padStart(2, '0');
+  const dd = String(nd.getUTCDate()).padStart(2, '0');
+  return `${yy}-${mm}-${dd}`;
+}
+
+function publishedAtFromYmd(ymd) {
+  const [y, m, d] = ymd.split('-').map(Number);
+  return new Date(Date.UTC(y, m - 1, d, 17, 0, 0)).toISOString();
+}
+
+function parseSeedCount() {
+  const i = process.argv.indexOf('--seed');
+  if (i === -1 || process.argv[i + 1] == null) return 0;
+  const n = parseInt(process.argv[i + 1], 10);
+  if (!Number.isFinite(n) || n < 1) return 0;
+  return Math.min(n, 30);
 }
 
 function slugify(input) {
@@ -160,19 +186,12 @@ function uniqueSlug(desired, existingSlugs) {
   return slug;
 }
 
-async function main() {
-  const openaiKey = process.env.OPENAI_API_KEY;
-  if (!openaiKey) {
-    console.error('Missing OPENAI_API_KEY');
-    process.exit(1);
-  }
-
-  const postDate = getTorontoYmd();
+async function addPostForDate(openaiKey, postDate) {
   const posts = readPosts();
 
   if (posts.some((p) => p.post_date === postDate)) {
     console.log('Skip: post already exists for', postDate);
-    process.exit(0);
+    return;
   }
 
   const dayNum = dayNumberFromYmd(postDate);
@@ -199,13 +218,34 @@ async function main() {
     meta_description: article.meta_description.trim(),
     focus_city: city.name,
     focus_city_slug: city.slug,
-    published_at: new Date().toISOString(),
+    published_at: publishedAtFromYmd(postDate),
     post_date: postDate,
   };
 
   posts.unshift(row);
   writePosts(posts);
   console.log('Wrote post:', slug, postDate);
+}
+
+async function main() {
+  const openaiKey = process.env.OPENAI_API_KEY;
+  if (!openaiKey) {
+    console.error('Missing OPENAI_API_KEY');
+    process.exit(1);
+  }
+
+  const seedCount = parseSeedCount();
+  const today = getTorontoYmd();
+
+  if (seedCount > 0) {
+    for (let i = 0; i < seedCount; i++) {
+      const postDate = ymdAddDays(today, -i);
+      await addPostForDate(openaiKey, postDate);
+    }
+    return;
+  }
+
+  await addPostForDate(openaiKey, today);
 }
 
 main().catch((e) => {
