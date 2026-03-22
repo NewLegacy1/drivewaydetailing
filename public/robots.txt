@@ -2,5 +2,4 @@
 User-agent: *
 Allow: /
 
-# Replace with your live domain when deployed
 Sitemap: https://showroomautocare.com/sitemap.xml

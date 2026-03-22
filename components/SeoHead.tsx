@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { buildDynamicJsonLd, canonicalUrl, normalizePath } from '../lib/site';
+import { buildDynamicJsonLd, BUSINESS, canonicalUrl, normalizePath, pageWebMeta } from '../lib/site';
+import { setDocumentSeo } from '../lib/socialMeta';
+import { GMB_PROFILE_URL } from '../lib/google-business';
 
 const DYNAMIC_LD_ATTR = 'data-showroom-seo-ld';
+const GMB_SAMEAS_ATTR = 'data-showroom-gmb-sameas';
 
 /**
  * Updates canonical URL and injects WebSite / WebPage / FAQPage JSON-LD per route.
@@ -10,6 +13,29 @@ const DYNAMIC_LD_ATTR = 'data-showroom-seo-ld';
  */
 const SeoHead: React.FC = () => {
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    document.querySelectorAll(`script[${GMB_SAMEAS_ATTR}]`).forEach((n) => n.remove());
+    if (GMB_PROFILE_URL) {
+      const s = document.createElement('script');
+      s.type = 'application/ld+json';
+      s.setAttribute(GMB_SAMEAS_ATTR, '1');
+      s.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@id': BUSINESS.jsonLdId,
+            '@type': 'LocalBusiness',
+            sameAs: [GMB_PROFILE_URL],
+          },
+        ],
+      });
+      document.head.appendChild(s);
+    }
+    return () => {
+      document.querySelectorAll(`script[${GMB_SAMEAS_ATTR}]`).forEach((n) => n.remove());
+    };
+  }, []);
 
   useEffect(() => {
     const href = canonicalUrl(pathname);
@@ -24,6 +50,10 @@ const SeoHead: React.FC = () => {
     const p = normalizePath(pathname);
     const isBlogList = p === '/blog';
     const isBlogArticle = p.startsWith('/blog/') && p.length > '/blog/'.length;
+    if (!isBlogList && !isBlogArticle) {
+      const meta = pageWebMeta(pathname);
+      setDocumentSeo({ title: meta.name, description: meta.description, path: pathname });
+    }
     document.querySelectorAll(`script[${DYNAMIC_LD_ATTR}]`).forEach((n) => n.remove());
     if (isBlogList || isBlogArticle) {
       return;

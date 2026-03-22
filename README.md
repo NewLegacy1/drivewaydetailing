@@ -55,8 +55,8 @@ The site is set up for local SEO and social sharing:
 
 - **Meta & social:** Title, description, keywords, canonical, Open Graph, and Twitter Card are in [index.html](index.html), targeting Hamilton, Ancaster, Burlington, Oakville, Mississauga and GTA.
 - **Local / geo:** `geo.region`, `geo.placename`, and ICBM coordinates for Hamilton.
-- **Structured data:** JSON-LD `AutoRepair` with `areaServed` (all service cities) in `index.html`.
-- **Crawlers:** [public/robots.txt](public/robots.txt) and [public/sitemap.xml](public/sitemap.xml).
+- **Structured data:** JSON-LD `LocalBusiness` / `ProfessionalService` with `areaServed` in `index.html`, plus dynamic WebPage, FAQ, blog, and breadcrumb data from the app.
+- **Crawlers:** [public/robots.txt](public/robots.txt) and [public/sitemap.xml](public/sitemap.xml). Each production build runs [scripts/build-sitemap.mjs](scripts/build-sitemap.mjs) so every blog URL in `public/blog/data.json` is included automatically.
 
 **Before going live:**
 

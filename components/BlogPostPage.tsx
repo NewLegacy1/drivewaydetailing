@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import { fetchBlogPostBySlug, blogPostCanonicalUrl, type BlogPost } from '../lib/blog';
-import { BUSINESS, SITE_ORIGIN } from '../lib/site';
+import { BUSINESS, SITE_ORIGIN, breadcrumbItemsForBlogPost, canonicalUrl } from '../lib/site';
+import { setDocumentSeo } from '../lib/socialMeta';
 
 const SEO_LD_ATTR = 'data-showroom-blog-post-ld';
 
@@ -13,6 +14,18 @@ const PURIFY = {
 
 function buildBlogPostingJsonLd(post: BlogPost): Record<string, unknown> {
   const url = blogPostCanonicalUrl(post.slug);
+  const crumbs = breadcrumbItemsForBlogPost(post.slug, post.title);
+  const breadcrumb: Record<string, unknown> = {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: crumbs.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      item: canonicalUrl(c.path),
+    })),
+  };
+
   const article: Record<string, unknown> = {
     '@type': 'BlogPosting',
     '@id': `${url}#article`,
@@ -41,7 +54,7 @@ function buildBlogPostingJsonLd(post: BlogPost): Record<string, unknown> {
   }
   return {
     '@context': 'https://schema.org',
-    '@graph': [article],
+    '@graph': [article, breadcrumb],
   };
 }
 
@@ -74,11 +87,13 @@ const BlogPostPage: React.FC = () => {
       return;
     }
 
-    document.title = post.meta_title || post.title;
-    const meta = document.querySelector('meta[name="description"]');
-    const prev = meta?.getAttribute('content') ?? '';
+    const title = post.meta_title || post.title;
     const desc = post.meta_description || post.excerpt || '';
-    if (meta && desc) meta.setAttribute('content', desc);
+    setDocumentSeo({
+      title,
+      description: desc || title,
+      path: `/blog/${post.slug}`,
+    });
 
     let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     const prevCanonical = canonical?.getAttribute('href') ?? '';
@@ -96,7 +111,6 @@ const BlogPostPage: React.FC = () => {
     document.head.appendChild(script);
 
     return () => {
-      if (meta) meta.setAttribute('content', prev);
       if (canonical) canonical.setAttribute('href', prevCanonical);
       document.querySelectorAll(`script[${SEO_LD_ATTR}]`).forEach((n) => n.remove());
     };

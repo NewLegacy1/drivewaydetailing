@@ -1,20 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 interface JetDetailingPageProps {
   onRequestQuote?: () => void;
 }
 
-const JET_PAGE_DESCRIPTION = 'Discover premier jet detailing services in Toronto and Hamilton. We specialize in exterior cleaning, interior cabin detailing, and brightwork polishing for private jets and turboprops.';
-
 const JetDetailingPage: React.FC<JetDetailingPageProps> = ({ onRequestQuote }) => {
-  useEffect(() => {
-    document.title = 'Jet Detailing Toronto & Hamilton | Luxury Aircraft Cleaning | ShowRoom AutoCare';
-    const metaDesc = document.querySelector('meta[name="description"]');
-    const prev = metaDesc?.getAttribute('content') ?? '';
-    if (metaDesc) metaDesc.setAttribute('content', JET_PAGE_DESCRIPTION);
-    return () => { if (metaDesc) metaDesc.setAttribute('content', prev); };
-  }, []);
-
   const services = [
     {
       title: 'Exterior Cleaning',

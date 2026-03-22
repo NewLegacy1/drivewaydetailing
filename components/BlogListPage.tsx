@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchBlogPosts, blogPostPath, type BlogPost } from '../lib/blog';
-import { AREA_SERVED, SITE_ORIGIN } from '../lib/site';
+import { AREA_SERVED, SITE_ORIGIN, pageWebMeta } from '../lib/site';
+import { setDocumentSeo } from '../lib/socialMeta';
 import { CITY_SLUGS, CITY_NAMES, type CitySlug } from '../lib/cities';
 
 const SEO_LD_ATTR = 'data-showroom-blog-list-ld';
@@ -36,6 +37,14 @@ function buildBlogListJsonLd(posts: BlogPost[]): Record<string, unknown> {
         }),
       },
       {
+        '@type': 'BreadcrumbList',
+        '@id': `${SITE_ORIGIN}/blog#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_ORIGIN}/` },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_ORIGIN}/blog` },
+        ],
+      },
+      {
         '@type': 'ItemList',
         '@id': `${SITE_ORIGIN}/blog#recent`,
         itemListElement: items,
@@ -63,13 +72,8 @@ const BlogListPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    document.title =
-      'Car Detailing & Ceramic Coating Blog | Hamilton, GTA | ShowRoom AutoCare';
-    const meta = document.querySelector('meta[name="description"]');
-    const prev = meta?.getAttribute('content') ?? '';
-    const desc =
-      'Expert mobile detailing and ceramic coating articles for Hamilton, Ancaster, Burlington, Oakville, Mississauga and the GTA. Tips from ShowRoom AutoCare.';
-    if (meta) meta.setAttribute('content', desc);
+    const m = pageWebMeta('/blog');
+    setDocumentSeo({ title: m.name, description: m.description, path: '/blog' });
 
     document.querySelectorAll(`script[${SEO_LD_ATTR}]`).forEach((n) => n.remove());
     if (posts.length) {
@@ -81,7 +85,6 @@ const BlogListPage: React.FC = () => {
     }
 
     return () => {
-      if (meta) meta.setAttribute('content', prev);
       document.querySelectorAll(`script[${SEO_LD_ATTR}]`).forEach((n) => n.remove());
     };
   }, [posts]);

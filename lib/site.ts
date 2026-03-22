@@ -66,7 +66,7 @@ export function pageWebMeta(pathname: string): { name: string; description: stri
     return {
       name: 'Car Detailing & Ceramic Coating Blog | Hamilton, GTA | ShowRoom AutoCare',
       description:
-        'Mobile detailing and ceramic coating tips for Hamilton, Ancaster, Burlington, Oakville, Mississauga and the GTA. ShowRoom AutoCare.',
+        'Expert mobile detailing and ceramic coating articles for Hamilton, Ancaster, Burlington, Oakville, Mississauga and the GTA. Tips from ShowRoom AutoCare.',
     };
   }
   if (isCityPath(p)) {
@@ -131,8 +131,10 @@ export function buildDynamicJsonLd(pathname: string): Record<string, unknown> {
     about: { '@id': BUSINESS.jsonLdId },
   };
 
+  const graph: Record<string, unknown>[] = [website, webPage];
+
   if (p === '/') {
-    const faqPage: Record<string, unknown> = {
+    graph.push({
       '@type': 'FAQPage',
       '@id': `${url}#faq`,
       mainEntity: HOME_FAQ.map((item) => ({
@@ -143,15 +145,60 @@ export function buildDynamicJsonLd(pathname: string): Record<string, unknown> {
           text: item.answer,
         },
       })),
-    };
-    return {
-      '@context': 'https://schema.org',
-      '@graph': [website, webPage, faqPage],
-    };
+    });
+    return { '@context': 'https://schema.org', '@graph': graph };
+  }
+
+  const crumbs = breadcrumbItemsForPath(p);
+  if (crumbs?.length) {
+    graph.push({
+      '@type': 'BreadcrumbList',
+      '@id': `${url}#breadcrumb`,
+      itemListElement: crumbs.map((c, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: c.name,
+        item: canonicalUrl(c.path),
+      })),
+    });
   }
 
   return {
     '@context': 'https://schema.org',
-    '@graph': [website, webPage],
+    '@graph': graph,
   };
+}
+
+/** Breadcrumb trail for JSON-LD (excludes home-only). */
+export function breadcrumbItemsForPath(pathname: string): { name: string; path: string }[] | null {
+  const p = normalizePath(pathname);
+  if (p === '/' || p === '/blog') return null;
+
+  if (p === '/jetdetailing') {
+    return [
+      { name: 'Home', path: '/' },
+      { name: 'Jet detailing', path: '/jetdetailing' },
+    ];
+  }
+
+  if (isCityPath(p)) {
+    const slug = p.slice(1) as CitySlug;
+    const city = CITY_NAMES[slug];
+    return [
+      { name: 'Home', path: '/' },
+      { name: `Mobile detailing ${city}`, path: p },
+    ];
+  }
+
+  return null;
+}
+
+/** Blog article: Home → Blog → title (truncated for breadcrumb display). */
+export function breadcrumbItemsForBlogPost(slug: string, title: string): { name: string; path: string }[] {
+  const name = title.length > 44 ? `${title.slice(0, 41)}…` : title;
+  return [
+    { name: 'Home', path: '/' },
+    { name: 'Blog', path: '/blog' },
+    { name, path: `/blog/${slug}` },
+  ];
 }

@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import GoogleBusinessBlock from './GoogleBusinessBlock';
 
 const REVIEWS = [
   {
@@ -96,7 +97,8 @@ const ReviewsStrip: React.FC = () => {
   const scrollDistance = REVIEWS.length * (CARD_WIDTH_PX + CARD_GAP_PX);
 
   return (
-    <section className="bg-brand-black border-y border-white/10 py-8 overflow-hidden" aria-label="Customer reviews">
+    <section className="bg-brand-black border-y border-white/10 pt-10 pb-8 overflow-hidden" aria-label="Customer reviews">
+      <GoogleBusinessBlock variant="reviews" />
       <div className="relative">
         <div
           className="flex gap-6 w-max"

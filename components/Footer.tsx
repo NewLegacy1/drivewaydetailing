@@ -1,5 +1,5 @@
-
 import React from 'react';
+import GoogleBusinessBlock from './GoogleBusinessBlock';
 
 const Footer: React.FC = () => {
   return (
@@ -60,6 +60,10 @@ const Footer: React.FC = () => {
               </a>
             </div>
           </div>
+        </div>
+
+        <div className="mb-12 max-w-3xl mx-auto">
+          <GoogleBusinessBlock variant="footer" />
         </div>
 
         <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold uppercase tracking-widest text-white/30">
