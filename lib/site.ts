@@ -62,6 +62,13 @@ export function pageWebMeta(pathname: string): { name: string; description: stri
         'Discover premier jet detailing services in Toronto and Hamilton. We specialize in exterior cleaning, interior cabin detailing, and brightwork polishing for private jets and turboprops.',
     };
   }
+  if (p === '/ceramic-coating') {
+    return {
+      name: 'Nano Ceramic Coating Hamilton & GTA | Mobile Application | ShowRoom AutoCare',
+      description:
+        'Professional mobile nano ceramic coating in Hamilton, Burlington, Oakville, Mississauga and the GTA. Prep, paint correction when needed, and coating at your location. Free quote.',
+    };
+  }
   if (p === '/blog') {
     return {
       name: 'Car Detailing & Ceramic Coating Blog | Hamilton, GTA | ShowRoom AutoCare',
@@ -178,6 +185,13 @@ export function breadcrumbItemsForPath(pathname: string): { name: string; path: 
     return [
       { name: 'Home', path: '/' },
       { name: 'Jet detailing', path: '/jetdetailing' },
+    ];
+  }
+
+  if (p === '/ceramic-coating') {
+    return [
+      { name: 'Home', path: '/' },
+      { name: 'Ceramic coating', path: '/ceramic-coating' },
     ];
   }
 

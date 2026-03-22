@@ -53,6 +53,14 @@ const Services: React.FC<ServicesProps> = ({ onRequestQuote }) => {
               </div>
               <h3 className="font-display text-2xl font-black uppercase mb-2 group-hover:text-brand-yellow transition-colors">
                 {service.title}
+                {idx === 1 && (
+                  <a
+                    href="/ceramic-coating"
+                    className="block mt-2 text-[10px] font-bold uppercase tracking-widest text-brand-yellow/90 hover:text-brand-yellow underline-offset-4 hover:underline"
+                  >
+                    Full ceramic coating page →
+                  </a>
+                )}
               </h3>
               <p className="text-brand-yellow font-bold uppercase text-xs tracking-widest mb-6">
                 {service.subtitle}

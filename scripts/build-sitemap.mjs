@@ -18,6 +18,7 @@ const CITY_SLUGS = ['ancaster', 'mississauga', 'hamilton', 'burlington', 'oakvil
 const STATIC = [
   { path: '/', priority: '1.0', changefreq: 'weekly' },
   { path: '/blog', priority: '0.85', changefreq: 'daily' },
+  { path: '/ceramic-coating', priority: '0.95', changefreq: 'weekly' },
   { path: '/jetdetailing', priority: '0.8', changefreq: 'monthly' },
   ...CITY_SLUGS.map((slug) => ({
     path: `/${slug}`,

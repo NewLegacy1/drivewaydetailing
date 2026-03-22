@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import LeadForm from './components/LeadForm';
 import HomePage from './components/HomePage';
 import JetDetailingPage from './components/JetDetailingPage';
+import CeramicCoatingPage from './components/CeramicCoatingPage';
 import CityPage from './components/CityPage';
 import BlogListPage from './components/BlogListPage';
 import BlogPostPage from './components/BlogPostPage';
@@ -61,6 +62,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<HomePage onRequestQuote={openQuote} />} />
             <Route path="/jetdetailing" element={<JetDetailingPage onRequestQuote={openQuote} />} />
+            <Route path="/ceramic-coating" element={<CeramicCoatingPage onRequestQuote={openQuote} />} />
             <Route path="/blog" element={<BlogListPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/:city" element={<CityPage onRequestQuote={openQuote} />} />
