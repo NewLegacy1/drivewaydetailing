@@ -1,9 +1,27 @@
 import React, { useState, useRef, useCallback } from 'react';
 
-const BEFORE_IMAGE = '/images/before-after/interior-before.png';
-const AFTER_IMAGE = '/images/before-after/interior-after.png';
+const DEFAULT_BEFORE = '/images/before-after/interior-before.png';
+const DEFAULT_AFTER = '/images/before-after/interior-after.png';
 
-const BeforeAfterSlider: React.FC = () => {
+export type BeforeAfterSliderProps = {
+  title?: React.ReactNode;
+  subtitle?: string;
+  beforeSrc?: string;
+  afterSrc?: string;
+  caption?: string;
+};
+
+const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
+  title = (
+    <>
+      See The <span className="text-brand-yellow">Transformation</span>
+    </>
+  ),
+  subtitle = 'Drag the line to reveal before & after — interior revival',
+  beforeSrc = DEFAULT_BEFORE,
+  afterSrc = DEFAULT_AFTER,
+  caption = 'Audi RS 6 interior — from mud and wear to showroom finish',
+}) => {
   const [position, setPosition] = useState(50);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -36,12 +54,8 @@ const BeforeAfterSlider: React.FC = () => {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-yellow/30 to-transparent" />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 reveal">
-          <h2 className="font-display text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">
-            See The <span className="text-brand-yellow">Transformation</span>
-          </h2>
-          <p className="text-white/50 uppercase tracking-[0.2em] font-bold text-sm">
-            Drag the line to reveal before & after — interior revival
-          </p>
+          <h2 className="font-display text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">{title}</h2>
+          <p className="text-white/50 uppercase tracking-[0.2em] font-bold text-sm">{subtitle}</p>
         </div>
 
         <div
@@ -56,8 +70,8 @@ const BeforeAfterSlider: React.FC = () => {
           {/* After (full image, always visible) */}
           <div className="absolute inset-0">
             <img
-              src={AFTER_IMAGE}
-              alt="After professional interior detailing"
+              src={afterSrc}
+              alt="After professional detailing"
               className="absolute inset-0 w-full h-full object-cover"
               draggable={false}
             />
@@ -68,7 +82,7 @@ const BeforeAfterSlider: React.FC = () => {
             style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
           >
             <img
-              src={BEFORE_IMAGE}
+              src={beforeSrc}
               alt="Before detailing"
               className="absolute inset-0 w-full h-full object-cover object-[center_center]"
               draggable={false}
@@ -96,9 +110,7 @@ const BeforeAfterSlider: React.FC = () => {
             After
           </div>
         </div>
-        <p className="text-center text-white/50 text-sm mt-4">
-          Audi RS 6 interior — from mud and wear to showroom finish
-        </p>
+        <p className="text-center text-white/50 text-sm mt-4">{caption}</p>
       </div>
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-yellow/30 to-transparent" />
     </section>

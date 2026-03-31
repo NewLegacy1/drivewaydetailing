@@ -50,7 +50,7 @@ const SeoHead: React.FC = () => {
     const p = normalizePath(pathname);
     const isBlogList = p === '/blog';
     const isBlogArticle = p.startsWith('/blog/') && p.length > '/blog/'.length;
-    const isAdsFunnel = p === '/ads/quote' || p === '/ads/thank-you';
+    const isAdsFunnel = p.startsWith('/ads');
     if (!isBlogList && !isBlogArticle) {
       const meta = pageWebMeta(pathname);
       setDocumentSeo({

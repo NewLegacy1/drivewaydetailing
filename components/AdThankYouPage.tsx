@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 /**
- * Success page for the /ads/quote funnel only. Point Google Ads “destination URL”
- * conversions here so organic / main-site form completions are not counted.
+ * Success page for paid landing funnels (/ads/*). Point Google Ads conversion
+ * tracking here; main-site modal quotes do not navigate to this URL.
  */
 const AdThankYouPage: React.FC = () => {
   return (

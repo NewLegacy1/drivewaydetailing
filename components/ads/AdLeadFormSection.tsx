@@ -8,11 +8,11 @@ import {
   type LeadQuoteFormState,
 } from '@/lib/leadQuote';
 
-/**
- * Paid-ads-only landing: use this URL in Google Ads. Submissions go to /ads/thank-you
- * for conversion tracking; the main site modal does not use that path.
- */
-const AdQuoteLandingPage: React.FC = () => {
+type AdLeadFormSectionProps = {
+  idPrefix: string;
+};
+
+const AdLeadFormSection: React.FC<AdLeadFormSectionProps> = ({ idPrefix }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<LeadQuoteFormState>(() => emptyLeadQuoteForm());
   const [loading, setLoading] = useState(false);
@@ -38,16 +38,16 @@ const AdQuoteLandingPage: React.FC = () => {
   };
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-      <div className="max-w-lg mx-auto">
+    <section id="quote" className="scroll-mt-28 py-16 md:py-24 bg-brand-dark border-y border-white/5">
+      <div className="max-w-lg mx-auto px-4 sm:px-6">
         <p className="font-display text-brand-yellow text-xs font-black uppercase tracking-[0.25em] text-center mb-3">
-          ShowRoom AutoCare
+          Free quote
         </p>
-        <h1 className="font-display text-3xl md:text-4xl font-black uppercase text-white text-center mb-3">
-          Get your free quote
-        </h1>
-        <p className="text-white/65 text-center text-sm md:text-base mb-10 leading-relaxed">
-          Mobile detailing and ceramic coating across Hamilton and the GTA. Tell us about your vehicle and we&apos;ll get back to you shortly.
+        <h2 className="font-display text-2xl md:text-3xl font-black uppercase text-white text-center mb-2">
+          Tell us about your vehicle
+        </h2>
+        <p className="text-white/55 text-center text-sm mb-8">
+          We respond by phone or email — usually the same day.
         </p>
         <div className="bg-brand-gray border border-white/10 rounded-lg p-6 md:p-8 shadow-2xl">
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -56,25 +56,19 @@ const AdQuoteLandingPage: React.FC = () => {
                 {error}
               </p>
             )}
-            <LeadQuoteFormFields idPrefix="ad" formData={formData} onChange={handleChange} showBookNow />
+            <LeadQuoteFormFields idPrefix={idPrefix} formData={formData} onChange={handleChange} showBookNow />
             <button
               type="submit"
               disabled={loading}
               className="w-full bg-brand-yellow text-brand-black py-4 font-black uppercase tracking-widest text-sm magnetic-cta disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {loading ? 'Sending…' : 'Send request'}
+              {loading ? 'Sending…' : 'Get my free quote'}
             </button>
           </form>
         </div>
-        <p className="text-center text-white/45 text-xs mt-8">
-          Prefer to call?{' '}
-          <a href="tel:+19053794820" className="text-brand-yellow font-semibold hover:underline whitespace-nowrap">
-            (905) 379-4820
-          </a>
-        </p>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default AdQuoteLandingPage;
+export default AdLeadFormSection;

@@ -10,9 +10,11 @@ import CeramicCoatingPage from './components/CeramicCoatingPage';
 import CityPage from './components/CityPage';
 import BlogListPage from './components/BlogListPage';
 import BlogPostPage from './components/BlogPostPage';
-import AdQuoteLandingPage from './components/AdQuoteLandingPage';
+import AdsLayout from './components/ads/AdsLayout';
+import AdCampaignLp from './components/ads/AdCampaignLp';
 import AdThankYouPage from './components/AdThankYouPage';
 import SeoHead from './components/SeoHead';
+import { AD_CAMPAIGN_CERAMIC, AD_CAMPAIGN_DETAILING } from './lib/adCampaigns';
 
 const OPEN_QUOTE_EVENT = 'showroom-open-quote';
 
@@ -41,7 +43,9 @@ const RevealEffect: React.FC = () => {
   return null;
 };
 
-const App: React.FC = () => {
+const AppRoutes: React.FC = () => {
+  const { pathname } = useLocation();
+  const isAdsPath = pathname.startsWith('/ads');
   const [showLeadForm, setShowLeadForm] = useState(false);
   const openQuote = useCallback(() => setShowLeadForm(true), []);
   const closeQuote = useCallback(() => setShowLeadForm(false), []);
@@ -53,28 +57,39 @@ const App: React.FC = () => {
   }, []);
 
   return (
+    <div className="min-h-screen bg-brand-black font-sans selection:bg-brand-yellow selection:text-brand-black">
+      <RevealEffect />
+      <LeadForm isOpen={showLeadForm} onClose={closeQuote} />
+      {!isAdsPath && <Header onRequestQuote={openQuote} />}
+      <main>
+        <Routes>
+          <Route path="/ads" element={<AdsLayout />}>
+            <Route index element={<Navigate to="mobile-detailing" replace />} />
+            <Route path="ceramic-coating" element={<AdCampaignLp config={AD_CAMPAIGN_CERAMIC} />} />
+            <Route path="mobile-detailing" element={<AdCampaignLp config={AD_CAMPAIGN_DETAILING} />} />
+            <Route path="thank-you" element={<AdThankYouPage />} />
+            <Route path="quote" element={<Navigate to="/ads/mobile-detailing" replace />} />
+          </Route>
+          <Route path="/" element={<HomePage onRequestQuote={openQuote} />} />
+          <Route path="/jetdetailing" element={<JetDetailingPage onRequestQuote={openQuote} />} />
+          <Route path="/ceramic-coating" element={<CeramicCoatingPage onRequestQuote={openQuote} />} />
+          <Route path="/blog" element={<BlogListPage />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <Route path="/thank-you" element={<Navigate to="/" replace />} />
+          <Route path="/:city" element={<CityPage onRequestQuote={openQuote} />} />
+        </Routes>
+      </main>
+      {!isAdsPath && <Footer />}
+    </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
     <BrowserRouter>
       <Analytics />
       <SeoHead />
-      <div className="min-h-screen bg-brand-black font-sans selection:bg-brand-yellow selection:text-brand-black">
-        <RevealEffect />
-        <LeadForm isOpen={showLeadForm} onClose={closeQuote} />
-        <Header onRequestQuote={openQuote} />
-        <main>
-          <Routes>
-            <Route path="/" element={<HomePage onRequestQuote={openQuote} />} />
-            <Route path="/jetdetailing" element={<JetDetailingPage onRequestQuote={openQuote} />} />
-            <Route path="/ceramic-coating" element={<CeramicCoatingPage onRequestQuote={openQuote} />} />
-            <Route path="/blog" element={<BlogListPage />} />
-            <Route path="/blog/:slug" element={<BlogPostPage />} />
-            <Route path="/thank-you" element={<Navigate to="/" replace />} />
-            <Route path="/ads/quote" element={<AdQuoteLandingPage />} />
-            <Route path="/ads/thank-you" element={<AdThankYouPage />} />
-            <Route path="/:city" element={<CityPage onRequestQuote={openQuote} />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <AppRoutes />
     </BrowserRouter>
   );
 };
