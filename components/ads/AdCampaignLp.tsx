@@ -21,15 +21,14 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
   return (
     <main>
       {/* Hero: same image pools + overlays as homepage Hero (mobile vs desktop) */}
-      <section className="relative w-full min-w-0 overflow-hidden min-h-[min(100dvh,920px)] md:min-h-[min(92vh,960px)] flex items-center">
+      <section className="relative w-full min-w-0 overflow-hidden min-h-[min(100dvh,920px)] md:min-h-[min(92vh,960px)] flex items-end md:items-center pb-6 pt-4 md:pb-0 md:pt-0">
         <div className="absolute inset-0 bg-brand-black">
           <div
             className="absolute inset-0 hero-bg-image md:hidden"
             style={{
               backgroundImage: `url(${heroMobile})`,
               backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'center',
-              backgroundSize: 'contain',
+              backgroundPosition: 'center 45%',
             }}
             aria-hidden
           />
@@ -49,10 +48,10 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
           <div className="absolute inset-0 bg-gradient-to-b from-brand-black/80 via-transparent to-brand-black md:from-brand-black/50 md:via-transparent md:to-brand-black/90 pointer-events-none" aria-hidden />
         </div>
 
-        <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
-          <div className="max-w-2xl [text-shadow:0_2px_24px_rgba(0,0,0,0.85)]">
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
+          <div className="max-w-2xl mx-auto md:mx-0 text-center md:text-left [text-shadow:0_2px_24px_rgba(0,0,0,0.85)]">
             <p className="font-display text-brand-yellow uppercase tracking-[0.25em] text-[10px] sm:text-xs font-bold mb-4">
-              ShowRoom AutoCare · Hamilton &amp; GTA
+              ShowRoom AutoCare • Hamilton &amp; GTA
             </p>
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-black uppercase tracking-tight text-white leading-[1.08] mb-5">
               {config.headline}
@@ -62,21 +61,21 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
             </p>
           </div>
 
-          <div className="mb-8 max-w-2xl">
+          <div className="mb-8 max-w-2xl mx-auto md:mx-0 w-full">
             <AdSocialProof />
           </div>
 
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 max-w-2xl mx-auto md:mx-0 w-full">
             <a
               href="tel:+19053794820"
-              className="inline-flex items-center justify-center border-2 border-brand-yellow text-brand-yellow px-8 py-4 font-black uppercase tracking-widest text-xs sm:text-sm hover:bg-brand-yellow/10 transition-colors [text-shadow:none] shadow-lg shadow-black/40"
+              className="w-full sm:w-auto sm:flex-1 inline-flex items-center justify-center border-2 border-brand-yellow text-brand-yellow px-6 py-4 sm:px-8 font-black uppercase tracking-widest text-xs sm:text-sm hover:bg-brand-yellow/10 transition-colors [text-shadow:none] shadow-lg shadow-black/40 min-h-[52px]"
             >
               Call (905) 379-4820
             </a>
             <button
               type="button"
               onClick={scrollToQuote}
-              className="inline-flex items-center justify-center bg-brand-yellow text-brand-black px-8 py-4 font-black uppercase tracking-widest text-xs sm:text-sm magnetic-cta hover:opacity-95 transition-opacity shadow-lg shadow-black/30"
+              className="w-full sm:w-auto sm:flex-1 inline-flex items-center justify-center bg-brand-yellow text-brand-black px-6 py-4 sm:px-8 font-black uppercase tracking-widest text-xs sm:text-sm magnetic-cta hover:opacity-95 transition-opacity shadow-lg shadow-black/30 min-h-[52px]"
             >
               Get a free quote
             </button>
