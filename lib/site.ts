@@ -76,6 +76,19 @@ export function pageWebMeta(pathname: string): { name: string; description: stri
         'Expert mobile detailing and ceramic coating articles for Hamilton, Ancaster, Burlington, Oakville, Mississauga and the GTA. Tips from ShowRoom AutoCare.',
     };
   }
+  if (p === '/ads/quote') {
+    return {
+      name: 'Free quote | Mobile detailing Hamilton & GTA | ShowRoom AutoCare',
+      description:
+        'Request a free quote for mobile car detailing and ceramic coating in Hamilton, Burlington, Oakville, Mississauga and the GTA.',
+    };
+  }
+  if (p === '/ads/thank-you') {
+    return {
+      name: 'Thank you | ShowRoom AutoCare',
+      description: 'Your quote request was received. We will contact you shortly.',
+    };
+  }
   if (isCityPath(p)) {
     const slug = p.slice(1) as CitySlug;
     const city = CITY_NAMES[slug];

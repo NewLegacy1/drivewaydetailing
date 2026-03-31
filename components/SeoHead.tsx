@@ -50,12 +50,18 @@ const SeoHead: React.FC = () => {
     const p = normalizePath(pathname);
     const isBlogList = p === '/blog';
     const isBlogArticle = p.startsWith('/blog/') && p.length > '/blog/'.length;
+    const isAdsFunnel = p === '/ads/quote' || p === '/ads/thank-you';
     if (!isBlogList && !isBlogArticle) {
       const meta = pageWebMeta(pathname);
-      setDocumentSeo({ title: meta.name, description: meta.description, path: pathname });
+      setDocumentSeo({
+        title: meta.name,
+        description: meta.description,
+        path: pathname,
+        robots: isAdsFunnel ? 'noindex, nofollow' : undefined,
+      });
     }
     document.querySelectorAll(`script[${DYNAMIC_LD_ATTR}]`).forEach((n) => n.remove());
-    if (isBlogList || isBlogArticle) {
+    if (isBlogList || isBlogArticle || isAdsFunnel) {
       return;
     }
     const script = document.createElement('script');

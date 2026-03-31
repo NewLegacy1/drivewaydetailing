@@ -17,11 +17,13 @@ function setMeta(attr: 'property' | 'name', key: string, content: string) {
  * Updates document title, meta description, and Open Graph / Twitter tags (SPA-friendly).
  * Social crawlers that do not run JS still see defaults from index.html.
  */
-export function setDocumentSeo(opts: { title: string; description: string; path: string }) {
+export function setDocumentSeo(opts: { title: string; description: string; path: string; robots?: string }) {
   const path = normalizePath(opts.path);
   const url = canonicalUrl(path);
 
   document.title = opts.title;
+
+  setMeta('name', 'robots', opts.robots ?? 'index, follow');
 
   let metaDesc = document.querySelector<HTMLMetaElement>('meta[name="description"]');
   if (!metaDesc) {

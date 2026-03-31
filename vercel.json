@@ -1,5 +1,7 @@
 {
   "redirects": [
+    { "source": "/thank-you", "destination": "/", "permanent": false },
+    { "source": "/thank-you/", "destination": "/", "permanent": false },
     { "source": "/contact", "destination": "/#contact", "permanent": true },
     { "source": "/contact/", "destination": "/#contact", "permanent": true },
     { "source": "/about", "destination": "/#about", "permanent": true },

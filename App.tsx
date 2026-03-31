@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Analytics } from '@vercel/analytics/react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import LeadForm from './components/LeadForm';
@@ -10,6 +10,8 @@ import CeramicCoatingPage from './components/CeramicCoatingPage';
 import CityPage from './components/CityPage';
 import BlogListPage from './components/BlogListPage';
 import BlogPostPage from './components/BlogPostPage';
+import AdQuoteLandingPage from './components/AdQuoteLandingPage';
+import AdThankYouPage from './components/AdThankYouPage';
 import SeoHead from './components/SeoHead';
 
 const OPEN_QUOTE_EVENT = 'showroom-open-quote';
@@ -65,6 +67,9 @@ const App: React.FC = () => {
             <Route path="/ceramic-coating" element={<CeramicCoatingPage onRequestQuote={openQuote} />} />
             <Route path="/blog" element={<BlogListPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
+            <Route path="/thank-you" element={<Navigate to="/" replace />} />
+            <Route path="/ads/quote" element={<AdQuoteLandingPage />} />
+            <Route path="/ads/thank-you" element={<AdThankYouPage />} />
             <Route path="/:city" element={<CityPage onRequestQuote={openQuote} />} />
           </Routes>
         </main>
