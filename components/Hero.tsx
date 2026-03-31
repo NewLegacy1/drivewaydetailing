@@ -1,19 +1,5 @@
 import React, { useMemo } from 'react';
-
-// Mobile hero: A/B test — Porsche + truck, or team washing Porsche in driveway
-const HERO_MOBILE_IMAGES = ['/hero-mobile.png', '/images/showroom-switch.png'];
-
-// Desktop: A/B test hero images (replace with your own for variety)
-const HERO_IMAGES = ['/hero.png', '/hero2.png', '/hero3.png'];
-
-// Lighter on left so worker is more visible; still dark enough for text
-const HERO_GRADIENTS: { className: string }[] = [
-  { className: 'bg-gradient-to-r from-black/45 via-black/25 to-transparent' },
-  { className: 'bg-gradient-to-r from-black/40 via-black/18 to-transparent' },
-  { className: 'bg-gradient-to-b from-black/40 via-transparent to-black/35' },
-  { className: 'bg-gradient-to-r from-black/42 from-[25%] via-transparent to-transparent' },
-  { className: 'bg-gradient-to-r from-black/40 via-black/20 to-black/8' },
-];
+import { pickHeroBackground } from '@/lib/heroBackgrounds';
 
 interface HeroProps {
   onRequestQuote?: () => void;
@@ -21,11 +7,7 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ onRequestQuote, city }) => {
-  const { image, gradient, mobileImage } = useMemo(() => ({
-    image: HERO_IMAGES[Math.floor(Math.random() * HERO_IMAGES.length)],
-    gradient: HERO_GRADIENTS[Math.floor(Math.random() * HERO_GRADIENTS.length)],
-    mobileImage: HERO_MOBILE_IMAGES[Math.floor(Math.random() * HERO_MOBILE_IMAGES.length)],
-  }), []);
+  const { desktop: image, gradient, mobile: mobileImage } = useMemo(() => pickHeroBackground(), []);
 
   return (
     <section className="relative min-h-[72vh] md:min-h-screen flex items-center overflow-hidden pt-20">
@@ -95,7 +77,7 @@ const Hero: React.FC<HeroProps> = ({ onRequestQuote, city }) => {
               ))}
             </div>
             <span className="text-white/80 font-bold uppercase tracking-widest text-sm">
-              100+ Five-Star Google Reviews
+              135+ Five-Star Google Reviews
             </span>
           </div>
           <div className="flex flex-col sm:flex-row gap-4">

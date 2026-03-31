@@ -10,8 +10,6 @@ export type AdCampaignConfig = {
   id: 'ceramic' | 'detailing';
   headline: string;
   subheadline: string;
-  heroImage: string;
-  heroImagePosition?: string;
   includedTitle: string;
   includedBullets: string[];
   whyTitle: string;
@@ -32,8 +30,6 @@ export const AD_CAMPAIGN_CERAMIC: AdCampaignConfig = {
   headline: 'Mobile ceramic coating in Hamilton',
   subheadline:
     'We come to your home or office — no drop-off, no waiting in a shop. Pro prep, correction when needed, and coating applied where your car lives.',
-  heroImage: '/hero3.png',
-  heroImagePosition: 'center 45%',
   includedTitle: 'What your ceramic coating visit includes',
   includedBullets: [
     'Consultation on paint condition and realistic gloss/protection goals',
@@ -91,8 +87,6 @@ export const AD_CAMPAIGN_DETAILING: AdCampaignConfig = {
   headline: 'Mobile car detailing in Hamilton',
   subheadline:
     'We come to your home or office — no drop-off, no waiting room. Interior revival, exterior washes, and full details done in your driveway.',
-  heroImage: '/hero3.png',
-  heroImagePosition: 'center 52%',
   includedTitle: 'What a full mobile detail can include',
   includedBullets: [
     'Thorough vacuum, blow-out, and fabric/leather-safe cleaning where appropriate',

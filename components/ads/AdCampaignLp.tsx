@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { AdCampaignConfig } from '@/lib/adCampaigns';
+import { pickHeroBackground } from '@/lib/heroBackgrounds';
 import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import AdSocialProof from './AdSocialProof';
 import AdLeadFormSection from './AdLeadFormSection';
@@ -15,48 +16,67 @@ type AdCampaignLpProps = {
 
 const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
   const idPrefix = `ad-${config.id}`;
+  const { desktop: heroDesktop, mobile: heroMobile, gradient } = useMemo(() => pickHeroBackground(), []);
 
   return (
     <main>
-      {/* 1–2: Headline + subhead + hero */}
-      <section className="relative w-full min-w-0 overflow-hidden pb-12 md:pb-16">
-        <div
-          className="absolute inset-0 bg-cover bg-no-repeat opacity-35"
-          style={{
-            backgroundImage: `url(${config.heroImage})`,
-            backgroundPosition: config.heroImagePosition || 'center center',
-          }}
-          aria-hidden
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-brand-black/95 to-brand-black pointer-events-none" aria-hidden />
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12">
-          <p className="font-display text-brand-yellow uppercase tracking-[0.25em] text-[10px] sm:text-xs font-bold mb-4">
-            ShowRoom AutoCare · Hamilton &amp; GTA
-          </p>
-          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-black uppercase tracking-tight text-white leading-[1.08] mb-5">
-            {config.headline}
-          </h1>
-          <p className="text-white/80 text-lg sm:text-xl leading-relaxed mb-8 max-w-2xl">
-            {config.subheadline}
-          </p>
+      {/* Hero: same image pools + overlays as homepage Hero (mobile vs desktop) */}
+      <section className="relative w-full min-w-0 overflow-hidden min-h-[min(100dvh,920px)] md:min-h-[min(92vh,960px)] flex items-center">
+        <div className="absolute inset-0 bg-brand-black">
+          <div
+            className="absolute inset-0 hero-bg-image md:hidden"
+            style={{
+              backgroundImage: `url(${heroMobile})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              backgroundSize: 'contain',
+            }}
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 hero-bg-image hidden md:block"
+            style={{
+              backgroundImage: `url(${heroDesktop})`,
+              backgroundRepeat: 'no-repeat',
+            }}
+            aria-hidden
+          />
+          <div className="absolute inset-0 bg-black/30 md:bg-black/25" aria-hidden />
+          <div className="absolute inset-0 hero-middle-light" aria-hidden />
+          <div className={`absolute inset-0 ${gradient.className}`} aria-hidden />
+          <div className="absolute inset-0 hero-vignette" aria-hidden />
+          <div className="absolute inset-0 hero-gridlines opacity-60" aria-hidden />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-black/80 via-transparent to-brand-black md:from-brand-black/50 md:via-transparent md:to-brand-black/90 pointer-events-none" aria-hidden />
+        </div>
 
-          {/* 3: Social proof — high on page */}
-          <div className="mb-8">
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+          <div className="max-w-2xl [text-shadow:0_2px_24px_rgba(0,0,0,0.85)]">
+            <p className="font-display text-brand-yellow uppercase tracking-[0.25em] text-[10px] sm:text-xs font-bold mb-4">
+              ShowRoom AutoCare · Hamilton &amp; GTA
+            </p>
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-black uppercase tracking-tight text-white leading-[1.08] mb-5">
+              {config.headline}
+            </h1>
+            <p className="text-white/90 text-base sm:text-lg md:text-xl leading-relaxed mb-8">
+              {config.subheadline}
+            </p>
+          </div>
+
+          <div className="mb-8 max-w-2xl">
             <AdSocialProof />
           </div>
 
-          {/* 4: CTAs above the fold */}
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
             <a
               href="tel:+19053794820"
-              className="inline-flex items-center justify-center border-2 border-brand-yellow text-brand-yellow px-8 py-4 font-black uppercase tracking-widest text-xs sm:text-sm hover:bg-brand-yellow/10 transition-colors"
+              className="inline-flex items-center justify-center border-2 border-brand-yellow text-brand-yellow px-8 py-4 font-black uppercase tracking-widest text-xs sm:text-sm hover:bg-brand-yellow/10 transition-colors [text-shadow:none] shadow-lg shadow-black/40"
             >
               Call (905) 379-4820
             </a>
             <button
               type="button"
               onClick={scrollToQuote}
-              className="inline-flex items-center justify-center bg-brand-yellow text-brand-black px-8 py-4 font-black uppercase tracking-widest text-xs sm:text-sm magnetic-cta hover:opacity-95 transition-opacity"
+              className="inline-flex items-center justify-center bg-brand-yellow text-brand-black px-8 py-4 font-black uppercase tracking-widest text-xs sm:text-sm magnetic-cta hover:opacity-95 transition-opacity shadow-lg shadow-black/30"
             >
               Get a free quote
             </button>

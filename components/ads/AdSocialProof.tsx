@@ -2,7 +2,7 @@ import React from 'react';
 import { GMB_PROFILE_URL, GMB_REVIEW_URL } from '@/lib/google-business';
 
 const RATING = (import.meta.env.VITE_ADS_GOOGLE_RATING as string | undefined)?.trim() || '5.0';
-const REVIEW_LABEL = (import.meta.env.VITE_ADS_GOOGLE_REVIEW_COUNT as string | undefined)?.trim() || '50+';
+const REVIEW_LABEL = (import.meta.env.VITE_ADS_GOOGLE_REVIEW_COUNT as string | undefined)?.trim() || '135';
 
 function Stars() {
   return (
@@ -20,21 +20,25 @@ const AdSocialProof: React.FC = () => {
   const href = GMB_REVIEW_URL || GMB_PROFILE_URL;
 
   const inner = (
-    <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 py-4 px-4 rounded-lg border border-white/10 bg-brand-gray/40">
-      <div className="flex items-center gap-3">
+    <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-between gap-4 sm:gap-6 py-5 px-5 sm:px-6 rounded-xl border border-white/15 bg-black/45 backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+      <div className="flex items-center gap-4 min-w-0">
         <Stars />
-        <div className="text-left">
-          <p className="text-white font-black text-lg leading-none">{RATING}</p>
-          <p className="text-white/50 text-xs uppercase tracking-wider mt-0.5">Google rating</p>
+        <div className="text-left min-w-0">
+          <p className="text-white font-black text-xl sm:text-2xl leading-none tabular-nums">{RATING}</p>
+          <p className="text-white/55 text-[10px] sm:text-xs uppercase tracking-[0.15em] mt-1">Google rating</p>
         </div>
       </div>
-      <div className="hidden sm:block w-px h-10 bg-white/15" aria-hidden />
-      <div className="text-center sm:text-left">
-        <p className="text-white font-bold text-sm uppercase tracking-wide">{REVIEW_LABEL} reviews</p>
-        <p className="text-white/50 text-xs mt-0.5">Real customers · Hamilton &amp; GTA</p>
+      <div className="hidden sm:block w-px h-12 bg-gradient-to-b from-transparent via-white/20 to-transparent shrink-0" aria-hidden />
+      <div className="flex-1 text-center sm:text-left min-w-[12rem]">
+        <p className="text-white font-black text-sm sm:text-base uppercase tracking-wide">
+          {REVIEW_LABEL} reviews
+        </p>
+        <p className="text-white/50 text-xs mt-1">Real customers · Hamilton &amp; GTA</p>
       </div>
-      <div className="w-full sm:w-auto flex justify-center sm:justify-end sm:ml-auto">
-        <span className="text-brand-yellow text-xs font-black uppercase tracking-widest">Google reviews</span>
+      <div className="flex justify-center sm:justify-end sm:shrink-0">
+        <span className="inline-flex items-center text-brand-yellow text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] border border-brand-yellow/40 rounded px-3 py-1.5 bg-brand-yellow/5">
+          Google reviews
+        </span>
       </div>
     </div>
   );
