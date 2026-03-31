@@ -1,5 +1,6 @@
-
 import React from 'react';
+import { trackClientEvent } from '@/lib/trackEvent';
+import { SITE_EVENT } from '@/lib/siteEvents';
 
 interface HeaderProps {
   onRequestQuote?: () => void;
@@ -42,12 +43,20 @@ const Header: React.FC<HeaderProps> = ({ onRequestQuote }) => {
 
         <div className="hidden md:flex shrink-0 items-center gap-3 lg:gap-4">
           <a 
-            href="tel:+19053794820" 
+            href="tel:+19053794820"
+            onClick={() => trackClientEvent(SITE_EVENT.HEADER_PHONE)}
             className="whitespace-nowrap text-brand-yellow font-bold text-sm tracking-tight hover:opacity-90 transition-opacity"
           >
             (905) 379-4820
           </a>
-          <button type="button" onClick={() => onRequestQuote?.()} className="shrink-0 whitespace-nowrap bg-brand-yellow text-brand-black px-5 py-2 lg:px-6 lg:py-2.5 rounded-none font-bold text-xs uppercase tracking-wide magnetic-cta">
+          <button
+            type="button"
+            onClick={() => {
+              trackClientEvent(SITE_EVENT.HEADER_GET_QUOTE);
+              onRequestQuote?.();
+            }}
+            className="shrink-0 whitespace-nowrap bg-brand-yellow text-brand-black px-5 py-2 lg:px-6 lg:py-2.5 rounded-none font-bold text-xs uppercase tracking-wide magnetic-cta"
+          >
             Get Quote
           </button>
         </div>

@@ -7,6 +7,8 @@ import {
   leadQuoteSubmitErrorMessage,
   type LeadQuoteFormState,
 } from '@/lib/leadQuote';
+import { trackClientEvent } from '@/lib/trackEvent';
+import { SITE_EVENT } from '@/lib/siteEvents';
 
 interface LeadFormProps {
   isOpen: boolean;
@@ -47,7 +49,8 @@ const LeadForm: React.FC<LeadFormProps> = ({ isOpen, onClose }) => {
     setError(null);
     setLoading(true);
     try {
-      await submitLeadQuote(formData);
+      await submitLeadQuote(formData, { source: 'website' });
+      trackClientEvent(SITE_EVENT.LEAD_SUBMIT_WEBSITE);
       setFormData(emptyLeadQuoteForm());
       setSubmitted(true);
       setTimeout(onClose, 2000);

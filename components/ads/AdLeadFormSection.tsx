@@ -7,6 +7,8 @@ import {
   leadQuoteSubmitErrorMessage,
   type LeadQuoteFormState,
 } from '@/lib/leadQuote';
+import { trackClientEvent } from '@/lib/trackEvent';
+import { SITE_EVENT } from '@/lib/siteEvents';
 
 type AdLeadFormSectionProps = {
   idPrefix: string;
@@ -27,7 +29,8 @@ const AdLeadFormSection: React.FC<AdLeadFormSectionProps> = ({ idPrefix }) => {
     setError(null);
     setLoading(true);
     try {
-      await submitLeadQuote(formData);
+      await submitLeadQuote(formData, { source: 'ads' });
+      trackClientEvent(SITE_EVENT.LEAD_SUBMIT_ADS, { campaign: idPrefix.replace(/^ad-/, '') });
       setFormData(emptyLeadQuoteForm());
       navigate('/ads/thank-you', { replace: true });
     } catch (err: unknown) {

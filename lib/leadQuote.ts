@@ -8,14 +8,21 @@ export type LeadQuoteFormState = {
   serviceNotes: string;
 };
 
+/** `website` → `showroom_organic`. `ads` → `showroom_ads` (Edge Function routes by this). */
+export type LeadSubmitSource = 'website' | 'ads';
+
 export function emptyLeadQuoteForm(): LeadQuoteFormState {
   return { name: '', email: '', phone: '', carMakeModel: '', serviceNotes: '' };
 }
 
-export async function submitLeadQuote(form: LeadQuoteFormState): Promise<void> {
+export async function submitLeadQuote(
+  form: LeadQuoteFormState,
+  options?: { source?: LeadSubmitSource }
+): Promise<void> {
   if (!supabase) {
     throw new Error('Form is not configured. Please add Supabase keys to .env.');
   }
+  const source: LeadSubmitSource = options?.source === 'ads' ? 'ads' : 'website';
   const { data, error: fnError } = await supabase.functions.invoke('resend-email', {
     body: {
       name: form.name,
@@ -23,6 +30,7 @@ export async function submitLeadQuote(form: LeadQuoteFormState): Promise<void> {
       phone: form.phone,
       car_make_model: form.carMakeModel || undefined,
       service_notes: form.serviceNotes || undefined,
+      lead_source: source,
     },
   });
   if (fnError) throw fnError;

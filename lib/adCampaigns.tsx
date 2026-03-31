@@ -86,7 +86,7 @@ export const AD_CAMPAIGN_DETAILING: AdCampaignConfig = {
   id: 'detailing',
   headline: 'Mobile car detailing in Hamilton',
   subheadline:
-    'We come to your home or office — no drop-off, no waiting room. Interior revival, exterior washes, and full details done in your driveway.',
+    'Professional paint correction, ceramic coating, and full detailing — done at your door.',
   includedTitle: 'What a full mobile detail can include',
   includedBullets: [
     'Thorough vacuum, blow-out, and fabric/leather-safe cleaning where appropriate',

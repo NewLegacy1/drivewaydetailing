@@ -7,12 +7,16 @@ const corsHeaders = {
   'Access-Control-Max-Age': '86400',
 };
 
+type LeadSource = 'website' | 'ads';
+
 interface LeadBody {
   name: string;
   email: string;
   phone: string;
   car_make_model?: string;
   service_notes?: string;
+  /** Main site modal → website (`showroom_organic`). /ads/* → `showroom_ads`. */
+  lead_source?: LeadSource;
 }
 
 Deno.serve(async (req) => {
@@ -46,7 +50,10 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { name, email, phone, car_make_model, service_notes } = body;
+    const { name, email, phone, car_make_model, service_notes, lead_source: rawSource } = body;
+
+    const leadSource: LeadSource =
+      rawSource === 'ads' ? 'ads' : 'website';
 
     if (!name?.trim() || !email?.trim() || !phone?.trim()) {
       return new Response(
@@ -59,7 +66,8 @@ Deno.serve(async (req) => {
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, serviceRoleKey);
 
-    const { error: insertError } = await supabase.from('leads').insert({
+    const table = leadSource === 'ads' ? 'showroom_ads' : 'showroom_organic';
+    const { error: insertError } = await supabase.from(table).insert({
       name: name.trim(),
       email: email.trim(),
       phone: phone.trim(),
@@ -79,8 +87,9 @@ Deno.serve(async (req) => {
     const leadEmailFrom = Deno.env.get('LEAD_EMAIL_FROM');
 
     if (resendKey && leadEmailTo && leadEmailFrom) {
+      const sourceLabel = leadSource === 'ads' ? 'Google Ads landing page' : 'main website';
       const html = `
-        <h2>New lead from website</h2>
+        <h2>New lead (${sourceLabel})</h2>
         <p><strong>Name:</strong> ${escapeHtml(name)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
         <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
@@ -97,7 +106,10 @@ Deno.serve(async (req) => {
         body: JSON.stringify({
           from: leadEmailFrom,
           to: [leadEmailTo],
-          subject: `New lead: ${name.trim()}`,
+          subject:
+            leadSource === 'ads'
+              ? `[Ads] New lead: ${name.trim()}`
+              : `New lead: ${name.trim()}`,
           html,
         }),
       });

@@ -3,6 +3,8 @@ import type { AdCampaignConfig } from '@/lib/adCampaigns';
 import Hero from '@/components/Hero';
 import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import AdLeadFormSection from './AdLeadFormSection';
+import { trackClientEvent } from '@/lib/trackEvent';
+import { SITE_EVENT } from '@/lib/siteEvents';
 
 function scrollToQuote() {
   document.getElementById('quote')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -19,7 +21,8 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
     <main>
       <Hero
         adCopy={{
-          eyebrow: 'ShowRoom AutoCare · Hamilton & GTA',
+          brandLine: 'ShowRoom AutoCare',
+          locationTag: 'Hamilton & GTA',
           title: config.headline,
           subline: config.subheadline,
           onQuoteClick: scrollToQuote,
@@ -117,13 +120,17 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
               href="tel:+19053794820"
+              onClick={() => trackClientEvent(SITE_EVENT.AD_FOOTER_PHONE)}
               className="inline-flex items-center justify-center border-2 border-white/25 text-white px-8 py-4 font-bold uppercase tracking-widest text-xs hover:border-brand-yellow hover:text-brand-yellow transition-colors"
             >
               (905) 379-4820
             </a>
             <button
               type="button"
-              onClick={scrollToQuote}
+              onClick={() => {
+                trackClientEvent(SITE_EVENT.AD_FOOTER_QUOTE);
+                scrollToQuote();
+              }}
               className="inline-flex items-center justify-center bg-brand-yellow text-brand-black px-8 py-4 font-black uppercase tracking-widest text-xs magnetic-cta"
             >
               Get a free quote

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { trackClientEvent } from '@/lib/trackEvent';
+import { SITE_EVENT } from '@/lib/siteEvents';
 
 function scrollToQuote(e: React.MouseEvent) {
   e.preventDefault();
@@ -17,6 +19,7 @@ const AdMinimalHeader: React.FC = () => {
         <div className="flex items-center gap-2 sm:gap-3">
           <a
             href="tel:+19053794820"
+            onClick={() => trackClientEvent(SITE_EVENT.AD_HEADER_PHONE)}
             className="text-brand-yellow font-bold text-sm sm:text-base whitespace-nowrap hover:opacity-90 transition-opacity"
           >
             <span className="hidden sm:inline">(905) 379-4820</span>
@@ -24,7 +27,10 @@ const AdMinimalHeader: React.FC = () => {
           </a>
           <button
             type="button"
-            onClick={scrollToQuote}
+            onClick={(e) => {
+              trackClientEvent(SITE_EVENT.AD_HEADER_FREE_QUOTE);
+              scrollToQuote(e);
+            }}
             className="shrink-0 bg-brand-yellow text-brand-black px-3 sm:px-5 py-2 rounded-none font-black text-[10px] sm:text-xs uppercase tracking-wide magnetic-cta whitespace-nowrap"
           >
             Free quote
