@@ -1,12 +1,10 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import type { AdCampaignConfig } from '@/lib/adCampaigns';
-import { pickHeroBackground } from '@/lib/heroBackgrounds';
+import Hero from '@/components/Hero';
 import BeforeAfterSlider from '@/components/BeforeAfterSlider';
-import AdSocialProof from './AdSocialProof';
 import AdLeadFormSection from './AdLeadFormSection';
 
-function scrollToQuote(e: React.MouseEvent) {
-  e.preventDefault();
+function scrollToQuote() {
   document.getElementById('quote')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -16,74 +14,18 @@ type AdCampaignLpProps = {
 
 const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
   const idPrefix = `ad-${config.id}`;
-  const { desktop: heroDesktop, mobile: heroMobile, gradient } = useMemo(() => pickHeroBackground(), []);
 
   return (
     <main>
-      {/* Hero: same image pools + overlays as homepage Hero (mobile vs desktop) */}
-      <section className="relative w-full min-w-0 overflow-hidden min-h-[min(100dvh,920px)] md:min-h-[min(92vh,960px)] flex items-end md:items-center pb-6 pt-4 md:pb-0 md:pt-0">
-        <div className="absolute inset-0 bg-brand-black">
-          <div
-            className="absolute inset-0 hero-bg-image md:hidden"
-            style={{
-              backgroundImage: `url(${heroMobile})`,
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'center 45%',
-            }}
-            aria-hidden
-          />
-          <div
-            className="absolute inset-0 hero-bg-image hidden md:block"
-            style={{
-              backgroundImage: `url(${heroDesktop})`,
-              backgroundRepeat: 'no-repeat',
-            }}
-            aria-hidden
-          />
-          <div className="absolute inset-0 bg-black/30 md:bg-black/25" aria-hidden />
-          <div className="absolute inset-0 hero-middle-light" aria-hidden />
-          <div className={`absolute inset-0 ${gradient.className}`} aria-hidden />
-          <div className="absolute inset-0 hero-vignette" aria-hidden />
-          <div className="absolute inset-0 hero-gridlines opacity-60" aria-hidden />
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-black/80 via-transparent to-brand-black md:from-brand-black/50 md:via-transparent md:to-brand-black/90 pointer-events-none" aria-hidden />
-        </div>
+      <Hero
+        adCopy={{
+          eyebrow: 'ShowRoom AutoCare · Hamilton & GTA',
+          title: config.headline,
+          subline: config.subheadline,
+          onQuoteClick: scrollToQuote,
+        }}
+      />
 
-        <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
-          <div className="max-w-2xl mx-auto md:mx-0 text-center md:text-left [text-shadow:0_2px_24px_rgba(0,0,0,0.85)]">
-            <p className="font-display text-brand-yellow uppercase tracking-[0.25em] text-[10px] sm:text-xs font-bold mb-4">
-              ShowRoom AutoCare • Hamilton &amp; GTA
-            </p>
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-black uppercase tracking-tight text-white leading-[1.08] mb-5">
-              {config.headline}
-            </h1>
-            <p className="text-white/90 text-base sm:text-lg md:text-xl leading-relaxed mb-8">
-              {config.subheadline}
-            </p>
-          </div>
-
-          <div className="mb-8 max-w-2xl mx-auto md:mx-0 w-full">
-            <AdSocialProof />
-          </div>
-
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 max-w-2xl mx-auto md:mx-0 w-full">
-            <a
-              href="tel:+19053794820"
-              className="w-full sm:w-auto sm:flex-1 inline-flex items-center justify-center border-2 border-brand-yellow text-brand-yellow px-6 py-4 sm:px-8 font-black uppercase tracking-widest text-xs sm:text-sm hover:bg-brand-yellow/10 transition-colors [text-shadow:none] shadow-lg shadow-black/40 min-h-[52px]"
-            >
-              Call (905) 379-4820
-            </a>
-            <button
-              type="button"
-              onClick={scrollToQuote}
-              className="w-full sm:w-auto sm:flex-1 inline-flex items-center justify-center bg-brand-yellow text-brand-black px-6 py-4 sm:px-8 font-black uppercase tracking-widest text-xs sm:text-sm magnetic-cta hover:opacity-95 transition-opacity shadow-lg shadow-black/30 min-h-[52px]"
-            >
-              Get a free quote
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* 5: What’s included */}
       <section className="py-14 md:py-20 bg-brand-black border-t border-white/5">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-display text-2xl md:text-3xl font-black uppercase text-white mb-8 text-center sm:text-left">
@@ -102,7 +44,6 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
         </div>
       </section>
 
-      {/* 6: Why ShowRoom */}
       <section className="py-14 md:py-20 bg-brand-dark border-y border-white/5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-display text-2xl md:text-3xl font-black uppercase text-white mb-10 text-center">
@@ -122,7 +63,6 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
         </div>
       </section>
 
-      {/* 7: Before / after */}
       <BeforeAfterSlider
         title={config.beforeAfter.title}
         subtitle={config.beforeAfter.subtitle}
@@ -131,7 +71,6 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
         caption={config.beforeAfter.caption}
       />
 
-      {/* Gallery */}
       <section className="py-16 md:py-24 bg-brand-black border-b border-white/5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-display text-2xl md:text-3xl font-black uppercase text-white mb-3 text-center">
@@ -151,10 +90,8 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
         </div>
       </section>
 
-      {/* 8: Form CTA */}
       <AdLeadFormSection idPrefix={idPrefix} />
 
-      {/* 9: FAQ */}
       <section className="py-16 md:py-24 bg-brand-black">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="font-display font-black uppercase text-brand-yellow text-xs tracking-[0.25em] mb-3 text-center">
@@ -174,7 +111,6 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
         </div>
       </section>
 
-      {/* Bottom CTA */}
       <section className="py-14 bg-brand-dark border-t border-white/10">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <p className="text-white/70 font-bold uppercase tracking-wider text-sm mb-4">Ready when you are</p>

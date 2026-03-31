@@ -1,16 +1,27 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, type ReactNode } from 'react';
 import { pickHeroBackground } from '@/lib/heroBackgrounds';
+
+/** Paid landing pages: same hero chrome as homepage, different copy + scroll-to-form quote CTA */
+export type HeroAdCopy = {
+  eyebrow: string;
+  title: ReactNode;
+  subline?: string;
+  onQuoteClick: () => void;
+};
 
 interface HeroProps {
   onRequestQuote?: () => void;
   city?: string;
+  adCopy?: HeroAdCopy;
 }
 
-const Hero: React.FC<HeroProps> = ({ onRequestQuote, city }) => {
+const Hero: React.FC<HeroProps> = ({ onRequestQuote, city, adCopy }) => {
   const { desktop: image, gradient, mobile: mobileImage } = useMemo(() => pickHeroBackground(), []);
 
+  const sectionPt = adCopy ? 'pt-2 md:pt-4' : 'pt-20';
+
   return (
-    <section className="relative min-h-[72vh] md:min-h-screen flex items-center overflow-hidden pt-20">
+    <section className={`relative min-h-[72vh] md:min-h-screen flex items-center overflow-hidden ${sectionPt}`}>
       {/* Background: mobile = A/B (Porsche+truck or team+Porsche); desktop = random hero + gradient */}
       <div className="absolute inset-0 bg-brand-black">
         {/* Mobile: random from Porsche+truck or team washing Porsche */}
@@ -41,14 +52,34 @@ const Hero: React.FC<HeroProps> = ({ onRequestQuote, city }) => {
       </div>
 
       {/* Top band ONLY: headline + stats — fixed height so it never covers the worker */}
-      <div className="absolute top-28 left-0 right-0 z-10 px-4 sm:px-6 lg:px-8 pt-6 pb-2 max-h-[28vh] flex flex-col justify-end">
+      <div
+        className={`absolute top-28 left-0 right-0 z-10 px-4 sm:px-6 lg:px-8 pt-6 pb-2 flex flex-col justify-end ${
+          adCopy ? 'max-h-[min(44vh,380px)] md:max-h-[30vh]' : 'max-h-[28vh]'
+        }`}
+      >
         <div className="w-full text-center reveal">
-          <p className="text-brand-yellow font-bold tracking-[0.3em] uppercase text-xs sm:text-sm">
-            {city ? `Mobile Detailing ${city}` : 'Mobile Car Detailing Hamilton'}
-          </p>
-          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-none tracking-tighter mt-1">
-            <span className="text-brand-yellow text-glow">Showroom</span> Detailing. Delivered.
-          </h1>
+          {adCopy ? (
+            <>
+              <p className="text-brand-yellow font-bold tracking-[0.3em] uppercase text-xs sm:text-sm">{adCopy.eyebrow}</p>
+              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-[1.05] tracking-tighter mt-1 text-white">
+                {adCopy.title}
+              </h1>
+              {adCopy.subline ? (
+                <p className="text-white/75 text-sm sm:text-base max-w-2xl mx-auto mt-3 leading-snug px-1">
+                  {adCopy.subline}
+                </p>
+              ) : null}
+            </>
+          ) : (
+            <>
+              <p className="text-brand-yellow font-bold tracking-[0.3em] uppercase text-xs sm:text-sm">
+                {city ? `Mobile Detailing ${city}` : 'Mobile Car Detailing Hamilton'}
+              </p>
+              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-none tracking-tighter mt-1">
+                <span className="text-brand-yellow text-glow">Showroom</span> Detailing. Delivered.
+              </h1>
+            </>
+          )}
         </div>
         {/* Stats: equal columns on mobile so 4+ / Mobile / 500+ align; bar on desktop */}
         <div className="reveal grid grid-cols-3 sm:flex sm:flex-wrap sm:justify-center gap-0 mt-5 w-full sm:w-auto">
@@ -81,7 +112,11 @@ const Hero: React.FC<HeroProps> = ({ onRequestQuote, city }) => {
             </span>
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button type="button" onClick={() => onRequestQuote?.()} className="bg-brand-yellow text-brand-black px-10 py-5 font-black uppercase tracking-widest text-sm magnetic-cta flex items-center justify-center gap-2 group">
+            <button
+              type="button"
+              onClick={() => (adCopy ? adCopy.onQuoteClick() : onRequestQuote?.())}
+              className="bg-brand-yellow text-brand-black px-10 py-5 font-black uppercase tracking-widest text-sm magnetic-cta flex items-center justify-center gap-2 group"
+            >
               Get a Fast Quote
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </button>
