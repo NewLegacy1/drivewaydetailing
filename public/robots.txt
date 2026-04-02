@@ -1,0 +1,5 @@
+# ShowRoom AutoCare - Mobile Car Detailing Hamilton, GTA
+User-agent: *
+Allow: /
+
+Sitemap: https://showroomautocare.com/sitemap.xml

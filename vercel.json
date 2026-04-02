@@ -1,0 +1,18 @@
+{
+  "redirects": [
+    { "source": "/thank-you", "destination": "/", "permanent": false },
+    { "source": "/thank-you/", "destination": "/", "permanent": false },
+    { "source": "/ads/quote", "destination": "/ads/mobile-detailing", "permanent": false },
+    { "source": "/ads/quote/", "destination": "/ads/mobile-detailing", "permanent": false },
+    { "source": "/contact", "destination": "/#contact", "permanent": true },
+    { "source": "/contact/", "destination": "/#contact", "permanent": true },
+    { "source": "/about", "destination": "/#about", "permanent": true },
+    { "source": "/about/", "destination": "/#about", "permanent": true }
+  ],
+  "rewrites": [
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
