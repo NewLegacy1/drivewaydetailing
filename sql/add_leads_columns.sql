@@ -1,5 +1,6 @@
--- Run this in Supabase SQL Editor if you get "Could not find the 'car_make_model' column"
--- Target: public.showroom_organic. If you have not renamed yet, use public.leads instead.
+-- Only if your EXISTING public.showroom_organic table is missing these columns
+-- (Edge Function error: unknown column). Skip if your CRM already has them.
+-- Target: public.showroom_organic (rename table in this file if you still use public.leads).
 
 alter table public.showroom_organic
   add column if not exists car_make_model text,

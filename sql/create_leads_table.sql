@@ -1,6 +1,14 @@
--- Run this in the Supabase SQL Editor (Dashboard → SQL Editor)
+-- =============================================================================
+-- STOP — Read before running
+-- =============================================================================
+-- Do NOT run on your live Showroom CRM if public.showroom_organic already exists.
+-- Greenfield / empty project only. The Edge Function writes to showroom_organic
+-- (and showroom_ads for /ads traffic); fix issues by deploying the function + env.
+-- =============================================================================
+
+-- Supabase SQL Editor → New query → Run once when the table does not exist yet.
 -- Project: https://gxhsgqwkfaicuqlrssed.supabase.co
--- Main site modal / organic traffic ("showroom organic").
+-- Main site modal / organic traffic → showroom_organic.
 
 create table if not exists public.showroom_organic (
   id uuid primary key default gen_random_uuid(),
@@ -12,6 +20,7 @@ create table if not exists public.showroom_organic (
   created_at timestamptz not null default now()
 );
 
+-- Optional RLS; Edge Function uses service role (bypasses RLS).
 alter table public.showroom_organic enable row level security;
 
 create policy "Allow anonymous insert into showroom_organic"

@@ -9,6 +9,12 @@ const corsHeaders = {
 
 type LeadSource = 'website' | 'ads';
 
+/** Main-site / organic table (UI “Showroom Organic”). Override via LEADS_TABLE secret. */
+function getOrganicLeadsTable(): string {
+  const raw = Deno.env.get('LEADS_TABLE')?.trim();
+  return raw || 'showroom_organic';
+}
+
 interface LeadBody {
   name: string;
   email: string;
@@ -66,7 +72,7 @@ Deno.serve(async (req) => {
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, serviceRoleKey);
 
-    const table = leadSource === 'ads' ? 'showroom_ads' : 'showroom_organic';
+    const table = leadSource === 'ads' ? 'showroom_ads' : getOrganicLeadsTable();
     const { error: insertError } = await supabase.from(table).insert({
       name: name.trim(),
       email: email.trim(),
