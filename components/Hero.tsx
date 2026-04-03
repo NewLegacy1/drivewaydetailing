@@ -90,9 +90,11 @@ const Hero: React.FC<HeroProps> = ({ onRequestQuote, city, adCopy }) => {
       <p className="text-brand-yellow font-bold uppercase tracking-[0.22em] text-[10px] sm:text-xs text-center px-2">
         Serving Hamilton, Oakville &amp; Burlington
       </p>
-      <div className="w-full max-w-md mx-auto rounded-xl border border-brand-yellow/25 bg-black/55 backdrop-blur-md px-5 py-4 sm:py-5 shadow-[0_8px_32px_rgba(0,0,0,0.45)]">
-        <StarRow size={24} />
-        <p className="text-center text-white font-black uppercase tracking-[0.12em] text-xs sm:text-sm mt-3">
+      <div className="w-fit max-w-full mx-auto rounded-lg md:rounded-xl border border-brand-yellow/15 md:border-brand-yellow/25 bg-black/30 md:bg-black/55 backdrop-blur-sm md:backdrop-blur-md px-3 py-2 md:px-5 md:py-4 lg:px-6 lg:py-5 shadow-none md:shadow-[0_8px_32px_rgba(0,0,0,0.45)]">
+        <div className="[&_svg]:!w-[14px] [&_svg]:!h-[14px] sm:[&_svg]:!w-[18px] sm:[&_svg]:!h-[18px] md:[&_svg]:!w-6 md:[&_svg]:!h-6 lg:[&_svg]:!w-[26px] lg:[&_svg]:!h-[26px]">
+          <StarRow size={24} />
+        </div>
+        <p className="text-center text-white/95 font-semibold md:font-black uppercase tracking-[0.12em] text-[10px] sm:text-xs md:text-sm lg:text-base mt-1.5 md:mt-3 lg:mt-3.5 max-w-[16rem] sm:max-w-none mx-auto leading-snug">
           135+ Five-Star Google Reviews
         </p>
       </div>
