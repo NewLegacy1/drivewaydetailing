@@ -1,10 +1,10 @@
 import React from 'react';
 import type { AdCampaignConfig } from '@/lib/adCampaigns';
-import Hero from '@/components/Hero';
 import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import AdLeadFormSection from './AdLeadFormSection';
 import { trackClientEvent } from '@/lib/trackEvent';
 import { SITE_EVENT } from '@/lib/siteEvents';
+import { BOOKING_URL } from '@/lib/site';
 
 function scrollToQuote() {
   document.getElementById('quote')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -19,15 +19,75 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
 
   return (
     <main>
-      <Hero
-        adCopy={{
-          brandLine: 'ShowRoom AutoCare',
-          locationTag: 'Hamilton & GTA',
-          title: config.headline,
-          subline: config.subheadline,
-          onQuoteClick: scrollToQuote,
-        }}
-      />
+      {/* Ad campaign hero — background image TBD */}
+      <section className="relative min-h-[72vh] md:min-h-screen flex items-center overflow-hidden pt-20">
+        <div className="absolute inset-0 bg-brand-black">
+          <div className="absolute inset-0 bg-black/25" aria-hidden />
+          <div className="absolute inset-0 hero-middle-light" aria-hidden />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/25 to-transparent" aria-hidden />
+          <div className="absolute inset-0 hero-vignette" aria-hidden />
+          <div className="absolute inset-0 hero-gridlines" aria-hidden />
+        </div>
+
+        <div className="absolute top-28 left-0 right-0 z-10 px-4 sm:px-6 lg:px-8 pt-6 pb-2 max-h-[38vh] flex flex-col justify-end">
+          <div className="w-full text-center reveal">
+            <p className="text-white/60 font-semibold uppercase tracking-[0.2em] text-[10px] sm:text-xs mb-2">
+              ShowRoom AutoCare
+            </p>
+            <p className="text-brand-yellow font-bold uppercase tracking-[0.28em] text-[10px] sm:text-[11px] mb-2">
+              Hamilton &amp; GTA
+            </p>
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-[1.05] tracking-tighter text-white">
+              {config.headline}
+            </h1>
+            {config.subheadline ? (
+              <p className="text-white/80 text-sm sm:text-base max-w-2xl mx-auto mt-3 leading-relaxed px-1">
+                {config.subheadline}
+              </p>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="absolute bottom-0 left-0 right-0 z-10 px-4 sm:px-6 lg:px-8 pb-10 lg:pb-12">
+          <div className="reveal flex flex-col items-center gap-5">
+            <div className="flex text-brand-yellow justify-center">
+              {[...Array(5)].map((_, i) => (
+                <svg key={i} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+              ))}
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto max-w-md sm:max-w-none">
+              <button
+                type="button"
+                onClick={() => {
+                  trackClientEvent(SITE_EVENT.AD_HERO_FAST_QUOTE);
+                  scrollToQuote();
+                }}
+                className="bg-brand-yellow text-brand-black px-10 py-5 font-black uppercase tracking-widest text-sm magnetic-cta flex items-center justify-center gap-2 group w-full sm:w-auto"
+              >
+                Get a Fast Quote
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform shrink-0">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </button>
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackClientEvent(SITE_EVENT.AD_HERO_BOOK_NOW)}
+                className="border-2 border-brand-yellow text-brand-yellow px-10 py-5 font-black uppercase tracking-widest text-sm magnetic-cta hover:bg-brand-yellow hover:text-brand-black transition-all text-center flex items-center justify-center w-full sm:w-auto"
+              >
+                Book Now
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-0 right-0 w-1/3 h-1 bg-gradient-to-l from-brand-yellow to-transparent" />
+        <div className="absolute top-1/4 -right-10 w-20 h-[60%] border-r border-brand-yellow/20 hidden lg:block" />
+      </section>
 
       <section className="py-14 md:py-20 bg-brand-black border-t border-white/5">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
