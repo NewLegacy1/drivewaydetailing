@@ -53,7 +53,7 @@ const Hero: React.FC<HeroProps> = ({ onRequestQuote, city }) => {
       </div>
 
       {/* Top band: headline + stats ? pinned near top, leaves middle open for background image */}
-      <div className="absolute top-28 left-0 right-0 z-10 px-4 sm:px-6 lg:px-8 pt-6 pb-2 max-h-[28vh] flex flex-col justify-end">
+      <div className="absolute top-24 md:top-28 left-0 right-0 z-10 px-4 sm:px-6 lg:px-8 pt-4 md:pt-6 pb-2 max-h-[28vh] flex flex-col justify-end">
         <div className="w-full text-center reveal">
           <p className="text-brand-yellow font-bold tracking-[0.3em] uppercase text-xs sm:text-sm">
             {city ? `Mobile Detailing ${city}` : 'Mobile Car Detailing Hamilton'}
@@ -79,7 +79,7 @@ const Hero: React.FC<HeroProps> = ({ onRequestQuote, city }) => {
       </div>
 
       {/* Bottom bar: stars + review count + CTA buttons ? pinned to bottom edge */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 px-4 sm:px-6 lg:px-8 pb-10 lg:pb-12">
+      <div className="absolute bottom-0 left-0 right-0 z-10 px-4 sm:px-6 lg:px-8 pb-7 md:pb-10 lg:pb-12">
         <div className="reveal flex flex-col items-center gap-5">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-center sm:text-left">
             <div className="flex text-brand-yellow justify-center">

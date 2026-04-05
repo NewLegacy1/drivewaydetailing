@@ -7,7 +7,8 @@ const services = [
     title: 'Deep Interior Revival',
     subtitle: 'That "New Car" Smell',
     description: 'From coffee stains to pet hair, we deep-clean every inch. Our process includes steam sanitization and leather conditioning to make your cabin feel brand new.',
-    benefits: ['Steam sanitization', 'Stain removal', 'Leather care']
+    benefits: ['Steam sanitization', 'Stain removal', 'Leather care'],
+    popular: true,
   },
   {
     icon: '🛡️',
@@ -48,6 +49,11 @@ const Services: React.FC<ServicesProps> = ({ onRequestQuote }) => {
             >
               {/* Glowing Background Effect — pointer-events-none so button stays clickable */}
               <div className="absolute inset-0 bg-brand-yellow/0 group-hover:bg-brand-yellow/[0.02] transition-colors duration-500 pointer-events-none" aria-hidden></div>
+              {service.popular && (
+                <span className="absolute top-4 right-4 z-20 inline-block rounded border border-brand-yellow/35 bg-brand-yellow/[0.08] px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.2em] text-brand-yellow">
+                  Most popular
+                </span>
+              )}
               <div className="text-5xl mb-6 grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110">
                 {service.icon}
               </div>

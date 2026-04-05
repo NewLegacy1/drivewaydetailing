@@ -3,5 +3,7 @@ Optional: add customer photos here for the reviews carousel.
 - andrea.png
 - chelsea.png
 - jamie.png
+- john-brown.png
+- rafaela-bozzo.png
 
-If these files are present, they will be used after the external profile image fails to load. Otherwise the carousel shows the first letter of each name.
+Local files are tried first; if missing, the Google profile URL in ReviewsStrip / ProblemSolution is used; if that fails, the first letter of the name is shown.

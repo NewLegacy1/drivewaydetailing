@@ -29,6 +29,20 @@ const REVIEWS = [
     photo: '/images/reviews/jamie.png',
     photoUrl: 'https://lh3.googleusercontent.com/a-/ALV-UjUiSzfAtkqhF9AYxOknG6IhHz_v3bLDLXJ_tPhhihlrJzpHK65QXA=s400-c-rp-mo-ba2-br100',
   },
+  {
+    name: 'John Brown',
+    location: 'Dundas',
+    text: "5 stars! Get your vehicle detailed while waiting in the comfort of your own home instead of a waiting room. Got an appointment quickly and easily. Nathan and Will worked diligently and it showed. My truck looks brand new inside and out. Will definitely be booking with Showroom Autocare in the future!",
+    photo: '/images/reviews/john-brown.png',
+    photoUrl: 'https://lh3.googleusercontent.com/a/ACg8ocJqYyg8zHRBbc9_F2JBrW07AX6Z1UBg00XGoxq3LzvQNNbfJw=s400-c-rp-mo-ba3-br100',
+  },
+  {
+    name: 'Rafaela Bozzo',
+    location: 'Hamilton',
+    text: "First time customer — Imran and Will did a fabulous job! Fast efficient and precise! My truck sparkled and I didn't have to leave my house! Very happy customer here and I will definitely be using them again! Thank you both for a remarkable service.",
+    photo: '/images/reviews/rafaela-bozzo.png',
+    photoUrl: 'https://lh3.googleusercontent.com/a-/ALV-UjVk24EK9m5FL7eWnWVBan-jDecrUvYbjk6UJiDaUIaFv6VAgL8AsQ=s400-c-rp-mo-br100',
+  },
 ];
 
 const SCROLL_DURATION_S = 45;
