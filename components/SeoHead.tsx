@@ -51,17 +51,18 @@ const SeoHead: React.FC = () => {
     const isBlogList = p === '/blog';
     const isBlogArticle = p.startsWith('/blog/') && p.length > '/blog/'.length;
     const isAdsFunnel = p.startsWith('/ads');
+    const isMdConversionPage = p === '/mobiledetailing/thank-you';
     if (!isBlogList && !isBlogArticle) {
       const meta = pageWebMeta(pathname);
       setDocumentSeo({
         title: meta.name,
         description: meta.description,
         path: pathname,
-        robots: isAdsFunnel ? 'noindex, nofollow' : undefined,
+        robots: isAdsFunnel || isMdConversionPage ? 'noindex, nofollow' : undefined,
       });
     }
     document.querySelectorAll(`script[${DYNAMIC_LD_ATTR}]`).forEach((n) => n.remove());
-    if (isBlogList || isBlogArticle || isAdsFunnel) {
+    if (isBlogList || isBlogArticle || isAdsFunnel || isMdConversionPage) {
       return;
     }
     const script = document.createElement('script');

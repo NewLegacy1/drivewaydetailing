@@ -13,8 +13,12 @@ import BlogPostPage from './components/BlogPostPage';
 import AdsLayout from './components/ads/AdsLayout';
 import AdCampaignLp from './components/ads/AdCampaignLp';
 import AdThankYouPage from './components/AdThankYouPage';
+import MobileDetailingLp from './components/MobileDetailingLp';
+import MobileDetailingThankYouPage from './components/MobileDetailingThankYouPage';
 import SeoHead from './components/SeoHead';
+import MetaPixelRouteTracker from './components/MetaPixelRouteTracker';
 import { AD_CAMPAIGN_CERAMIC, AD_CAMPAIGN_DETAILING } from './lib/adCampaigns';
+import { isMobileDetailingFunnelPath } from './lib/mobiledetailingRoutes';
 
 const OPEN_QUOTE_EVENT = 'showroom-open-quote';
 
@@ -46,6 +50,7 @@ const RevealEffect: React.FC = () => {
 const AppRoutes: React.FC = () => {
   const { pathname } = useLocation();
   const isAdsPath = pathname.startsWith('/ads');
+  const hideSiteChrome = isAdsPath || isMobileDetailingFunnelPath(pathname);
   const [showLeadForm, setShowLeadForm] = useState(false);
   const openQuote = useCallback(() => setShowLeadForm(true), []);
   const closeQuote = useCallback(() => setShowLeadForm(false), []);
@@ -60,7 +65,7 @@ const AppRoutes: React.FC = () => {
     <div className="min-h-screen bg-brand-black font-sans selection:bg-brand-yellow selection:text-brand-black">
       <RevealEffect />
       <LeadForm isOpen={showLeadForm} onClose={closeQuote} />
-      {!isAdsPath && <Header onRequestQuote={openQuote} />}
+      {!hideSiteChrome && <Header onRequestQuote={openQuote} />}
       <main>
         <Routes>
           <Route path="/ads" element={<AdsLayout />}>
@@ -71,6 +76,8 @@ const AppRoutes: React.FC = () => {
             <Route path="quote" element={<Navigate to="/ads/mobile-detailing" replace />} />
           </Route>
           <Route path="/" element={<HomePage onRequestQuote={openQuote} />} />
+          <Route path="/mobiledetailing/thank-you" element={<MobileDetailingThankYouPage />} />
+          <Route path="/mobiledetailing" element={<MobileDetailingLp onRequestQuote={openQuote} />} />
           <Route path="/jetdetailing" element={<JetDetailingPage onRequestQuote={openQuote} />} />
           <Route path="/ceramic-coating" element={<CeramicCoatingPage onRequestQuote={openQuote} />} />
           <Route path="/blog" element={<BlogListPage />} />
@@ -79,7 +86,7 @@ const AppRoutes: React.FC = () => {
           <Route path="/:city" element={<CityPage onRequestQuote={openQuote} />} />
         </Routes>
       </main>
-      {!isAdsPath && <Footer />}
+      {!hideSiteChrome && <Footer />}
     </div>
   );
 };
@@ -89,6 +96,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Analytics />
       <SeoHead />
+      <MetaPixelRouteTracker />
       <AppRoutes />
     </BrowserRouter>
   );

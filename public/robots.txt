@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://showroomautocare.com/sitemap.xml
+Sitemap: https://showroomautocare.ca/sitemap.xml

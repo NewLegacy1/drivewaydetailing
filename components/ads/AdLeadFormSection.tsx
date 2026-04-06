@@ -7,6 +7,7 @@ import {
   leadQuoteSubmitErrorMessage,
   type LeadQuoteFormState,
 } from '@/lib/leadQuote';
+import { trackMetaLead } from '@/lib/metaPixel';
 import { trackClientEvent } from '@/lib/trackEvent';
 import { SITE_EVENT } from '@/lib/siteEvents';
 
@@ -31,6 +32,7 @@ const AdLeadFormSection: React.FC<AdLeadFormSectionProps> = ({ idPrefix }) => {
     try {
       await submitLeadQuote(formData, { source: 'ads' });
       trackClientEvent(SITE_EVENT.LEAD_SUBMIT_ADS, { campaign: idPrefix.replace(/^ad-/, '') });
+      trackMetaLead();
       setFormData(emptyLeadQuoteForm());
       navigate('/ads/thank-you', { replace: true });
     } catch (err: unknown) {

@@ -6,8 +6,6 @@ const TRUSTED_AVATARS = [
   { photo: '/images/reviews/andrea.png', photoUrl: 'https://lh3.googleusercontent.com/a-/ALV-UjVC1PTxpHRPSDmurmc-0LRhd3tpzJba78LDITDssOqLWHcNzGj3=s400-c-rp-mo-br100', name: 'Andrea' },
   { photo: '/images/reviews/chelsea.png', photoUrl: 'https://lh3.googleusercontent.com/a-/ALV-UjXvZ1Gpt_zdwtwhRboz_M7Ek_RmTh2V5XnRgYWXIik5Lpcgqj5icA=s400-c-rp-mo-br100', name: 'Chelsea' },
   { photo: '/images/reviews/jamie.png', photoUrl: 'https://lh3.googleusercontent.com/a-/ALV-UjUiSzfAtkqhF9AYxOknG6IhHz_v3bLDLXJ_tPhhihlrJzpHK65QXA=s400-c-rp-mo-ba2-br100', name: 'Jamie' },
-  { photo: '/images/reviews/john-brown.png', photoUrl: 'https://lh3.googleusercontent.com/a/ACg8ocJqYyg8zHRBbc9_F2JBrW07AX6Z1UBg00XGoxq3LzvQNNbfJw=s400-c-rp-mo-ba3-br100', name: 'John' },
-  { photo: '/images/reviews/rafaela-bozzo.png', photoUrl: 'https://lh3.googleusercontent.com/a-/ALV-UjVk24EK9m5FL7eWnWVBan-jDecrUvYbjk6UJiDaUIaFv6VAgL8AsQ=s400-c-rp-mo-br100', name: 'Rafaela' },
 ];
 
 function TrustedAvatar({ photo, photoUrl, name }: { photo: string; photoUrl: string; name: string }) {
@@ -86,7 +84,7 @@ const ProblemSolution: React.FC<ProblemSolutionProps> = ({ city = 'Hamilton' }) 
                   />
                 ))}
               </div>
-              <span className="text-sm uppercase tracking-widest font-bold text-brand-yellow">Trusted by 200+ clients</span>
+              <span className="text-sm uppercase tracking-widest font-bold text-brand-yellow">Trusted by 430+ clients</span>
             </div>
           </div>
 

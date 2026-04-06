@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import LeadQuoteFormFields from '@/components/LeadQuoteFormFields';
 import {
   emptyLeadQuoteForm,
@@ -7,6 +8,9 @@ import {
   leadQuoteSubmitErrorMessage,
   type LeadQuoteFormState,
 } from '@/lib/leadQuote';
+import { MOBILEDETAILING_PATH, MOBILEDETAILING_THANK_YOU_PATH } from '@/lib/mobiledetailingRoutes';
+import { normalizePath } from '@/lib/site';
+import { trackMetaLead } from '@/lib/metaPixel';
 import { trackClientEvent } from '@/lib/trackEvent';
 import { SITE_EVENT } from '@/lib/siteEvents';
 
@@ -16,6 +20,8 @@ interface LeadFormProps {
 }
 
 const LeadForm: React.FC<LeadFormProps> = ({ isOpen, onClose }) => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,10 +56,23 @@ const LeadForm: React.FC<LeadFormProps> = ({ isOpen, onClose }) => {
     setLoading(true);
     try {
       await submitLeadQuote(formData, { source: 'website' });
-      trackClientEvent(SITE_EVENT.LEAD_SUBMIT_WEBSITE);
-      setFormData(emptyLeadQuoteForm());
-      setSubmitted(true);
-      setTimeout(onClose, 2000);
+      // Read path after async work — closure `pathname` can be stale vs `window.location`.
+      const pathNow = normalizePath(
+        typeof window !== 'undefined' ? window.location.pathname : pathname
+      );
+      if (pathNow === MOBILEDETAILING_PATH) {
+        trackClientEvent(SITE_EVENT.LEAD_SUBMIT_MOBILEDETAILING_LP);
+        trackMetaLead();
+        setFormData(emptyLeadQuoteForm());
+        navigate(MOBILEDETAILING_THANK_YOU_PATH, { replace: true });
+        onClose();
+      } else {
+        trackClientEvent(SITE_EVENT.LEAD_SUBMIT_WEBSITE);
+        trackMetaLead();
+        setFormData(emptyLeadQuoteForm());
+        setSubmitted(true);
+        setTimeout(onClose, 2000);
+      }
     } catch (err: unknown) {
       setError(await leadQuoteSubmitErrorMessage(err));
     } finally {

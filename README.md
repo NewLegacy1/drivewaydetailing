@@ -76,4 +76,4 @@ The site is set up for local SEO and social sharing:
 
 **Before going live:**
 
-1. **Domain:** Replace `https://showroomautocare.com` in `index.html` (canonical, `og:url`, `og:image`, `twitter:image`), in the JSON-LD block, and in `public/robots.txt` and `public/sitemap.xml` with your real domain. Social share uses `hero3.png`.
+1. **Domain:** Canonical origin is `https://showroomautocare.ca` (`lib/site.ts`, `index.html`, `public/robots.txt`, sitemap build). Override with `SITE_ORIGIN` when generating the sitemap if needed. Social share uses `hero3.png`.

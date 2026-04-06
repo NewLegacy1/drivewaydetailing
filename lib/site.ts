@@ -1,7 +1,7 @@
 import { CITY_NAMES, CITY_SLUGS, type CitySlug } from './cities';
 
 /** Canonical marketing origin (matches index.html & robots.txt). */
-export const SITE_ORIGIN = 'https://showroomautocare.com';
+export const SITE_ORIGIN = 'https://showroomautocare.ca';
 
 /** DetailOps online booking for ShowRoom AutoCare (all “Book now” CTAs). */
 export const BOOKING_URL = 'https://detailops.ca/book/showroom-autocare';
@@ -51,11 +51,17 @@ function isCityPath(p: string): p is `/${CitySlug}` {
 
 export function pageWebMeta(pathname: string): { name: string; description: string } {
   const p = normalizePath(pathname);
-  if (p === '/') {
+  if (p === '/' || p === '/mobiledetailing') {
     return {
       name: 'Mobile Car Detailing Hamilton & GTA | ShowRoom AutoCare',
       description:
         'Professional mobile detailing, ceramic coating & paint correction across Hamilton, Burlington, Oakville & Mississauga. We come to you. Get a free quote.',
+    };
+  }
+  if (p === '/mobiledetailing/thank-you') {
+    return {
+      name: 'Thank you | ShowRoom AutoCare',
+      description: 'Your quote request was received. We will contact you shortly.',
     };
   }
   if (p === '/jetdetailing') {
@@ -163,7 +169,7 @@ export function buildDynamicJsonLd(pathname: string): Record<string, unknown> {
 
   const graph: Record<string, unknown>[] = [website, webPage];
 
-  if (p === '/') {
+  if (p === '/' || p === '/mobiledetailing') {
     graph.push({
       '@type': 'FAQPage',
       '@id': `${url}#faq`,
@@ -215,6 +221,21 @@ export function breadcrumbItemsForPath(pathname: string): { name: string; path: 
     return [
       { name: 'Home', path: '/' },
       { name: 'Ceramic coating', path: '/ceramic-coating' },
+    ];
+  }
+
+  if (p === '/mobiledetailing') {
+    return [
+      { name: 'Home', path: '/' },
+      { name: 'Mobile detailing', path: '/mobiledetailing' },
+    ];
+  }
+
+  if (p === '/mobiledetailing/thank-you') {
+    return [
+      { name: 'Home', path: '/' },
+      { name: 'Mobile detailing', path: '/mobiledetailing' },
+      { name: 'Thank you', path: '/mobiledetailing/thank-you' },
     ];
   }
 

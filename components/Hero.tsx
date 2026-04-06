@@ -12,20 +12,46 @@ const HERO_GRADIENTS: { className: string }[] = [
   { className: 'bg-gradient-to-r from-black/40 via-black/20 to-black/8' },
 ];
 
+/** Deterministic index so duplicate routes (e.g. / and /mobiledetailing) share the same hero visuals. */
+function stableIndex(seed: string, length: number): number {
+  let h = 2166136261;
+  for (let i = 0; i < seed.length; i++) {
+    h ^= seed.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return Math.abs(h) % length;
+}
+
 interface HeroProps {
   onRequestQuote?: () => void;
   city?: string;
+  /** Same seed → same mobile/desktop hero image + gradient (omit for random rotation, e.g. city pages). */
+  layoutSeed?: string;
+  /** Less top offset when fixed header is hidden (e.g. /mobiledetailing). */
+  noHeaderOffset?: boolean;
 }
 
-const Hero: React.FC<HeroProps> = ({ onRequestQuote, city }) => {
-  const { image, gradient, mobileImage } = useMemo(() => ({
-    image: HERO_IMAGES[Math.floor(Math.random() * HERO_IMAGES.length)],
-    gradient: HERO_GRADIENTS[Math.floor(Math.random() * HERO_GRADIENTS.length)],
-    mobileImage: HERO_MOBILE_IMAGES[Math.floor(Math.random() * HERO_MOBILE_IMAGES.length)],
-  }), []);
+const Hero: React.FC<HeroProps> = ({ onRequestQuote, city, layoutSeed, noHeaderOffset }) => {
+  const { image, gradient, mobileImage } = useMemo(() => {
+    if (layoutSeed) {
+      const s = layoutSeed;
+      return {
+        image: HERO_IMAGES[stableIndex(`${s}:desktop`, HERO_IMAGES.length)],
+        gradient: HERO_GRADIENTS[stableIndex(`${s}:gradient`, HERO_GRADIENTS.length)],
+        mobileImage: HERO_MOBILE_IMAGES[stableIndex(`${s}:mobile`, HERO_MOBILE_IMAGES.length)],
+      };
+    }
+    return {
+      image: HERO_IMAGES[Math.floor(Math.random() * HERO_IMAGES.length)],
+      gradient: HERO_GRADIENTS[Math.floor(Math.random() * HERO_GRADIENTS.length)],
+      mobileImage: HERO_MOBILE_IMAGES[Math.floor(Math.random() * HERO_MOBILE_IMAGES.length)],
+    };
+  }, [layoutSeed]);
 
   return (
-    <section className="relative min-h-[72vh] md:min-h-screen flex items-center overflow-hidden pt-20">
+    <section
+      className={`relative min-h-[72vh] md:min-h-screen flex items-center overflow-hidden ${noHeaderOffset ? 'pt-6 sm:pt-8' : 'pt-20'}`}
+    >
       <div className="absolute inset-0 bg-brand-black">
         <div
           className="absolute inset-0 hero-bg-image md:hidden"
@@ -53,7 +79,9 @@ const Hero: React.FC<HeroProps> = ({ onRequestQuote, city }) => {
       </div>
 
       {/* Top band: headline + stats ? pinned near top, leaves middle open for background image */}
-      <div className="absolute top-24 md:top-28 left-0 right-0 z-10 px-4 sm:px-6 lg:px-8 pt-4 md:pt-6 pb-2 max-h-[28vh] flex flex-col justify-end">
+      <div
+        className={`absolute left-0 right-0 z-10 px-4 sm:px-6 lg:px-8 pb-2 max-h-[28vh] flex flex-col justify-end ${noHeaderOffset ? 'top-8 md:top-10 pt-2 md:pt-4' : 'top-24 md:top-28 pt-4 md:pt-6'}`}
+      >
         <div className="w-full text-center reveal">
           <p className="text-brand-yellow font-bold tracking-[0.3em] uppercase text-xs sm:text-sm">
             {city ? `Mobile Detailing ${city}` : 'Mobile Car Detailing Hamilton'}

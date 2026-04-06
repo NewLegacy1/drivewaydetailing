@@ -90,7 +90,7 @@ function slugify(input) {
 }
 
 async function generateWithOpenAI(apiKey, params) {
-  const site = 'https://showroomautocare.com';
+  const site = 'https://showroomautocare.ca';
   const system = `You write original, helpful SEO articles for ShowRoom AutoCare, a premium MOBILE car detailing and ceramic coating business in Ontario, Canada.
 Audience: vehicle owners in the Greater Toronto and Hamilton area.
 Tone: professional, clear, non-hype. No unverifiable superlatives like "best" or "#1". Do not invent discounts, prices, or guarantees.

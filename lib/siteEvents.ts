@@ -15,6 +15,7 @@ export const SITE_EVENT = {
   AD_FOOTER_QUOTE: 'ad_footer_quote_click',
   LEAD_SUBMIT_WEBSITE: 'lead_submit_website',
   LEAD_SUBMIT_ADS: 'lead_submit_ads',
+  LEAD_SUBMIT_MOBILEDETAILING_LP: 'lead_submit_mobiledetailing_lp',
 } as const;
 
 export type SiteEventMeta = Record<string, string | number | boolean | null>;
