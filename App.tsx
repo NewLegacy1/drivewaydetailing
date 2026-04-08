@@ -80,6 +80,7 @@ const AppRoutes: React.FC = () => {
           <Route path="/" element={<HomePage onRequestQuote={openQuote} />} />
           <Route path="/mobiledetailing/thank-you" element={<MobileDetailingThankYouPage />} />
           <Route path="/mobiledetailing" element={<MobileDetailingLp onRequestQuote={openQuote} />} />
+          <Route path="/jetdetailing/:jetCity" element={<JetDetailingPage onRequestQuote={openQuote} />} />
           <Route path="/jetdetailing" element={<JetDetailingPage onRequestQuote={openQuote} />} />
           <Route path="/ceramic-coating" element={<CeramicCoatingPage onRequestQuote={openQuote} />} />
           <Route path="/blog" element={<BlogListPage />} />

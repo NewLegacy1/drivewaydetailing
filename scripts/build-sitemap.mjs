@@ -21,11 +21,19 @@ const FLEET_CITY_SLUGS = ['hamilton', 'mississauga', 'toronto', 'burlington', 'o
 /** Keep in sync with lib/boatCities.ts BOAT_CITY_SLUGS */
 const BOAT_CITY_SLUGS = ['hamilton', 'mississauga', 'toronto', 'burlington', 'oakville', 'ancaster'];
 
+/** Keep in sync with lib/jetCities.ts JET_CITY_SLUGS */
+const JET_CITY_SLUGS = ['hamilton', 'mississauga', 'toronto', 'burlington', 'oakville', 'ancaster'];
+
 const STATIC = [
   { path: '/', priority: '1.0', changefreq: 'weekly' },
   { path: '/blog', priority: '0.85', changefreq: 'daily' },
   { path: '/ceramic-coating', priority: '0.95', changefreq: 'weekly' },
   { path: '/jetdetailing', priority: '0.8', changefreq: 'monthly' },
+  ...JET_CITY_SLUGS.map((slug) => ({
+    path: `/jetdetailing/${slug}`,
+    priority: '0.78',
+    changefreq: 'monthly',
+  })),
   { path: '/fleet-detailing', priority: '0.92', changefreq: 'weekly' },
   { path: '/boat-ceramic-coating', priority: '0.91', changefreq: 'weekly' },
   ...FLEET_CITY_SLUGS.map((slug) => ({

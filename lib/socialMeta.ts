@@ -17,9 +17,17 @@ function setMeta(attr: 'property' | 'name', key: string, content: string) {
  * Updates document title, meta description, and Open Graph / Twitter tags (SPA-friendly).
  * Social crawlers that do not run JS still see defaults from index.html.
  */
-export function setDocumentSeo(opts: { title: string; description: string; path: string; robots?: string }) {
+export function setDocumentSeo(opts: {
+  title: string;
+  description: string;
+  path: string;
+  robots?: string;
+  /** Full URL; defaults to site OG image when omitted. */
+  ogImage?: string;
+}) {
   const path = normalizePath(opts.path);
   const url = canonicalUrl(path);
+  const imageUrl = opts.ogImage ?? DEFAULT_OG_IMAGE;
 
   document.title = opts.title;
 
@@ -36,11 +44,11 @@ export function setDocumentSeo(opts: { title: string; description: string; path:
   setMeta('property', 'og:title', opts.title);
   setMeta('property', 'og:description', opts.description);
   setMeta('property', 'og:url', url);
-  setMeta('property', 'og:image', DEFAULT_OG_IMAGE);
+  setMeta('property', 'og:image', imageUrl);
   setMeta('property', 'og:type', 'website');
 
   setMeta('name', 'twitter:card', 'summary_large_image');
   setMeta('name', 'twitter:title', opts.title);
   setMeta('name', 'twitter:description', opts.description);
-  setMeta('name', 'twitter:image', DEFAULT_OG_IMAGE);
+  setMeta('name', 'twitter:image', imageUrl);
 }

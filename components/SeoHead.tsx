@@ -59,6 +59,7 @@ const SeoHead: React.FC = () => {
         description: meta.description,
         path: pathname,
         robots: isAdsFunnel || isMdConversionPage ? 'noindex, nofollow' : undefined,
+        ogImage: meta.ogImage,
       });
     }
     document.querySelectorAll(`script[${DYNAMIC_LD_ATTR}]`).forEach((n) => n.remove());

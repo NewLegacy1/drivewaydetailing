@@ -1,6 +1,7 @@
 import { CITY_NAMES, CITY_SLUGS, type CitySlug } from './cities';
 import { BOAT_CITY_NAMES, isBoatCitySlug, type BoatCitySlug } from './boatCities';
 import { FLEET_CITY_NAMES, isFleetCitySlug, type FleetCitySlug } from './fleetCities';
+import { JET_CITY_NAMES, isJetCitySlug, type JetCitySlug } from './jetCities';
 
 /** Canonical marketing origin (matches index.html & robots.txt). */
 export const SITE_ORIGIN = 'https://showroomautocare.ca';
@@ -15,7 +16,7 @@ export const BUSINESS = {
   telephone: '+19053794820',
   email: 'contact@showroomautocare.ca',
   description:
-    'Premium mobile car detailing and ceramic coating. We come to you in Hamilton, Ancaster, Burlington, Oakville, Mississauga and the Greater Toronto Area. Services include nano ceramic coating, paint correction, and deep interior revival.',
+    'Premium mobile car detailing, ceramic coating, and paint correction across Hamilton, Ancaster, Burlington, Oakville, Mississauga and the Greater Toronto Area. Commercial fleet and transport truck detailing, marine ceramic coating for boats, and private aircraft jet detailing where hangar or FBO access can be coordinated.',
 } as const;
 
 /** Cities named in copy and city landing routes (Ontario). */
@@ -75,7 +76,21 @@ function isBoatCeramicJsonLdPath(p: string): boolean {
   return boatPathSlug(p) !== null;
 }
 
-export function pageWebMeta(pathname: string): { name: string; description: string } {
+function jetPathSlug(p: string): JetCitySlug | null {
+  if (p === '/jetdetailing') return null;
+  if (!p.startsWith('/jetdetailing/')) return null;
+  const slug = p.slice('/jetdetailing/'.length);
+  return isJetCitySlug(slug) ? slug : null;
+}
+
+function isJetJsonLdPath(p: string): boolean {
+  if (p === '/jetdetailing') return true;
+  return jetPathSlug(p) !== null;
+}
+
+export type PageWebMeta = { name: string; description: string; ogImage?: string };
+
+export function pageWebMeta(pathname: string): PageWebMeta {
   const p = normalizePath(pathname);
   if (p === '/' || p === '/mobiledetailing') {
     return {
@@ -90,11 +105,22 @@ export function pageWebMeta(pathname: string): { name: string; description: stri
       description: 'Your quote request was received. We will contact you shortly.',
     };
   }
-  if (p === '/jetdetailing') {
+  if (p.startsWith('/jetdetailing')) {
+    const slug = jetPathSlug(p);
+    const jetOg = `${SITE_ORIGIN}/jet-hero.png`;
+    if (slug) {
+      const city = JET_CITY_NAMES[slug];
+      return {
+        name: `Jet Detailing ${city} | Private Aircraft Cleaning | ShowRoom AutoCare`,
+        description: `Luxury aircraft detailing in ${city} and the Golden Horseshoe: exterior wash and protection, cabin interior detailing, and brightwork polishing. Mobile service to hangars and FBOs. Request a quote.`,
+        ogImage: jetOg,
+      };
+    }
     return {
       name: 'Jet Detailing Toronto & Hamilton | Luxury Aircraft Cleaning | ShowRoom AutoCare',
       description:
         'Discover premier jet detailing services in Toronto and Hamilton. We specialize in exterior cleaning, interior cabin detailing, and brightwork polishing for private jets and turboprops.',
+      ogImage: jetOg,
     };
   }
   if (p === '/ceramic-coating') {
@@ -133,32 +159,38 @@ export function pageWebMeta(pathname: string): { name: string; description: stri
   }
   if (p.startsWith('/fleet-detailing')) {
     const slug = fleetPathSlug(p);
+    const fleetOg = `${SITE_ORIGIN}/fleet-hero.png`;
     if (slug) {
       const city = FLEET_CITY_NAMES[slug];
       return {
         name: `Fleet Detailing ${city} | Transport Trucks & Company Fleets | ShowRoom AutoCare`,
         description: `Commercial fleet detailing and transport truck cleaning in ${city}. Mobile semi cab & sleeper interior detailing, fleet washing, and contract plans for carriers and businesses. Free fleet quote.`,
+        ogImage: fleetOg,
       };
     }
     return {
       name: 'Fleet Detailing Hamilton, Toronto & GTA | Transport Trucks | ShowRoom AutoCare',
       description:
         'Commercial fleet detailing, semi truck interior cleaning, and company fleet washing across Hamilton, Mississauga, Toronto, Burlington, and the GTA. Mobile on-site service. Build a contract plan and request a quote.',
+      ogImage: fleetOg,
     };
   }
   if (p.startsWith('/boat-ceramic-coating')) {
     const slug = boatPathSlug(p);
+    const boatOg = `${SITE_ORIGIN}/boat-hero.png`;
     if (slug) {
       const city = BOAT_CITY_NAMES[slug];
       return {
         name: `Boat Ceramic Coating ${city} | Marine Nano Ceramic | ShowRoom AutoCare`,
         description: `Marine ceramic coating and gelcoat protection in ${city}. Longer-lasting finish than yearly waxing—hull, deck, and topside options. Free boat coating quote.`,
+        ogImage: boatOg,
       };
     }
     return {
       name: 'Boat Ceramic Coating Hamilton & GTA | Marine Gelcoat Protection | ShowRoom AutoCare',
       description:
         'Professional boat ceramic coating across Hamilton, Mississauga, Toronto, Burlington, and the GTA. Nano ceramic for gelcoat and topsides—less annual waxing, easier wash-downs. Plan your scope and request a quote.',
+      ogImage: boatOg,
     };
   }
   if (isCityPath(p)) {
@@ -257,10 +289,39 @@ export const BOAT_CERAMIC_FAQ = [
   },
 ] as const;
 
+/** Visible + schema-aligned FAQs (jet detailing hub + city pages). */
+export const JET_FAQ = [
+  {
+    question: 'Which airports and regions do you serve for aircraft detailing?',
+    answer:
+      'We coordinate mobile jet detailing across the Greater Toronto Area, Hamilton, and nearby Golden Horseshoe airports—including major hubs and regional fields where hangar or FBO access can be arranged.',
+  },
+  {
+    question: 'Are your products and methods appropriate for aircraft finishes and interiors?',
+    answer:
+      'We use aviation-conscious techniques and products suited to painted and composite exteriors, brightwork, and cabin materials. Scope and product selection are confirmed for your aircraft type before work begins.',
+  },
+  {
+    question: 'Do you work on-site at hangars and FBOs?',
+    answer:
+      'Yes, when permitted by the facility. We bring equipment and coordinate with your operations team or FBO so you minimize downtime while exteriors, cabins, and brightwork are refreshed.',
+  },
+  {
+    question: 'What is the difference between exterior, cabin, and brightwork services?',
+    answer:
+      'Exterior work focuses on safe cleaning and protection of airframe surfaces; cabin detailing covers upholstery, leather, panels, and touchpoints; brightwork addresses polished metal and alloy trim for gloss and corrosion resistance.',
+  },
+  {
+    question: 'How do I request a quote for jet detailing?',
+    answer:
+      'Use the quote request on our site, email contact@showroomautocare.ca, or call (905) 379-4820 with aircraft type, location, and desired services—we follow up with scheduling and scope.',
+  },
+] as const;
+
 export function buildDynamicJsonLd(pathname: string): Record<string, unknown> {
   const p = normalizePath(pathname);
   const url = canonicalUrl(p);
-  const { name, description } = pageWebMeta(p);
+  const { name, description, ogImage } = pageWebMeta(p);
   const webpageId = `${url}#webpage`;
 
   const website: Record<string, unknown> = {
@@ -280,6 +341,13 @@ export function buildDynamicJsonLd(pathname: string): Record<string, unknown> {
     isPartOf: { '@id': WEBSITE_JSONLD_ID },
     about: { '@id': BUSINESS.jsonLdId },
   };
+
+  if (ogImage) {
+    webPage.primaryImageOfPage = {
+      '@type': 'ImageObject',
+      url: ogImage,
+    };
+  }
 
   const graph: Record<string, unknown>[] = [website, webPage];
 
@@ -329,6 +397,21 @@ export function buildDynamicJsonLd(pathname: string): Record<string, unknown> {
     });
   }
 
+  if (isJetJsonLdPath(p)) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${url}#faq`,
+      mainEntity: JET_FAQ.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
+    });
+  }
+
   const crumbs = breadcrumbItemsForPath(p);
   if (crumbs?.length) {
     graph.push({
@@ -358,6 +441,16 @@ export function breadcrumbItemsForPath(pathname: string): { name: string; path: 
     return [
       { name: 'Home', path: '/' },
       { name: 'Jet detailing', path: '/jetdetailing' },
+    ];
+  }
+
+  const jetSlug = jetPathSlug(p);
+  if (jetSlug) {
+    const city = JET_CITY_NAMES[jetSlug];
+    return [
+      { name: 'Home', path: '/' },
+      { name: 'Jet detailing', path: '/jetdetailing' },
+      { name: city, path: p },
     ];
   }
 
