@@ -139,6 +139,13 @@
     .magnetic-cta:hover {
       transform: scale(1.05);
     }
+    @keyframes fleet-total-pop {
+      0% { opacity: 0.85; transform: scale(0.98); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .fleet-total-pop {
+      animation: fleet-total-pop 0.45s ease-out;
+    }
     ::-webkit-scrollbar {
       width: 8px;
     }

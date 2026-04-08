@@ -1,4 +1,6 @@
 import { CITY_NAMES, CITY_SLUGS, type CitySlug } from './cities';
+import { BOAT_CITY_NAMES, isBoatCitySlug, type BoatCitySlug } from './boatCities';
+import { FLEET_CITY_NAMES, isFleetCitySlug, type FleetCitySlug } from './fleetCities';
 
 /** Canonical marketing origin (matches index.html & robots.txt). */
 export const SITE_ORIGIN = 'https://showroomautocare.ca';
@@ -47,6 +49,30 @@ function isCityPath(p: string): p is `/${CitySlug}` {
   if (!p.startsWith('/') || p === '/') return false;
   const slug = p.slice(1);
   return CITY_SLUGS.includes(slug as CitySlug);
+}
+
+function fleetPathSlug(p: string): FleetCitySlug | null {
+  if (p === '/fleet-detailing') return null;
+  if (!p.startsWith('/fleet-detailing/')) return null;
+  const slug = p.slice('/fleet-detailing/'.length);
+  return isFleetCitySlug(slug) ? slug : null;
+}
+
+function isFleetJsonLdPath(p: string): boolean {
+  if (p === '/fleet-detailing') return true;
+  return fleetPathSlug(p) !== null;
+}
+
+function boatPathSlug(p: string): BoatCitySlug | null {
+  if (p === '/boat-ceramic-coating') return null;
+  if (!p.startsWith('/boat-ceramic-coating/')) return null;
+  const slug = p.slice('/boat-ceramic-coating/'.length);
+  return isBoatCitySlug(slug) ? slug : null;
+}
+
+function isBoatCeramicJsonLdPath(p: string): boolean {
+  if (p === '/boat-ceramic-coating') return true;
+  return boatPathSlug(p) !== null;
 }
 
 export function pageWebMeta(pathname: string): { name: string; description: string } {
@@ -105,6 +131,36 @@ export function pageWebMeta(pathname: string): { name: string; description: stri
       description: 'Your quote request was received. We will contact you shortly.',
     };
   }
+  if (p.startsWith('/fleet-detailing')) {
+    const slug = fleetPathSlug(p);
+    if (slug) {
+      const city = FLEET_CITY_NAMES[slug];
+      return {
+        name: `Fleet Detailing ${city} | Transport Trucks & Company Fleets | ShowRoom AutoCare`,
+        description: `Commercial fleet detailing and transport truck cleaning in ${city}. Mobile semi cab & sleeper interior detailing, fleet washing, and contract plans for carriers and businesses. Free fleet quote.`,
+      };
+    }
+    return {
+      name: 'Fleet Detailing Hamilton, Toronto & GTA | Transport Trucks | ShowRoom AutoCare',
+      description:
+        'Commercial fleet detailing, semi truck interior cleaning, and company fleet washing across Hamilton, Mississauga, Toronto, Burlington, and the GTA. Mobile on-site service. Build a contract plan and request a quote.',
+    };
+  }
+  if (p.startsWith('/boat-ceramic-coating')) {
+    const slug = boatPathSlug(p);
+    if (slug) {
+      const city = BOAT_CITY_NAMES[slug];
+      return {
+        name: `Boat Ceramic Coating ${city} | Marine Nano Ceramic | ShowRoom AutoCare`,
+        description: `Marine ceramic coating and gelcoat protection in ${city}. Longer-lasting finish than yearly waxing—hull, deck, and topside options. Free boat coating quote.`,
+      };
+    }
+    return {
+      name: 'Boat Ceramic Coating Hamilton & GTA | Marine Gelcoat Protection | ShowRoom AutoCare',
+      description:
+        'Professional boat ceramic coating across Hamilton, Mississauga, Toronto, Burlington, and the GTA. Nano ceramic for gelcoat and topsides—less annual waxing, easier wash-downs. Plan your scope and request a quote.',
+    };
+  }
   if (isCityPath(p)) {
     const slug = p.slice(1) as CitySlug;
     const city = CITY_NAMES[slug];
@@ -140,6 +196,64 @@ export const HOME_FAQ = [
     question: 'What services do you offer besides detailing?',
     answer:
       'We focus on premium mobile detailing: interior revival, exterior correction, ceramic coating, and specialty services such as jet detailing for private aircraft in select markets.',
+  },
+] as const;
+
+/** Visible + schema-aligned FAQs (fleet detailing hub + city pages). */
+export const FLEET_FAQ = [
+  {
+    question: 'Do you detail semi trucks, day cabs, and sleeper cabs?',
+    answer:
+      'Yes. We service transport trucks (day cab) and units with sleepers—interior cab and bunk refresh plus exterior washes sized for highway tractors, not tunnel washes.',
+  },
+  {
+    question: 'Is fleet detailing mobile—do you come to our yard or terminal?',
+    answer:
+      'We operate as a mobile fleet detailing service in Hamilton, the GTA, and surrounding Golden Horseshoe communities. We coordinate on-site visits with your operations team.',
+  },
+  {
+    question: 'How does contract pricing and frequency work?',
+    answer:
+      'Choose one-time for a single visit at list rate (plus fleet volume tiers), or pick a recurring frequency (weekly through bimonthly) with optional 6- or 12-month loyalty savings. The planner shows an indicative total; we confirm after a quick fleet walkthrough.',
+  },
+  {
+    question: 'Can you handle mixed fleets—cars, vans, and pickups?',
+    answer:
+      'Yes. You can combine cars, SUVs, vans, and pickup trucks in one plan. Specialty or unique units can be flagged as “other” so we can price them manually.',
+  },
+  {
+    question: 'How do I book or follow up after I send a fleet plan?',
+    answer:
+      'Submit the planner form and we will email you back, or call (905) 379-4820. For single-vehicle consumer detailing you can also use our online booking link.',
+  },
+] as const;
+
+/** Visible + schema-aligned FAQs (boat ceramic hub + city pages). */
+export const BOAT_CERAMIC_FAQ = [
+  {
+    question: 'Is boat ceramic coating better than waxing every year?',
+    answer:
+      'Ceramic coatings are designed to last much longer than traditional wax under normal fresh-water use and washing. You still wash the boat, but you typically reapply protection far less often than with seasonal wax—exact intervals depend on storage, UV exposure, and how you use the boat.',
+  },
+  {
+    question: 'What surfaces can you coat?',
+    answer:
+      'Most projects focus on gelcoat hull sides and painted topsides. We can add deck and non-skid areas, rails, and metal brightwork as scoped add-ons. Inflatable tubes and soft trim are evaluated case by case.',
+  },
+  {
+    question: 'Do you work at marinas or only at my home?',
+    answer:
+      'We coordinate on-site service where permitted—marina slips, launch ramps with staging, or your driveway with the boat on a trailer. Tell us your marina or storage location when you request a quote.',
+  },
+  {
+    question: 'Will you polish oxidized gelcoat first?',
+    answer:
+      'Yes, when needed. Heavier oxidation requires more correction before coating—that is reflected in the prep tier you select in the planner and confirmed after inspection.',
+  },
+  {
+    question: 'How do I get a firm price?',
+    answer:
+      'Use the quote planner for an indicative total, then we follow up after seeing the boat in person (or detailed photos) to lock scope and pricing. Call (905) 379-4820 anytime.',
   },
 ] as const;
 
@@ -183,6 +297,36 @@ export function buildDynamicJsonLd(pathname: string): Record<string, unknown> {
       })),
     });
     return { '@context': 'https://schema.org', '@graph': graph };
+  }
+
+  if (isFleetJsonLdPath(p)) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${url}#faq`,
+      mainEntity: FLEET_FAQ.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
+    });
+  }
+
+  if (isBoatCeramicJsonLdPath(p)) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${url}#faq`,
+      mainEntity: BOAT_CERAMIC_FAQ.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
+    });
   }
 
   const crumbs = breadcrumbItemsForPath(p);
@@ -236,6 +380,40 @@ export function breadcrumbItemsForPath(pathname: string): { name: string; path: 
       { name: 'Home', path: '/' },
       { name: 'Mobile detailing', path: '/mobiledetailing' },
       { name: 'Thank you', path: '/mobiledetailing/thank-you' },
+    ];
+  }
+
+  if (p === '/fleet-detailing') {
+    return [
+      { name: 'Home', path: '/' },
+      { name: 'Fleet detailing', path: '/fleet-detailing' },
+    ];
+  }
+
+  const fleetSlug = fleetPathSlug(p);
+  if (fleetSlug) {
+    const city = FLEET_CITY_NAMES[fleetSlug];
+    return [
+      { name: 'Home', path: '/' },
+      { name: 'Fleet detailing', path: '/fleet-detailing' },
+      { name: city, path: p },
+    ];
+  }
+
+  if (p === '/boat-ceramic-coating') {
+    return [
+      { name: 'Home', path: '/' },
+      { name: 'Boat ceramic coating', path: '/boat-ceramic-coating' },
+    ];
+  }
+
+  const boatSlug = boatPathSlug(p);
+  if (boatSlug) {
+    const city = BOAT_CITY_NAMES[boatSlug];
+    return [
+      { name: 'Home', path: '/' },
+      { name: 'Boat ceramic coating', path: '/boat-ceramic-coating' },
+      { name: city, path: p },
     ];
   }
 

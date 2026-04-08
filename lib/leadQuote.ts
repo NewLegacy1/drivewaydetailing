@@ -38,6 +38,80 @@ export async function submitLeadQuote(
   if (result?.error) throw new Error(result.error);
 }
 
+export type FleetQuoteSubmitPayload = {
+  name: string;
+  email: string;
+  phone: string;
+  company?: string;
+  notes?: string;
+  fleetCityLabel: string;
+  summaryText: string;
+  carMakeModelShort: string;
+};
+
+export async function submitFleetQuote(payload: FleetQuoteSubmitPayload): Promise<void> {
+  if (!supabase) {
+    throw new Error('Form is not configured. Please add Supabase keys to .env.');
+  }
+  let service_notes = payload.summaryText.trim();
+  if (payload.notes?.trim()) {
+    service_notes += `\n\n---\nAdditional notes:\n${payload.notes.trim()}`;
+  }
+  const { data, error: fnError } = await supabase.functions.invoke('resend-email', {
+    body: {
+      name: payload.name,
+      email: payload.email,
+      phone: payload.phone,
+      car_make_model: payload.carMakeModelShort,
+      service_notes,
+      lead_source: 'website',
+      lead_type: 'fleet_quote',
+      fleet_city: payload.fleetCityLabel,
+      company: payload.company?.trim() || undefined,
+    },
+  });
+  if (fnError) throw fnError;
+  const result = data as { ok?: boolean; error?: string } | null;
+  if (result?.error) throw new Error(result.error);
+}
+
+export type BoatQuoteSubmitPayload = {
+  name: string;
+  email: string;
+  phone: string;
+  notes?: string;
+  boatCityLabel: string;
+  marinaOrSlip?: string;
+  summaryText: string;
+  carMakeModelShort: string;
+};
+
+export async function submitBoatQuote(payload: BoatQuoteSubmitPayload): Promise<void> {
+  if (!supabase) {
+    throw new Error('Form is not configured. Please add Supabase keys to .env.');
+  }
+  let service_notes = payload.summaryText.trim();
+  if (payload.notes?.trim()) {
+    service_notes += `\n\n---\nAdditional notes:\n${payload.notes.trim()}`;
+  }
+  const { data, error: fnError } = await supabase.functions.invoke('resend-email', {
+    body: {
+      name: payload.name,
+      email: payload.email,
+      phone: payload.phone,
+      car_make_model: payload.carMakeModelShort,
+      service_notes,
+      lead_source: 'website',
+      lead_type: 'boat_quote',
+      boat_city: payload.boatCityLabel,
+      boat_marina: payload.marinaOrSlip?.trim() || undefined,
+    },
+  });
+  if (fnError) throw fnError;
+  const result = data as { ok?: boolean; error?: string } | null;
+  if (result?.error) throw new Error(result.error);
+}
+
 export async function leadQuoteSubmitErrorMessage(err: unknown): Promise<string> {
   if ((err as { name?: string })?.name === 'FunctionsFetchError') {
     return 'Could not reach the server. Make sure the resend-email Edge Function is deployed to Supabase (see README).';

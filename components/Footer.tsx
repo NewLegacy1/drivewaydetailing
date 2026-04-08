@@ -16,12 +16,18 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h4 className="font-display font-black uppercase text-brand-yellow text-sm tracking-[0.2em] mb-6">Blog</h4>
+            <h4 className="font-display font-black uppercase text-brand-yellow text-sm tracking-[0.2em] mb-6">Fleet &amp; commercial</h4>
             <p className="text-white/50 text-sm leading-relaxed mb-4">
-              Detailing tips, ceramic coating care, and local guides for Hamilton and the GTA.
+              Transport trucks, company fleets, and contract detailing across Hamilton and the GTA.
             </p>
-            <a href="/blog" className="text-white font-bold hover:text-brand-yellow transition-colors text-sm uppercase tracking-wider">
-              Read the blog
+            <a href="/fleet-detailing" className="text-white font-bold hover:text-brand-yellow transition-colors text-sm uppercase tracking-wider block mb-3">
+              Fleet detailing &amp; planner
+            </a>
+            <a href="/boat-ceramic-coating" className="text-white font-bold hover:text-brand-yellow transition-colors text-sm uppercase tracking-wider block mb-3">
+              Boat ceramic coating &amp; planner
+            </a>
+            <a href="/blog" className="text-white/70 font-bold hover:text-brand-yellow transition-colors text-sm uppercase tracking-wider">
+              Blog
             </a>
           </div>
 

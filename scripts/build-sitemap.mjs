@@ -15,11 +15,29 @@ const TODAY = new Date().toISOString().slice(0, 10);
 
 const CITY_SLUGS = ['ancaster', 'mississauga', 'hamilton', 'burlington', 'oakville'];
 
+/** Keep in sync with lib/fleetCities.ts FLEET_CITY_SLUGS */
+const FLEET_CITY_SLUGS = ['hamilton', 'mississauga', 'toronto', 'burlington', 'oakville', 'ancaster'];
+
+/** Keep in sync with lib/boatCities.ts BOAT_CITY_SLUGS */
+const BOAT_CITY_SLUGS = ['hamilton', 'mississauga', 'toronto', 'burlington', 'oakville', 'ancaster'];
+
 const STATIC = [
   { path: '/', priority: '1.0', changefreq: 'weekly' },
   { path: '/blog', priority: '0.85', changefreq: 'daily' },
   { path: '/ceramic-coating', priority: '0.95', changefreq: 'weekly' },
   { path: '/jetdetailing', priority: '0.8', changefreq: 'monthly' },
+  { path: '/fleet-detailing', priority: '0.92', changefreq: 'weekly' },
+  { path: '/boat-ceramic-coating', priority: '0.91', changefreq: 'weekly' },
+  ...FLEET_CITY_SLUGS.map((slug) => ({
+    path: `/fleet-detailing/${slug}`,
+    priority: '0.9',
+    changefreq: 'weekly',
+  })),
+  ...BOAT_CITY_SLUGS.map((slug) => ({
+    path: `/boat-ceramic-coating/${slug}`,
+    priority: '0.89',
+    changefreq: 'weekly',
+  })),
   ...CITY_SLUGS.map((slug) => ({
     path: `/${slug}`,
     priority: '0.9',

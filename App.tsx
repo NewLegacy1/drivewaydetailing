@@ -15,6 +15,8 @@ import AdCampaignLp from './components/ads/AdCampaignLp';
 import AdThankYouPage from './components/AdThankYouPage';
 import MobileDetailingLp from './components/MobileDetailingLp';
 import MobileDetailingThankYouPage from './components/MobileDetailingThankYouPage';
+import FleetDetailingPage from './components/FleetDetailingPage';
+import BoatCeramicCoatingPage from './components/BoatCeramicCoatingPage';
 import SeoHead from './components/SeoHead';
 import MetaPixelRouteTracker from './components/MetaPixelRouteTracker';
 import { AD_CAMPAIGN_CERAMIC, AD_CAMPAIGN_DETAILING } from './lib/adCampaigns';
@@ -83,6 +85,10 @@ const AppRoutes: React.FC = () => {
           <Route path="/blog" element={<BlogListPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/thank-you" element={<Navigate to="/" replace />} />
+          <Route path="/fleet-detailing" element={<FleetDetailingPage />} />
+          <Route path="/fleet-detailing/:fleetCity" element={<FleetDetailingPage />} />
+          <Route path="/boat-ceramic-coating" element={<BoatCeramicCoatingPage />} />
+          <Route path="/boat-ceramic-coating/:boatCity" element={<BoatCeramicCoatingPage />} />
           <Route path="/:city" element={<CityPage onRequestQuote={openQuote} />} />
         </Routes>
       </main>
