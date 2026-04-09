@@ -193,6 +193,14 @@ export function pageWebMeta(pathname: string): PageWebMeta {
       ogImage: boatOg,
     };
   }
+  if (p === '/quotes/manitoulin-transport') {
+    return {
+      name: 'Manitoulin Transport fleet proposal | ShowRoom AutoCare',
+      description:
+        'Private transport fleet detailing proposal: Class 8 day cab and sleeper pricing, volume tiers, and contract options for Manitoulin Transport.',
+      ogImage: `${SITE_ORIGIN}/fleet-hero.png`,
+    };
+  }
   if (isCityPath(p)) {
     const slug = p.slice(1) as CitySlug;
     const city = CITY_NAMES[slug];

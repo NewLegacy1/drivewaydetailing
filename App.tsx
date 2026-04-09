@@ -16,6 +16,7 @@ import AdThankYouPage from './components/AdThankYouPage';
 import MobileDetailingLp from './components/MobileDetailingLp';
 import MobileDetailingThankYouPage from './components/MobileDetailingThankYouPage';
 import FleetDetailingPage from './components/FleetDetailingPage';
+import ManitoulinTransportQuotePage from './components/ManitoulinTransportQuotePage';
 import BoatCeramicCoatingPage from './components/BoatCeramicCoatingPage';
 import SeoHead from './components/SeoHead';
 import MetaPixelRouteTracker from './components/MetaPixelRouteTracker';
@@ -88,6 +89,7 @@ const AppRoutes: React.FC = () => {
           <Route path="/thank-you" element={<Navigate to="/" replace />} />
           <Route path="/fleet-detailing" element={<FleetDetailingPage />} />
           <Route path="/fleet-detailing/:fleetCity" element={<FleetDetailingPage />} />
+          <Route path="/quotes/manitoulin-transport" element={<ManitoulinTransportQuotePage />} />
           <Route path="/boat-ceramic-coating" element={<BoatCeramicCoatingPage />} />
           <Route path="/boat-ceramic-coating/:boatCity" element={<BoatCeramicCoatingPage />} />
           <Route path="/:city" element={<CityPage onRequestQuote={openQuote} />} />

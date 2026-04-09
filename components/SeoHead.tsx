@@ -52,18 +52,20 @@ const SeoHead: React.FC = () => {
     const isBlogArticle = p.startsWith('/blog/') && p.length > '/blog/'.length;
     const isAdsFunnel = p.startsWith('/ads');
     const isMdConversionPage = p === '/mobiledetailing/thank-you';
+    const isPrivateQuote = p.startsWith('/quotes/');
     if (!isBlogList && !isBlogArticle) {
       const meta = pageWebMeta(pathname);
       setDocumentSeo({
         title: meta.name,
         description: meta.description,
         path: pathname,
-        robots: isAdsFunnel || isMdConversionPage ? 'noindex, nofollow' : undefined,
+        robots:
+          isAdsFunnel || isMdConversionPage || isPrivateQuote ? 'noindex, nofollow' : undefined,
         ogImage: meta.ogImage,
       });
     }
     document.querySelectorAll(`script[${DYNAMIC_LD_ATTR}]`).forEach((n) => n.remove());
-    if (isBlogList || isBlogArticle || isAdsFunnel || isMdConversionPage) {
+    if (isBlogList || isBlogArticle || isAdsFunnel || isMdConversionPage || isPrivateQuote) {
       return;
     }
     const script = document.createElement('script');
