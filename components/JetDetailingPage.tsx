@@ -54,13 +54,12 @@ const JetDetailingPage: React.FC<JetDetailingPageProps> = ({ onRequestQuote }) =
   return (
     <>
       <section className="relative w-full min-w-0 overflow-x-hidden pt-24 sm:pt-28 pb-16 sm:pb-20 md:pt-36 md:pb-28 bg-brand-black min-h-[72vh] sm:min-h-[60vh] md:min-h-[60vh] flex flex-col justify-center">
-        <div
-          className="absolute inset-0 bg-cover bg-no-repeat bg-center"
-          style={{
-            backgroundImage: 'url(/jet-hero.png)',
-            backgroundPosition: 'center 30%',
-            backgroundSize: 'cover',
-          }}
+        {/* Hero: same asset is jet + service van; narrow viewports must anchor on the aircraft or cover crops to mostly van */}
+        <img
+          src="/jet-hero.png"
+          alt=""
+          decoding="async"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[76%_22%] sm:object-[68%_26%] md:object-[58%_28%] lg:object-[center_30%]"
           aria-hidden
         />
         <div className="absolute inset-0 bg-black/60 pointer-events-none" aria-hidden />
