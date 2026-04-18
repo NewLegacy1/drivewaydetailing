@@ -63,8 +63,8 @@ const ProblemSolution: React.FC<ProblemSolutionProps> = ({ city = 'Hamilton' }) 
 
             <h3 className="font-display text-2xl font-bold text-brand-navy uppercase italic">The driveway standard</h3>
             <img
-              src="/hero2.png"
-              alt="Mobile detailing team washing a vehicle at a residential driveway"
+              src="/hero-driveway-911.png"
+              alt="Snow foam wash on a vehicle in a residential driveway"
               className="w-full rounded-lg border border-slate-200 object-cover aspect-[4/3]"
             />
             <blockquote className="text-lg text-slate-700 font-semibold italic">

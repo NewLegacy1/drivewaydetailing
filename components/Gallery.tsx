@@ -39,7 +39,6 @@ const Gallery: React.FC = () => {
                 decoding="async"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/85 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="absolute inset-0 ring-2 ring-inset ring-brand-yellow/0 group-hover:ring-brand-yellow/45 rounded-xl transition-all duration-300 pointer-events-none" />
             </div>
           ))}
