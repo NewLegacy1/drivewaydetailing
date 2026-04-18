@@ -3,7 +3,6 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { Droplets, MapPin, ShieldCheck, Sparkles } from 'lucide-react';
 import BoatCeramicQuoteBuilder from './boat/BoatCeramicQuoteBuilder';
 import { BOAT_CITY_SLUGS, getBoatCityName, isBoatCitySlug, type BoatCitySlug } from '@/lib/boatCities';
-import { BOOKING_URL } from '@/lib/site';
 import { BOAT_CERAMIC_FAQ } from '@/lib/site';
 
 const LOCAL_INTRO: Record<BoatCitySlug, string> = {
@@ -34,7 +33,7 @@ const BoatCeramicCoatingPage: React.FC = () => {
   const localLine = boatCity ? LOCAL_INTRO[boatCity] : null;
 
   const openQuoteModal = () => {
-    window.dispatchEvent(new CustomEvent('showroom-open-quote'));
+    window.dispatchEvent(new CustomEvent('ddc-open-quote'));
   };
 
   return (
@@ -105,14 +104,6 @@ const BoatCeramicCoatingPage: React.FC = () => {
             >
               Quick quote
             </button>
-            <a
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center text-brand-yellow font-bold uppercase tracking-wider text-xs sm:text-sm hover:underline underline-offset-4 py-3.5"
-            >
-              Book auto detailing →
-            </a>
           </div>
         </div>
       </section>

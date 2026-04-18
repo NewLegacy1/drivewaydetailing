@@ -90,8 +90,8 @@ function slugify(input) {
 }
 
 async function generateWithOpenAI(apiKey, params) {
-  const site = 'https://showroomautocare.ca';
-  const system = `You write original, helpful SEO articles for ShowRoom AutoCare, a premium MOBILE car detailing and ceramic coating business in Ontario, Canada.
+  const site = (process.env.SITE_ORIGIN || 'https://drivewaydetail.com').replace(/\/$/, '');
+  const system = `You write original, helpful SEO articles for Driveway Detail Co., a premium MOBILE car detailing and ceramic coating business in Ontario, Canada.
 Audience: vehicle owners in the Greater Toronto and Hamilton area.
 Tone: professional, clear, non-hype. No unverifiable superlatives like "best" or "#1". Do not invent discounts, prices, or guarantees.
 The primary local focus for this article is ${params.cityName}, Ontario — also mention nearby GTA context naturally (Hamilton, Burlington, Oakville, Mississauga, Ancaster) where relevant.
@@ -114,7 +114,7 @@ body_html requirements:
 - Use rel="noopener" on every a tag. External links are NOT allowed except the internal URLs above.
 - Include one h2 near the top and 2–4 more h2/h3 sections.
 - Mention mobile service (we come to you) once clearly.
-- End with a short paragraph that mentions calling (905) 379-4820 or using the website quote form — no mailto in HTML.`;
+- End with a short paragraph that encourages readers to request a quote via the website quote form — no phone numbers and no mailto in HTML.`;
 
   const user = `Write today's article. Topic angle: ${params.topic}. Local pillar city: ${params.cityName}. Date stamp for slug if helpful: ${params.postDate}.`;
 

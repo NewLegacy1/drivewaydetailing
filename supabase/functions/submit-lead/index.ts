@@ -15,7 +15,7 @@ const ADS_LEADS_TABLE = 'showroom_ads';
 interface LeadBody {
   name: string;
   email: string;
-  phone: string;
+  phone?: string;
   car_make_model?: string;
   service_notes?: string;
   lead_source?: LeadSource;
@@ -55,12 +55,14 @@ Deno.serve(async (req) => {
 
     const leadSource: LeadSource = rawSource === 'ads' ? 'ads' : 'website';
 
-    if (!name?.trim() || !email?.trim() || !phone?.trim()) {
+    if (!name?.trim() || !email?.trim()) {
       return new Response(
-        JSON.stringify({ error: 'Name, email, and phone are required.' }),
+        JSON.stringify({ error: 'Name and email are required.' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+
+    const phoneStored = (phone ?? '').trim() || '—';
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -70,7 +72,7 @@ Deno.serve(async (req) => {
     const { error: insertError } = await supabase.from(table).insert({
       name: name.trim(),
       email: email.trim(),
-      phone: phone.trim(),
+      phone: phoneStored,
       car_make_model: car_make_model?.trim() ?? null,
       service_notes: service_notes?.trim() ?? null,
     });
@@ -88,11 +90,15 @@ Deno.serve(async (req) => {
 
     if (resendKey && leadEmailTo && leadEmailFrom) {
       const sourceLabel = leadSource === 'ads' ? 'Google Ads landing page' : 'main website';
+      const phoneLine =
+        phoneStored !== '—'
+          ? `<p><strong>Phone:</strong> ${escapeHtml(phoneStored)}</p>`
+          : '';
       const html = `
         <h2>New lead (${sourceLabel})</h2>
         <p><strong>Name:</strong> ${escapeHtml(name)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-        <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+        ${phoneLine}
         <p><strong>Car make/model:</strong> ${escapeHtml(car_make_model || '—')}</p>
         <p><strong>Service notes:</strong></p>
         <p>${escapeHtml(service_notes || '—')}</p>

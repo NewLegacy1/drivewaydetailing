@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { useLocation, useNavigate } from 'react-router-dom';
 import LeadQuoteFormFields from '@/components/LeadQuoteFormFields';
 import {
   emptyLeadQuoteForm,
@@ -8,8 +7,6 @@ import {
   leadQuoteSubmitErrorMessage,
   type LeadQuoteFormState,
 } from '@/lib/leadQuote';
-import { MOBILEDETAILING_PATH, MOBILEDETAILING_THANK_YOU_PATH } from '@/lib/mobiledetailingRoutes';
-import { normalizePath } from '@/lib/site';
 import { trackMetaLead } from '@/lib/metaPixel';
 import { trackClientEvent } from '@/lib/trackEvent';
 import { SITE_EVENT } from '@/lib/siteEvents';
@@ -20,8 +17,6 @@ interface LeadFormProps {
 }
 
 const LeadForm: React.FC<LeadFormProps> = ({ isOpen, onClose }) => {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,12 +25,16 @@ const LeadForm: React.FC<LeadFormProps> = ({ isOpen, onClose }) => {
   useEffect(() => {
     if (isOpen) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = '';
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
-    const onEscape = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    const onEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
     window.addEventListener('keydown', onEscape);
     return () => window.removeEventListener('keydown', onEscape);
   }, [isOpen, onClose]);
@@ -56,23 +55,11 @@ const LeadForm: React.FC<LeadFormProps> = ({ isOpen, onClose }) => {
     setLoading(true);
     try {
       await submitLeadQuote(formData, { source: 'website' });
-      // Read path after async work — closure `pathname` can be stale vs `window.location`.
-      const pathNow = normalizePath(
-        typeof window !== 'undefined' ? window.location.pathname : pathname
-      );
-      if (pathNow === MOBILEDETAILING_PATH) {
-        trackClientEvent(SITE_EVENT.LEAD_SUBMIT_MOBILEDETAILING_LP);
-        trackMetaLead();
-        setFormData(emptyLeadQuoteForm());
-        navigate(MOBILEDETAILING_THANK_YOU_PATH, { replace: true });
-        onClose();
-      } else {
-        trackClientEvent(SITE_EVENT.LEAD_SUBMIT_WEBSITE);
-        trackMetaLead();
-        setFormData(emptyLeadQuoteForm());
-        setSubmitted(true);
-        setTimeout(onClose, 2000);
-      }
+      trackClientEvent(SITE_EVENT.LEAD_SUBMIT_WEBSITE);
+      trackMetaLead();
+      setFormData(emptyLeadQuoteForm());
+      setSubmitted(true);
+      setTimeout(onClose, 2000);
     } catch (err: unknown) {
       setError(await leadQuoteSubmitErrorMessage(err));
     } finally {
@@ -86,14 +73,16 @@ const LeadForm: React.FC<LeadFormProps> = ({ isOpen, onClose }) => {
 
   const modal = (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="lead-form-title">
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} aria-hidden />
-      <div className="relative z-10 w-full max-w-lg bg-brand-gray border border-white/10 rounded-lg shadow-2xl overflow-hidden">
-        <div className="border-b border-white/10 px-6 py-4 flex items-center justify-between">
-          <h3 id="lead-form-title" className="font-display text-xl font-black uppercase text-white">Request a Quote</h3>
+      <div className="absolute inset-0 bg-brand-navy/70 backdrop-blur-sm" onClick={onClose} aria-hidden />
+      <div className="relative z-10 w-full max-w-lg bg-white border border-slate-200 rounded-lg shadow-2xl overflow-hidden">
+        <div className="border-b border-slate-200 px-6 py-4 flex items-center justify-between bg-brand-page">
+          <h3 id="lead-form-title" className="font-display text-xl font-black uppercase text-brand-navy">
+            Request a Quote
+          </h3>
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-white/60 hover:text-brand-yellow transition-colors"
+            className="p-2 text-slate-500 hover:text-brand-navy transition-colors"
             aria-label="Close"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
@@ -101,25 +90,25 @@ const LeadForm: React.FC<LeadFormProps> = ({ isOpen, onClose }) => {
         </div>
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {error && (
-            <p className="text-red-400 text-sm" role="alert">{error}</p>
+            <p className="text-red-600 text-sm" role="alert">{error}</p>
           )}
           {submitted ? (
-            <p className="text-brand-yellow font-bold text-center py-8">Thanks! We’ll be in touch soon.</p>
+            <p className="text-brand-navy font-bold text-center py-8">Thanks! We’ll be in touch soon.</p>
           ) : (
             <>
-              <LeadQuoteFormFields idPrefix="lead" formData={formData} onChange={handleChange} showBookNow />
+              <LeadQuoteFormFields idPrefix="lead" formData={formData} onChange={handleChange} />
               <div className="flex gap-3 pt-2">
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 bg-brand-yellow text-brand-black py-4 font-black uppercase tracking-widest text-sm magnetic-cta disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="flex-1 bg-brand-navy text-white py-4 font-black uppercase tracking-widest text-sm magnetic-cta disabled:opacity-60 disabled:cursor-not-allowed hover:bg-brand-silver hover:text-brand-navy transition-colors"
                 >
                   {loading ? 'Sending…' : 'Send request'}
                 </button>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-6 py-4 border border-white/20 text-white/80 font-bold uppercase tracking-widest text-sm hover:border-brand-yellow hover:text-brand-yellow transition-colors"
+                  className="px-6 py-4 border border-slate-300 text-slate-600 font-bold uppercase tracking-widest text-sm hover:border-brand-navy hover:text-brand-navy transition-colors"
                 >
                   Cancel
                 </button>

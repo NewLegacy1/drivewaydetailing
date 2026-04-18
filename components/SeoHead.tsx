@@ -4,8 +4,8 @@ import { buildDynamicJsonLd, BUSINESS, canonicalUrl, normalizePath, pageWebMeta 
 import { setDocumentSeo } from '../lib/socialMeta';
 import { GMB_PROFILE_URL } from '../lib/google-business';
 
-const DYNAMIC_LD_ATTR = 'data-showroom-seo-ld';
-const GMB_SAMEAS_ATTR = 'data-showroom-gmb-sameas';
+const DYNAMIC_LD_ATTR = 'data-ddc-seo-ld';
+const GMB_SAMEAS_ATTR = 'data-ddc-gmb-sameas';
 
 /**
  * Updates canonical URL and injects WebSite / WebPage / FAQPage JSON-LD per route.
@@ -47,32 +47,24 @@ const SeoHead: React.FC = () => {
     }
     link.setAttribute('href', href);
 
-    const p = normalizePath(pathname);
-    const isBlogList = p === '/blog';
-    const isBlogArticle = p.startsWith('/blog/') && p.length > '/blog/'.length;
-    const isAdsFunnel = p.startsWith('/ads');
-    const isMdConversionPage = p === '/mobiledetailing/thank-you';
-    const isPrivateQuote = p.startsWith('/quotes/');
-    if (!isBlogList && !isBlogArticle) {
-      const meta = pageWebMeta(pathname);
-      setDocumentSeo({
-        title: meta.name,
-        description: meta.description,
-        path: pathname,
-        robots:
-          isAdsFunnel || isMdConversionPage || isPrivateQuote ? 'noindex, nofollow' : undefined,
-        ogImage: meta.ogImage,
-      });
-    }
+    const meta = pageWebMeta(pathname);
+    setDocumentSeo({
+      title: meta.name,
+      description: meta.description,
+      path: pathname,
+      ogImage: meta.ogImage,
+    });
+
     document.querySelectorAll(`script[${DYNAMIC_LD_ATTR}]`).forEach((n) => n.remove());
-    if (isBlogList || isBlogArticle || isAdsFunnel || isMdConversionPage || isPrivateQuote) {
-      return;
-    }
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.setAttribute(DYNAMIC_LD_ATTR, '1');
     script.textContent = JSON.stringify(buildDynamicJsonLd(pathname));
     document.head.appendChild(script);
+
+    return () => {
+      document.querySelectorAll(`script[${DYNAMIC_LD_ATTR}]`).forEach((n) => n.remove());
+    };
   }, [pathname]);
 
   return null;

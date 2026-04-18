@@ -5,7 +5,7 @@ import { fetchBlogPostBySlug, blogPostCanonicalUrl, type BlogPost } from '../lib
 import { BUSINESS, SITE_ORIGIN, breadcrumbItemsForBlogPost, canonicalUrl } from '../lib/site';
 import { setDocumentSeo } from '../lib/socialMeta';
 
-const SEO_LD_ATTR = 'data-showroom-blog-post-ld';
+const SEO_LD_ATTR = 'data-ddc-blog-post-ld';
 
 const PURIFY = {
   ALLOWED_TAGS: ['h2', 'h3', 'p', 'ul', 'ol', 'li', 'strong', 'em', 'a', 'br', 'blockquote'],
@@ -83,7 +83,7 @@ const BlogPostPage: React.FC = () => {
     document.querySelectorAll(`script[${SEO_LD_ATTR}]`).forEach((n) => n.remove());
 
     if (!post) {
-      document.title = 'Article not found | ShowRoom AutoCare';
+      document.title = `Article not found | ${BUSINESS.name}`;
       return;
     }
 
@@ -156,7 +156,7 @@ const BlogPostPage: React.FC = () => {
 
         <header className="mb-8 reveal">
           <p className="text-brand-yellow text-[10px] font-black uppercase tracking-[0.25em] mb-3">
-            ShowRoom AutoCare · {post.focus_city}
+            {BUSINESS.name} · {post.focus_city}
           </p>
           <h1 className="font-display font-black text-3xl sm:text-4xl md:text-[2.75rem] uppercase tracking-tight text-white leading-tight">
             {post.title}
@@ -183,17 +183,11 @@ const BlogPostPage: React.FC = () => {
           <div className="flex flex-wrap gap-4">
             <button
               type="button"
-              onClick={() => window.dispatchEvent(new CustomEvent('showroom-open-quote'))}
+              onClick={() => window.dispatchEvent(new CustomEvent('ddc-open-quote'))}
               className="bg-brand-yellow text-brand-black px-6 py-3 font-bold text-xs uppercase tracking-widest magnetic-cta"
             >
               Get a quote
             </button>
-            <a
-              href="tel:+19053794820"
-              className="border border-white/20 text-white px-6 py-3 font-bold text-xs uppercase tracking-widest hover:border-brand-yellow transition-colors"
-            >
-              (905) 379-4820
-            </a>
             {post.focus_city_slug && (
               <Link
                 to={`/${post.focus_city_slug}`}

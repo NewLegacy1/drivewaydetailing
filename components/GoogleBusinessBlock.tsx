@@ -6,6 +6,7 @@ import {
   hasGoogleBusinessIntegration,
   isAllowedMapEmbedSrc,
 } from '../lib/google-business';
+import { BUSINESS } from '@/lib/site';
 
 const GoogleBusinessBlock: React.FC = () => {
   if (!hasGoogleBusinessIntegration()) return null;
@@ -13,14 +14,14 @@ const GoogleBusinessBlock: React.FC = () => {
   const showMap = GMB_MAP_EMBED_SRC && isAllowedMapEmbedSrc(GMB_MAP_EMBED_SRC);
 
   return (
-    <div className="rounded border border-white/10 bg-brand-gray/30 p-5 text-center">
-      <p className="font-display font-black uppercase text-brand-yellow text-[10px] tracking-[0.25em] mb-2">
+    <div className="rounded-lg border border-slate-200 bg-white p-5 text-center shadow-sm">
+      <p className="font-display font-black uppercase text-brand-accent text-[10px] tracking-[0.25em] mb-2">
         Google Business Profile
       </p>
-      <h2 className="font-display font-black text-white text-lg uppercase tracking-tight mb-3">
+      <h2 className="font-display font-black text-brand-navy text-lg uppercase tracking-tight mb-3">
         See verified reviews &amp; updates on Google
       </h2>
-      <p className="text-white/55 text-sm leading-relaxed mb-5 max-w-xl mx-auto">
+      <p className="text-slate-600 text-sm leading-relaxed mb-5 max-w-xl mx-auto">
         Read what customers say on our live listing, get directions, or leave a review — it helps local search and other drivers find us.
       </p>
       <div className="flex flex-wrap items-center justify-center gap-3">
@@ -29,7 +30,7 @@ const GoogleBusinessBlock: React.FC = () => {
             href={GMB_PROFILE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-5 py-2.5 bg-white text-brand-black font-bold text-xs uppercase tracking-widest hover:bg-brand-yellow transition-colors"
+            className="inline-flex items-center justify-center px-5 py-2.5 bg-brand-navy text-white font-bold text-xs uppercase tracking-widest hover:bg-brand-silver hover:text-brand-navy transition-colors rounded-sm"
           >
             View on Google Maps
           </a>
@@ -39,16 +40,16 @@ const GoogleBusinessBlock: React.FC = () => {
             href={GMB_REVIEW_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-5 py-2.5 border-2 border-brand-yellow text-brand-yellow font-bold text-xs uppercase tracking-widest hover:bg-brand-yellow hover:text-brand-black transition-colors"
+            className="inline-flex items-center justify-center px-5 py-2.5 border-2 border-brand-accent text-brand-accent font-bold text-xs uppercase tracking-widest hover:bg-brand-accent hover:text-white transition-colors rounded-sm"
           >
             Leave a Google review
           </a>
         )}
       </div>
       {showMap && (
-        <div className="mt-6 rounded-lg overflow-hidden border border-white/10 aspect-video max-w-3xl mx-auto bg-brand-gray">
+        <div className="mt-6 rounded-lg overflow-hidden border border-slate-200 aspect-video max-w-3xl mx-auto bg-slate-100">
           <iframe
-            title="ShowRoom AutoCare on Google Maps"
+            title={`${BUSINESS.name} on Google Maps`}
             src={GMB_MAP_EMBED_SRC}
             className="w-full h-full min-h-[220px]"
             loading="lazy"

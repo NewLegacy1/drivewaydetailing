@@ -52,7 +52,7 @@ const AdLeadFormSection: React.FC<AdLeadFormSectionProps> = ({ idPrefix }) => {
           Tell us about your vehicle
         </h2>
         <p className="text-white/55 text-center text-sm mb-8">
-          We respond by phone or email — usually the same day.
+          We respond by email — usually the same day.
         </p>
         <div className="bg-brand-gray border border-white/10 rounded-lg p-6 md:p-8 shadow-2xl">
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -61,7 +61,7 @@ const AdLeadFormSection: React.FC<AdLeadFormSectionProps> = ({ idPrefix }) => {
                 {error}
               </p>
             )}
-            <LeadQuoteFormFields idPrefix={idPrefix} formData={formData} onChange={handleChange} showBookNow />
+            <LeadQuoteFormFields idPrefix={idPrefix} formData={formData} onChange={handleChange} />
             <button
               type="submit"
               disabled={loading}

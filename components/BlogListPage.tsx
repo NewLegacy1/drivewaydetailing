@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchBlogPosts, blogPostPath, type BlogPost } from '../lib/blog';
-import { AREA_SERVED, SITE_ORIGIN, pageWebMeta } from '../lib/site';
+import { AREA_SERVED, BUSINESS, SITE_ORIGIN, pageWebMeta } from '../lib/site';
 import { setDocumentSeo } from '../lib/socialMeta';
 import { CITY_SLUGS, CITY_NAMES, type CitySlug } from '../lib/cities';
 
-const SEO_LD_ATTR = 'data-showroom-blog-list-ld';
+const SEO_LD_ATTR = 'data-ddc-blog-list-ld';
 
 function buildBlogListJsonLd(posts: BlogPost[]): Record<string, unknown> {
   const items = posts.slice(0, 24).map((p, i) => ({
@@ -20,7 +20,7 @@ function buildBlogListJsonLd(posts: BlogPost[]): Record<string, unknown> {
       {
         '@type': 'Blog',
         '@id': `${SITE_ORIGIN}/blog#blog`,
-        name: 'ShowRoom AutoCare Detailing Blog',
+        name: `${BUSINESS.name} Detailing Blog`,
         description:
           'Mobile car detailing, ceramic coating, and paint care tips for Hamilton, Burlington, Oakville, Mississauga, Ancaster and the GTA.',
         url: `${SITE_ORIGIN}/blog`,

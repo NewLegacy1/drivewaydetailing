@@ -31,7 +31,6 @@ const ManitoulinTransportQuotePage: React.FC = () => {
   const [contract, setContract] = useState<ManitoulinContract>('12mo');
   const [name, setName] = useState('April');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [notes, setNotes] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
@@ -67,7 +66,7 @@ const ManitoulinTransportQuotePage: React.FC = () => {
       await submitFleetQuote({
         name,
         email,
-        phone,
+        phone: '',
         company: 'Manitoulin Transport',
         notes: notes.trim() || undefined,
         fleetCityLabel: 'Manitoulin Transport (proposal)',
@@ -82,7 +81,7 @@ const ManitoulinTransportQuotePage: React.FC = () => {
     }
   };
 
-  const canSubmit = name.trim() && email.trim() && phone.trim();
+  const canSubmit = name.trim() && email.trim();
 
   return (
     <div className="min-h-screen bg-brand-black text-white pt-24 sm:pt-28 pb-16">
@@ -505,16 +504,6 @@ const ManitoulinTransportQuotePage: React.FC = () => {
               />
             </label>
             <label className="block">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-white/35 block mb-1">Phone</span>
-              <input
-                type="tel"
-                required
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="w-full bg-brand-black border border-white/15 text-white text-sm px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-yellow/40"
-              />
-            </label>
-            <label className="block">
               <span className="text-[10px] font-bold uppercase tracking-wider text-white/35 block mb-1">Notes (optional)</span>
               <textarea
                 rows={2}
@@ -528,7 +517,7 @@ const ManitoulinTransportQuotePage: React.FC = () => {
               disabled={!canSubmit || submitting}
               className="bg-brand-yellow text-brand-black px-6 py-3 font-black uppercase tracking-wider text-xs magnetic-cta disabled:opacity-40 w-full sm:w-auto"
             >
-              {submitting ? 'Sending…' : 'Send to ShowRoom'}
+              {submitting ? 'Sending…' : 'Send estimate'}
             </button>
             {message && (
               <p className={`text-sm ${message.type === 'ok' ? 'text-green-400' : 'text-red-400'}`}>{message.text}</p>

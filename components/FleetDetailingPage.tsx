@@ -3,7 +3,6 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { MapPin, ShieldCheck, Sparkles } from 'lucide-react';
 import FleetQuoteBuilder from './fleet/FleetQuoteBuilder';
 import { FLEET_CITY_SLUGS, getFleetCityName, isFleetCitySlug, type FleetCitySlug } from '@/lib/fleetCities';
-import { BOOKING_URL } from '@/lib/site';
 import { FLEET_FAQ } from '@/lib/site';
 
 const LOCAL_INTRO: Record<FleetCitySlug, string> = {
@@ -34,7 +33,7 @@ const FleetDetailingPage: React.FC = () => {
   const localLine = fleetCity ? LOCAL_INTRO[fleetCity] : null;
 
   const openQuoteModal = () => {
-    window.dispatchEvent(new CustomEvent('showroom-open-quote'));
+    window.dispatchEvent(new CustomEvent('ddc-open-quote'));
   };
 
   return (
@@ -107,14 +106,6 @@ const FleetDetailingPage: React.FC = () => {
             >
               Quick quote
             </button>
-            <a
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center text-brand-yellow font-bold uppercase tracking-wider text-xs sm:text-sm hover:underline underline-offset-4 py-3.5"
-            >
-              Book single-vehicle detail →
-            </a>
           </div>
         </div>
       </section>

@@ -1,6 +1,8 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
+  /** Canonical site URL, no trailing slash (used in SEO, JSON-LD, canonical links). */
+  readonly VITE_SITE_ORIGIN?: string;
   readonly VITE_GMB_PROFILE_URL?: string;
   readonly VITE_GMB_REVIEW_URL?: string;
   readonly VITE_GMB_MAP_EMBED_SRC?: string;

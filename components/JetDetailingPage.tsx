@@ -37,7 +37,7 @@ const JetDetailingPage: React.FC<JetDetailingPageProps> = ({ onRequestQuote }) =
     {
       title: 'Exterior Cleaning',
       description:
-        'Professional wash and protection for aircraft exteriors. We use aviation-safe products and techniques to remove contaminants, protect paint and composite surfaces, and restore a showroom finish.',
+        'Professional wash and protection for aircraft exteriors. We use aviation-safe products and techniques to remove contaminants, protect paint and composite surfaces, and restore a refined, high-gloss finish.',
     },
     {
       title: 'Interior Cabin Detailing',

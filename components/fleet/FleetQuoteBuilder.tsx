@@ -55,7 +55,6 @@ const FleetQuoteBuilder: React.FC<FleetQuoteBuilderProps> = ({ cityLabel }) => {
   const [company, setCompany] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [notes, setNotes] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
@@ -101,7 +100,7 @@ const FleetQuoteBuilder: React.FC<FleetQuoteBuilderProps> = ({ cityLabel }) => {
       await submitFleetQuote({
         name,
         email,
-        phone,
+        phone: '',
         company: company.trim() || undefined,
         notes: notes.trim() || undefined,
         fleetCityLabel: cityLabel,
@@ -117,7 +116,7 @@ const FleetQuoteBuilder: React.FC<FleetQuoteBuilderProps> = ({ cityLabel }) => {
     }
   };
 
-  const canSubmit = name.trim() && email.trim() && phone.trim();
+  const canSubmit = name.trim() && email.trim();
 
   return (
     <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
@@ -412,17 +411,6 @@ const FleetQuoteBuilder: React.FC<FleetQuoteBuilderProps> = ({ cityLabel }) => {
               onChange={(e) => setEmail(e.target.value)}
               className="mt-1 w-full bg-brand-black border border-white/15 text-white text-sm px-3 py-2.5 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-yellow/50"
               autoComplete="email"
-            />
-          </label>
-          <label className="block">
-            <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Phone *</span>
-            <input
-              required
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="mt-1 w-full bg-brand-black border border-white/15 text-white text-sm px-3 py-2.5 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-yellow/50"
-              autoComplete="tel"
             />
           </label>
           <label className="block">

@@ -11,11 +11,7 @@ const AdThankYouPage: React.FC = () => {
       <p className="font-display text-brand-yellow text-sm font-black uppercase tracking-[0.2em] mb-4">You&apos;re all set</p>
       <h1 className="font-display text-3xl md:text-4xl font-black uppercase text-white mb-4">Thanks — we&apos;ll be in touch soon</h1>
       <p className="text-white/70 max-w-md mb-10 leading-relaxed">
-        We received your quote request. If you need us right away, call{' '}
-        <a href="tel:+19053794820" className="text-brand-yellow font-semibold hover:underline whitespace-nowrap">
-          (905) 379-4820
-        </a>
-        .
+        We received your quote request and will reply by email as soon as we can.
       </p>
       <Link
         to="/"

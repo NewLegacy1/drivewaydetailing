@@ -1,5 +1,5 @@
-# ShowRoom AutoCare - Mobile Car Detailing Hamilton, GTA
+# Driveway Detail Co. — mobile detailing, Hamilton & GTA
 User-agent: *
 Allow: /
 
-Sitemap: https://showroomautocare.ca/sitemap.xml
+Sitemap: https://drivewaydetail.com/sitemap.xml

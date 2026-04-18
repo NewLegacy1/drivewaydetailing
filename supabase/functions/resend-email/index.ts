@@ -9,17 +9,17 @@ const corsHeaders = {
 
 type LeadSource = 'website' | 'ads';
 
-/** Must match your Supabase table (Table Editor “Showroom Organic”). Do not use `leads`. */
+/** Must match your Supabase public tables for organic vs ads leads. */
 const ORGANIC_LEADS_TABLE = 'showroom_organic';
 const ADS_LEADS_TABLE = 'showroom_ads';
 
 interface LeadBody {
   name: string;
   email: string;
-  phone: string;
+  phone?: string;
   car_make_model?: string;
   service_notes?: string;
-  /** Main site modal → website (`showroom_organic`). /ads/* → `showroom_ads`. */
+  /** Main site modal → organic table. /ads/* → ads table. */
   lead_source?: LeadSource;
   lead_type?: 'fleet_quote' | 'boat_quote';
   company?: string;
@@ -76,12 +76,14 @@ Deno.serve(async (req) => {
     const leadSource: LeadSource =
       rawSource === 'ads' ? 'ads' : 'website';
 
-    if (!name?.trim() || !email?.trim() || !phone?.trim()) {
+    if (!name?.trim() || !email?.trim()) {
       return new Response(
-        JSON.stringify({ error: 'Name, email, and phone are required.' }),
+        JSON.stringify({ error: 'Name and email are required.' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+
+    const phoneStored = (phone ?? '').trim() || '—';
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -91,7 +93,7 @@ Deno.serve(async (req) => {
     const { error: insertError } = await supabase.from(table).insert({
       name: name.trim(),
       email: email.trim(),
-      phone: phone.trim(),
+      phone: phoneStored,
       car_make_model: car_make_model?.trim() ?? null,
       service_notes: service_notes?.trim() ?? null,
     });
@@ -111,6 +113,10 @@ Deno.serve(async (req) => {
       const sourceLabel = leadSource === 'ads' ? 'Google Ads landing page' : 'main website';
       const isFleet = lead_type === 'fleet_quote';
       const isBoat = lead_type === 'boat_quote';
+      const phoneLine =
+        phoneStored !== '—'
+          ? `<p><strong>Phone:</strong> ${escapeHtml(phoneStored)}</p>`
+          : '';
       const html = isFleet
         ? `
         <h2>Fleet quote request</h2>
@@ -119,7 +125,7 @@ Deno.serve(async (req) => {
         <p><strong>Company:</strong> ${escapeHtml(company?.trim() || '—')}</p>
         <p><strong>Name:</strong> ${escapeHtml(name)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-        <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+        ${phoneLine}
         <p><strong>Label:</strong> ${escapeHtml(car_make_model || '—')}</p>
         <h3>Plan &amp; notes</h3>
         <pre style="white-space:pre-wrap;font-family:ui-monospace,monospace;font-size:13px;background:#f4f4f4;padding:12px;border-radius:8px;">${escapeHtml(service_notes || '—')}</pre>
@@ -132,7 +138,7 @@ Deno.serve(async (req) => {
         <p><strong>Marina / slip:</strong> ${escapeHtml(boat_marina?.trim() || '—')}</p>
         <p><strong>Name:</strong> ${escapeHtml(name)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-        <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+        ${phoneLine}
         <p><strong>Label:</strong> ${escapeHtml(car_make_model || '—')}</p>
         <h3>Plan &amp; notes</h3>
         <pre style="white-space:pre-wrap;font-family:ui-monospace,monospace;font-size:13px;background:#f4f4f4;padding:12px;border-radius:8px;">${escapeHtml(service_notes || '—')}</pre>
@@ -141,7 +147,7 @@ Deno.serve(async (req) => {
         <h2>New lead (${sourceLabel})</h2>
         <p><strong>Name:</strong> ${escapeHtml(name)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-        <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+        ${phoneLine}
         <p><strong>Car make/model:</strong> ${escapeHtml(car_make_model || '—')}</p>
         <p><strong>Service notes:</strong></p>
         <p>${escapeHtml(service_notes || '—')}</p>

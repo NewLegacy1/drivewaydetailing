@@ -38,12 +38,12 @@ export const AD_CAMPAIGN_CERAMIC: AdCampaignConfig = {
     'Panel-by-panel nano ceramic application with proper flash and cure guidance',
     'Aftercare rules for the first days and weeks so the coating performs long-term',
   ],
-  whyTitle: 'Why ShowRoom AutoCare',
+  whyTitle: 'Why Driveway Detail Co.',
   whyItems: [
     { title: 'Truly mobile', body: 'We run a fully equipped van — water, power, and lighting — at your driveway or workplace across Hamilton & the GTA.' },
     { title: 'Fully insured', body: 'Professional service with clear expectations — no hype, just honest outcomes on daily drivers and weekend cars alike.' },
     { title: 'Pro products & process', body: 'Coating-grade prep and application standards — the same discipline we use on correction and interior work.' },
-    { title: 'Hamilton-based', body: 'Local crew that knows Ontario seasons, salt, and sun — we tailor advice for how you actually use your vehicle.' },
+    { title: 'Ontario-season smart', body: 'Local crew that knows salt, sun, and pollen cycles — we tailor advice for how you actually use your vehicle.' },
   ],
   beforeAfter: {
     title: (
@@ -60,7 +60,7 @@ export const AD_CAMPAIGN_CERAMIC: AdCampaignConfig = {
     { src: '/images/gallery-08.png', alt: 'Red Porsche exterior — paint correction and coating shine' },
     { src: '/images/gallery-05.png', alt: 'Mercedes SUV — mobile detailing and finish work' },
     { src: '/images/gallery-03.png', alt: 'Mercedes G-Wagen — exterior mobile detailing Ontario' },
-    { src: '/images/gallery-16.png', alt: 'Porsche 911 interior and exterior showroom standard' },
+    { src: '/images/gallery-16.png', alt: 'Porsche 911 interior and exterior mirror-gloss finish' },
   ],
   faqs: [
     {
@@ -73,7 +73,7 @@ export const AD_CAMPAIGN_CERAMIC: AdCampaignConfig = {
     },
     {
       q: 'What areas do you service?',
-      a: 'Hamilton, Ancaster, Burlington, Oakville, Mississauga, and surrounding GTA. If you are unsure, ask in the form or call (905) 379-4820.',
+      a: 'Hamilton, Ancaster, Burlington, Oakville, Mississauga, and surrounding GTA. If you are unsure, note it in the quote form.',
     },
     {
       q: 'Is ceramic coating worth it on a daily driver?',
@@ -95,12 +95,12 @@ export const AD_CAMPAIGN_DETAILING: AdCampaignConfig = {
     'Paint decontamination or light enhancement options when you want more pop',
     'Final walkthrough so you see the result before we pack up',
   ],
-  whyTitle: 'Why ShowRoom AutoCare',
+  whyTitle: 'Why Driveway Detail Co.',
   whyItems: [
     { title: 'Mobile convenience', body: 'We meet you at home, work, or your job site — you keep your day while we work.' },
     { title: 'Self-contained van', body: 'De-ionized water and quiet power on board — we are not plugging into your house.' },
     { title: 'Trusted pros', body: 'Background-checked team trained for fine finishes on daily drivers and luxury vehicles.' },
-    { title: 'Hamilton-grown', body: 'Locally owned since 2021 — we know local grime, salt, and what it takes to fix it.' },
+    { title: 'Locally operated', body: 'Hamilton & GTA roots — we know local grime, salt, and what it takes to fix it.' },
   ],
   beforeAfter: {
     title: (
@@ -111,13 +111,13 @@ export const AD_CAMPAIGN_DETAILING: AdCampaignConfig = {
     subtitle: 'Drag the line — interior revival, real customer cars',
     beforeSrc: '/images/before-after/interior-before.png',
     afterSrc: '/images/before-after/interior-after.png',
-    caption: 'Audi RS 6 interior — from heavy wear to showroom finish',
+    caption: 'Audi RS 6 interior — from heavy wear to like-new finish',
   },
   gallery: [
     { src: '/images/gallery-01.png', alt: 'Cadillac Escalade interior — leather and carpet revival' },
     { src: '/images/gallery-17.png', alt: 'Mobile detailing result — Hamilton Burlington GTA' },
     { src: '/images/gallery-09.png', alt: 'Luxury sedan snow foam wash — mobile at your location' },
-    { src: '/images/gallery-10.png', alt: 'ShowRoom AutoCare mobile van — professional detailing' },
+    { src: '/images/gallery-10.png', alt: 'Mobile detailing van — professional on-site service' },
   ],
   faqs: [
     {
@@ -130,11 +130,11 @@ export const AD_CAMPAIGN_DETAILING: AdCampaignConfig = {
     },
     {
       q: 'What areas do you service?',
-      a: 'Hamilton, Ancaster, Burlington, Oakville, Mississauga, and the wider GTA. Call (905) 379-4820 if your city is not listed.',
+      a: 'Hamilton, Ancaster, Burlington, Oakville, Mississauga, and the wider GTA. Note your location in the quote form if your city is not listed.',
     },
     {
-      q: 'How do I book?',
-      a: 'Request a free quote on this page or call us. We follow up by phone or email — no third-party booking widget.',
+      q: 'How do I get on the schedule?',
+      a: 'Request a free quote on this page. We follow up by email with next steps — no third-party booking widget.',
     },
   ],
 };

@@ -9,6 +9,7 @@ import Services from './Services';
 import WhyChooseUs from './WhyChooseUs';
 import ServiceAreas from './ServiceAreas';
 import Gallery from './Gallery';
+import FaqSection from './FaqSection';
 import { isCitySlug, getCityName } from '../lib/cities';
 
 interface CityPageProps {
@@ -31,6 +32,7 @@ const CityPage: React.FC<CityPageProps> = ({ onRequestQuote }) => {
       <Services onRequestQuote={onRequestQuote} />
       <WhyChooseUs city={cityName} />
       <ServiceAreas city={cityName} />
+      <FaqSection />
       <Gallery />
     </>
   );

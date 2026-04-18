@@ -6,7 +6,7 @@ interface CeramicCoatingPageProps {
 
 function openLeadForm(onRequestQuote?: () => void) {
   onRequestQuote?.();
-  window.dispatchEvent(new CustomEvent('showroom-open-quote'));
+  window.dispatchEvent(new CustomEvent('ddc-open-quote'));
 }
 
 const BENEFITS = [
@@ -59,7 +59,7 @@ const FAQ = [
   },
   {
     q: 'What happens after I submit the form?',
-    a: 'We review your note and follow up by phone or email with next steps. Same lead form as the rest of our site—no external booking links.',
+    a: 'We review your note and follow up by email with next steps. Same lead form as the rest of our site—no external booking links.',
   },
 ];
 
@@ -92,7 +92,7 @@ const CeramicCoatingPage: React.FC<CeramicCoatingPageProps> = ({ onRequestQuote 
             <ul className="text-white/55 text-sm sm:text-base space-y-2 mb-8 border-l-2 border-brand-yellow/60 pl-4">
               <li>Clear, upfront expectations — not hype</li>
               <li>Paint correction before coating when gloss matters</li>
-              <li>Response by phone or email — no third-party booking</li>
+              <li>Response by email — no third-party booking</li>
             </ul>
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
               <button
@@ -102,12 +102,6 @@ const CeramicCoatingPage: React.FC<CeramicCoatingPageProps> = ({ onRequestQuote 
               >
                 Get my ceramic quote
               </button>
-              <a
-                href="tel:+19053794820"
-                className="inline-flex items-center justify-center border-2 border-white/25 text-white px-8 py-4 font-bold uppercase tracking-widest text-xs sm:text-sm hover:border-brand-yellow hover:text-brand-yellow transition-colors"
-              >
-                Call (905) 379-4820
-              </a>
             </div>
           </div>
         </div>
@@ -263,7 +257,7 @@ const CeramicCoatingPage: React.FC<CeramicCoatingPageProps> = ({ onRequestQuote 
           <p className="text-white/65 text-lg leading-relaxed mb-8">
             One short form — vehicle, location, and what you want to achieve. We’ll follow up personally.
             <span className="block mt-2 text-brand-yellow/90 text-sm font-bold uppercase tracking-widest">
-              No external booking links · same ShowRoom lead form
+              No external booking links · same site lead form
             </span>
           </p>
           <button

@@ -22,7 +22,7 @@ function TrustedAvatar({ photo, photoUrl, name }: { photo: string; photoUrl: str
   };
   if (showInitial) {
     return (
-      <div className="w-12 h-12 rounded-full border-2 border-brand-black ring-2 ring-brand-gray/50 flex-shrink-0 bg-brand-yellow/20 flex items-center justify-center text-brand-yellow font-bold text-sm">
+      <div className="w-12 h-12 rounded-full border-2 border-brand-navy ring-2 ring-brand-silver/60 flex-shrink-0 bg-brand-yellow/15 flex items-center justify-center text-brand-navy font-bold text-sm">
         {name.charAt(0)}
       </div>
     );
@@ -33,47 +33,48 @@ function TrustedAvatar({ photo, photoUrl, name }: { photo: string; photoUrl: str
       alt=""
       onError={onError}
       referrerPolicy="no-referrer"
-      className="w-12 h-12 rounded-full border-2 border-brand-black object-cover ring-2 ring-brand-gray/50"
+      className="w-12 h-12 rounded-full border-2 border-brand-navy object-cover ring-2 ring-brand-silver/50"
     />
   );
 }
 
-interface ProblemSolutionProps { city?: string; }
+interface ProblemSolutionProps {
+  city?: string;
+}
 const ProblemSolution: React.FC<ProblemSolutionProps> = ({ city = 'Hamilton' }) => {
   return (
-    <section className="bg-brand-dark py-24 lg:py-32 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-yellow/30 to-transparent"></div>
-      
+    <section className="bg-brand-dark py-24 lg:py-32 relative overflow-hidden border-t border-slate-200">
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-yellow/30 to-transparent" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-16 items-center lg:grid-cols-2">
-          {/* Mobile order: 1 = headline+roads, 2 = box, 3 = quote. Desktop: col1 = 1+3, col2 = box */}
           <div className="reveal order-1 lg:col-start-1 lg:row-start-1 lg:flex lg:flex-col lg:justify-center">
-            <h2 className="font-display text-4xl md:text-5xl font-black uppercase tracking-tighter mb-8">
-              Your Car is an Investment. <br />
-              <span className="text-brand-yellow">Don't Let It Fade.</span>
+            <h2 className="font-display text-4xl md:text-5xl font-black uppercase tracking-tighter mb-8 text-brand-navy">
+              Your car is an investment. <br />
+              <span className="text-brand-yellow">Don&apos;t let it fade.</span>
             </h2>
-            <p className="text-lg text-white/70 leading-relaxed">
+            <p className="text-lg text-slate-600 leading-relaxed">
               {`${city}'s roads are tough on your vehicle. From winter salt and road grime to UV damage and bird droppings, your paint is under constant attack.`}
             </p>
           </div>
 
-          <div className="reveal order-2 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center space-y-8 bg-brand-gray/50 p-8 lg:p-12 border border-white/5 relative">
-            <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-brand-yellow opacity-40"></div>
-            
-            <h3 className="font-display text-2xl font-bold text-white uppercase italic">The ShowRoom Switch</h3>
+          <div className="reveal order-2 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center space-y-8 bg-white p-8 lg:p-12 border border-slate-200 relative rounded-lg shadow-md">
+            <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-brand-yellow opacity-50" />
+
+            <h3 className="font-display text-2xl font-bold text-brand-navy uppercase italic">The driveway standard</h3>
             <img
-              src="/images/showroom-switch.png"
-              alt="ShowRoom AutoCare team hand-washing a Porsche in a residential driveway"
-              className="w-full rounded-lg border border-white/10 object-cover aspect-[4/3]"
+              src="/hero2.png"
+              alt="Mobile detailing team washing a vehicle at a residential driveway"
+              className="w-full rounded-lg border border-slate-200 object-cover aspect-[4/3]"
             />
-            <blockquote className="text-lg text-white/80 font-semibold italic">
+            <blockquote className="text-lg text-slate-700 font-semibold italic">
               &ldquo;We treat every car we work on with the same level of care and attention to detail that we would give to our own cars.&rdquo;
             </blockquote>
-            <p className="text-brand-yellow font-bold text-sm uppercase tracking-wider">
-              — Nathan Leon & Will Youngberg
+            <p className="text-brand-navy-mid font-bold text-sm uppercase tracking-wider">
+              — Driveway Detail Co.
             </p>
-            
-            <div className="pt-4 flex items-center gap-6">
+
+            <div className="pt-4 flex items-center gap-6 flex-wrap">
               <div className="flex -space-x-3">
                 {TRUSTED_AVATARS.map((avatar, id) => (
                   <TrustedAvatar
@@ -89,8 +90,8 @@ const ProblemSolution: React.FC<ProblemSolutionProps> = ({ city = 'Hamilton' }) 
           </div>
 
           <div className="reveal order-3 lg:col-start-1 lg:row-start-2">
-            <p className="text-lg text-white/70 leading-relaxed border-l-4 border-brand-yellow pl-6 py-2 bg-brand-yellow/5">
-              A simple car wash isn't enough to stop the oxidation and swirl marks that kill your resale value.
+            <p className="text-lg text-slate-600 leading-relaxed border-l-4 border-brand-yellow pl-6 py-2 bg-brand-yellow/5 rounded-r-sm">
+              A simple car wash isn&apos;t enough to stop the oxidation and swirl marks that kill your resale value.
             </p>
           </div>
         </div>

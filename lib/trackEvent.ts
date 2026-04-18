@@ -2,7 +2,7 @@ import { supabase } from './supabase';
 import type { SiteEventMeta } from './siteEvents';
 
 /**
- * Records a UI event in Supabase (`showroom_organic_events` or `showroom_ads_events` from path) via `track-event`.
+ * Records a UI event in Supabase (organic vs ads events tables, chosen from path) via `track-event`.
  * Fire-and-forget: does not block the UI; failures are only logged to the console.
  */
 export function trackClientEvent(eventName: string, meta?: SiteEventMeta): void {

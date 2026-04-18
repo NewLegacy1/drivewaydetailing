@@ -4,7 +4,6 @@ import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import AdLeadFormSection from './AdLeadFormSection';
 import { trackClientEvent } from '@/lib/trackEvent';
 import { SITE_EVENT } from '@/lib/siteEvents';
-import { BOOKING_URL } from '@/lib/site';
 
 function scrollToQuote() {
   document.getElementById('quote')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -32,7 +31,7 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
         <div className="absolute top-28 left-0 right-0 z-10 px-4 sm:px-6 lg:px-8 pt-6 pb-2 max-h-[38vh] flex flex-col justify-end">
           <div className="w-full text-center reveal">
             <p className="text-white/60 font-semibold uppercase tracking-[0.2em] text-[10px] sm:text-xs mb-2">
-              ShowRoom AutoCare
+              Driveway Detail Co.
             </p>
             <p className="text-brand-yellow font-bold uppercase tracking-[0.28em] text-[10px] sm:text-[11px] mb-2">
               Hamilton &amp; GTA
@@ -72,15 +71,6 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
                   <path d="m12 5 7 7-7 7" />
                 </svg>
               </button>
-              <a
-                href={BOOKING_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackClientEvent(SITE_EVENT.AD_HERO_BOOK_NOW)}
-                className="border-2 border-brand-yellow text-brand-yellow px-10 py-5 font-black uppercase tracking-widest text-sm magnetic-cta hover:bg-brand-yellow hover:text-brand-black transition-all text-center flex items-center justify-center w-full sm:w-auto"
-              >
-                Book Now
-              </a>
             </div>
           </div>
         </div>
@@ -178,13 +168,6 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <p className="text-white/70 font-bold uppercase tracking-wider text-sm mb-4">Ready when you are</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href="tel:+19053794820"
-              onClick={() => trackClientEvent(SITE_EVENT.AD_FOOTER_PHONE)}
-              className="inline-flex items-center justify-center border-2 border-white/25 text-white px-8 py-4 font-bold uppercase tracking-widest text-xs hover:border-brand-yellow hover:text-brand-yellow transition-colors"
-            >
-              (905) 379-4820
-            </a>
             <button
               type="button"
               onClick={() => {

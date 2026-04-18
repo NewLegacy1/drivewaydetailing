@@ -15,7 +15,7 @@ const AboutBlurb: React.FC = () => {
               The people behind the shine
             </h3>
             <p className="text-white/70 leading-relaxed mb-2">
-              ShowRoom AutoCare is run by car people who got tired of seeing great cars treated like appliances. We bring showroom standards to your driveway — no compromise, no shortcuts.
+              Driveway Detail Co. is run by car people who got tired of seeing great cars treated like appliances. We bring concours-level standards to your driveway — no compromise, no shortcuts.
             </p>
             <p className="text-white/50 text-sm">
               Add a real photo of yourself or the team above to build trust. Local service businesses with a face convert better.

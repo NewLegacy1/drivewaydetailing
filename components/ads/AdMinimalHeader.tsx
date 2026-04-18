@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { trackClientEvent } from '@/lib/trackEvent';
 import { SITE_EVENT } from '@/lib/siteEvents';
+import { BUSINESS } from '@/lib/site';
 
 function scrollToQuote(e: React.MouseEvent) {
   e.preventDefault();
@@ -12,19 +13,11 @@ const AdMinimalHeader: React.FC = () => {
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-brand-black/95 backdrop-blur-md border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 md:h-[4.25rem] flex items-center justify-between gap-4">
-        <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="ShowRoom AutoCare home">
+        <Link to="/" className="flex shrink-0 items-center gap-2" aria-label={`${BUSINESS.name} home`}>
           <img src="/logo.png" alt="" className="h-9 md:h-10 w-auto" />
-          <span className="sr-only">ShowRoom AutoCare</span>
+          <span className="sr-only">{BUSINESS.name}</span>
         </Link>
         <div className="flex items-center gap-2 sm:gap-3">
-          <a
-            href="tel:+19053794820"
-            onClick={() => trackClientEvent(SITE_EVENT.AD_HEADER_PHONE)}
-            className="text-brand-yellow font-bold text-sm sm:text-base whitespace-nowrap hover:opacity-90 transition-opacity"
-          >
-            <span className="hidden sm:inline">(905) 379-4820</span>
-            <span className="sm:hidden">Call</span>
-          </a>
           <button
             type="button"
             onClick={(e) => {

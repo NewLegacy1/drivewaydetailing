@@ -4,7 +4,7 @@
  * Desktop: rotates hero.png / hero2.png / hero3.png.
  */
 
-export const HERO_MOBILE_IMAGES = ['/hero-mobile.png', '/images/showroom-switch.png'] as const;
+export const HERO_MOBILE_IMAGES = ['/hero-mobile.png', '/hero3.png'] as const;
 
 export const HERO_DESKTOP_IMAGES = ['/hero.png', '/hero2.png', '/hero3.png'] as const;
 
