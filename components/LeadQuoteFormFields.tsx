@@ -45,6 +45,23 @@ const LeadQuoteFormFields: React.FC<LeadQuoteFormFieldsProps> = ({ idPrefix, for
         />
       </div>
       <div>
+        <label htmlFor={`${idPrefix}-phone`} className={labelClass}>
+          Phone
+        </label>
+        <input
+          id={`${idPrefix}-phone`}
+          name="phone"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          required
+          value={formData.phone}
+          onChange={onChange}
+          className={inputClass}
+          placeholder="(555) 123-4567"
+        />
+      </div>
+      <div>
         <label htmlFor={`${idPrefix}-car`} className={labelClass}>
           Car make / model
         </label>

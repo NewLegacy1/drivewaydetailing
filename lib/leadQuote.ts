@@ -3,6 +3,7 @@ import { supabase } from './supabase';
 export type LeadQuoteFormState = {
   name: string;
   email: string;
+  phone: string;
   carMakeModel: string;
   serviceNotes: string;
 };
@@ -11,7 +12,7 @@ export type LeadQuoteFormState = {
 export type LeadSubmitSource = 'website' | 'ads';
 
 export function emptyLeadQuoteForm(): LeadQuoteFormState {
-  return { name: '', email: '', carMakeModel: '', serviceNotes: '' };
+  return { name: '', email: '', phone: '', carMakeModel: '', serviceNotes: '' };
 }
 
 export async function submitLeadQuote(
@@ -26,7 +27,7 @@ export async function submitLeadQuote(
     body: {
       name: form.name,
       email: form.email,
-      phone: '',
+      phone: form.phone.trim(),
       car_make_model: form.carMakeModel || undefined,
       service_notes: form.serviceNotes || undefined,
       lead_source: source,
