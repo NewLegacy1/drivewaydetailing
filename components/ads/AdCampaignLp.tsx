@@ -1,6 +1,5 @@
 import React from 'react';
 import type { AdCampaignConfig } from '@/lib/adCampaigns';
-import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import AdLeadFormSection from './AdLeadFormSection';
 import { trackClientEvent } from '@/lib/trackEvent';
 import { SITE_EVENT } from '@/lib/siteEvents';
@@ -115,14 +114,6 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
           </div>
         </div>
       </section>
-
-      <BeforeAfterSlider
-        title={config.beforeAfter.title}
-        subtitle={config.beforeAfter.subtitle}
-        beforeSrc={config.beforeAfter.beforeSrc}
-        afterSrc={config.beforeAfter.afterSrc}
-        caption={config.beforeAfter.caption}
-      />
 
       <section className="py-16 md:py-24 bg-brand-black border-b border-white/5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

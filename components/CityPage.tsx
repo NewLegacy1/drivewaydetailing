@@ -4,7 +4,6 @@ import Hero from './Hero';
 import ReviewsStrip from './ReviewsStrip';
 import HeroVideo from './HeroVideo';
 import ProblemSolution from './ProblemSolution';
-import BeforeAfterSlider from './BeforeAfterSlider';
 import Services from './Services';
 import WhyChooseUs from './WhyChooseUs';
 import ServiceAreas from './ServiceAreas';
@@ -28,7 +27,6 @@ const CityPage: React.FC<CityPageProps> = ({ onRequestQuote }) => {
       <ReviewsStrip />
       <HeroVideo />
       <ProblemSolution city={cityName} />
-      <BeforeAfterSlider />
       <Services onRequestQuote={onRequestQuote} />
       <WhyChooseUs city={cityName} />
       <ServiceAreas city={cityName} />

@@ -2,7 +2,6 @@ import React from 'react';
 import Hero from './Hero';
 import ReviewsStrip from './ReviewsStrip';
 import ProblemSolution from './ProblemSolution';
-import BeforeAfterSlider from './BeforeAfterSlider';
 import Services from './Services';
 import ServiceAreas from './ServiceAreas';
 import FaqSection from './FaqSection';
@@ -22,7 +21,6 @@ const MobileDetailingLp: React.FC<MobileDetailingLpProps> = ({ onRequestQuote })
     <Hero onRequestQuote={onRequestQuote} layoutSeed={HOME_HERO_SEED} noHeaderOffset />
     <ReviewsStrip />
     <ProblemSolution />
-    <BeforeAfterSlider />
     <Services onRequestQuote={onRequestQuote} />
     <ServiceAreas />
     <FaqSection />

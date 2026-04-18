@@ -1,9 +1,8 @@
 import React from 'react';
 
-// Curated: 8 strongest shots — uniform grid for a clean, premium feel
+// Curated gallery — uniform grid for a clean, premium feel
 export const GALLERY_IMAGES = [
   { src: '/images/gallery-01.png', alt: 'Cadillac Escalade interior – tan leather, vacuum lines, Hamilton GTA' },
-  { src: '/images/gallery-03.png', alt: 'Mercedes G-Wagen mobile detailing – grey SUV Ontario' },
   { src: '/images/gallery-05.png', alt: 'Porsche Carrera GTS interior – mirror-gloss finish Hamilton' },
   { src: '/images/gallery-08.png', alt: 'Red Porsche GTS exterior – paint correction and coating' },
   { src: '/images/gallery-09.png', alt: 'Luxury sedan snow foam wash – mobile detailing at your location' },

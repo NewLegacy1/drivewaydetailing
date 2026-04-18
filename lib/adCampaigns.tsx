@@ -1,5 +1,3 @@
-import type { ReactNode } from 'react';
-
 export type AdFaqItem = { q: string; a: string };
 
 export type AdWhyItem = { title: string; body: string };
@@ -14,13 +12,6 @@ export type AdCampaignConfig = {
   includedBullets: string[];
   whyTitle: string;
   whyItems: AdWhyItem[];
-  beforeAfter: {
-    title: ReactNode;
-    subtitle: string;
-    beforeSrc: string;
-    afterSrc: string;
-    caption: string;
-  };
   gallery: AdGalleryItem[];
   faqs: AdFaqItem[];
 };
@@ -45,21 +36,9 @@ export const AD_CAMPAIGN_CERAMIC: AdCampaignConfig = {
     { title: 'Pro products & process', body: 'Coating-grade prep and application standards — the same discipline we use on correction and interior work.' },
     { title: 'Ontario-season smart', body: 'Local crew that knows salt, sun, and pollen cycles — we tailor advice for how you actually use your vehicle.' },
   ],
-  beforeAfter: {
-    title: (
-      <>
-        Gloss you can <span className="text-brand-yellow">see</span>
-      </>
-    ),
-    subtitle: 'Paint correction + coating — drag to compare',
-    beforeSrc: '/images/before-after/interior-before.png',
-    afterSrc: '/images/before-after/interior-after.png',
-    caption: 'Real correction and finishing work — we bring the same eye for finish to your paint.',
-  },
   gallery: [
     { src: '/images/gallery-08.png', alt: 'Red Porsche exterior — paint correction and coating shine' },
     { src: '/images/gallery-05.png', alt: 'Mercedes SUV — mobile detailing and finish work' },
-    { src: '/images/gallery-03.png', alt: 'Mercedes G-Wagen — exterior mobile detailing Ontario' },
     { src: '/images/gallery-16.png', alt: 'Porsche 911 interior and exterior mirror-gloss finish' },
   ],
   faqs: [
@@ -102,17 +81,6 @@ export const AD_CAMPAIGN_DETAILING: AdCampaignConfig = {
     { title: 'Trusted pros', body: 'Background-checked team trained for fine finishes on daily drivers and luxury vehicles.' },
     { title: 'Locally operated', body: 'Hamilton & GTA roots — we know local grime, salt, and what it takes to fix it.' },
   ],
-  beforeAfter: {
-    title: (
-      <>
-        See the <span className="text-brand-yellow">transformation</span>
-      </>
-    ),
-    subtitle: 'Drag the line — interior revival, real customer cars',
-    beforeSrc: '/images/before-after/interior-before.png',
-    afterSrc: '/images/before-after/interior-after.png',
-    caption: 'Audi RS 6 interior — from heavy wear to like-new finish',
-  },
   gallery: [
     { src: '/images/gallery-01.png', alt: 'Cadillac Escalade interior — leather and carpet revival' },
     { src: '/images/gallery-17.png', alt: 'Mobile detailing result — Hamilton Burlington GTA' },
