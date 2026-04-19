@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { trackClientEvent } from '@/lib/trackEvent';
 import { SITE_EVENT } from '@/lib/siteEvents';
 import { BUSINESS } from '@/lib/site';
-import { CITY_SLUGS, CITY_NAMES, type CitySlug } from '@/lib/cities';
 
 interface HeaderProps {
   onRequestQuote?: () => void;
@@ -37,17 +36,6 @@ const Header: React.FC<HeaderProps> = ({ onRequestQuote }) => {
                 if (el) (e.currentTarget.closest('details') as HTMLDetailsElement | null)?.removeAttribute('open');
               }}
             >
-              <p className="px-4 py-1 text-[10px] font-black uppercase tracking-widest text-brand-silver/90">Locations</p>
-              {CITY_SLUGS.map((slug) => (
-                <Link
-                  key={slug}
-                  to={`/${slug}`}
-                  className="block px-4 py-2 text-xs font-bold uppercase tracking-wide text-white/85 hover:bg-white/10 hover:text-brand-silver"
-                >
-                  {CITY_NAMES[slug as CitySlug]}
-                </Link>
-              ))}
-              <div className="my-1 border-t border-white/10" />
               {MORE_LINKS.map((l) => (
                 <a
                   key={l.href}
@@ -65,28 +53,6 @@ const Header: React.FC<HeaderProps> = ({ onRequestQuote }) => {
           <Link to="/" className="shrink-0 whitespace-nowrap hover:text-brand-silver transition-colors px-1.5">
             Home
           </Link>
-          <details className="relative shrink-0 group/nav">
-            <summary className="list-none cursor-pointer whitespace-nowrap hover:text-brand-silver transition-colors px-1.5 [&::-webkit-details-marker]:hidden">
-              Locations
-            </summary>
-            <div
-              className="absolute left-0 top-full z-50 mt-2 min-w-[10.5rem] rounded-md border border-white/15 bg-brand-navy py-2 shadow-xl"
-              onClick={(e) => {
-                const el = (e.target as HTMLElement).closest('a');
-                if (el) (e.currentTarget.closest('details') as HTMLDetailsElement | null)?.removeAttribute('open');
-              }}
-            >
-              {CITY_SLUGS.map((slug) => (
-                <Link
-                  key={slug}
-                  to={`/${slug}`}
-                  className="block px-4 py-2 text-[11px] font-semibold uppercase tracking-wide text-white/85 hover:bg-white/10 hover:text-brand-silver"
-                >
-                  {CITY_NAMES[slug as CitySlug]}
-                </Link>
-              ))}
-            </div>
-          </details>
           <details className="relative shrink-0 group/nav2">
             <summary className="list-none cursor-pointer whitespace-nowrap hover:text-brand-silver transition-colors px-1.5 [&::-webkit-details-marker]:hidden">
               More

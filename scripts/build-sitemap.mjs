@@ -1,5 +1,5 @@
 /**
- * Regenerates public/sitemap.xml — home + city location pages only.
+ * Regenerates public/sitemap.xml — home only (GTA-focused site).
  *
  * Optional: SITE_ORIGIN=https://yourdomain.com node scripts/build-sitemap.mjs
  */
@@ -12,16 +12,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = (process.env.SITE_ORIGIN || 'https://drivewaydetail.com').replace(/\/$/, '');
 const TODAY = new Date().toISOString().slice(0, 10);
 
-const CITY_SLUGS = ['ancaster', 'mississauga', 'hamilton', 'burlington', 'oakville'];
-
-const STATIC = [
-  { path: '/', priority: '1.0', changefreq: 'weekly' },
-  ...CITY_SLUGS.map((slug) => ({
-    path: `/${slug}`,
-    priority: '0.9',
-    changefreq: 'weekly',
-  })),
-];
+const STATIC = [{ path: '/', priority: '1.0', changefreq: 'weekly' }];
 
 function urlXml(loc, lastmod, changefreq, priority) {
   return `  <url>

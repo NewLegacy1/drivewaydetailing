@@ -18,7 +18,7 @@ export type AdCampaignConfig = {
 
 export const AD_CAMPAIGN_CERAMIC: AdCampaignConfig = {
   id: 'ceramic',
-  headline: 'Mobile ceramic coating in Hamilton',
+  headline: 'Mobile ceramic coating in the GTA',
   subheadline:
     'We come to your home or office — no drop-off, no waiting in a shop. Pro prep, correction when needed, and coating applied where your car lives.',
   includedTitle: 'What your ceramic coating visit includes',
@@ -31,10 +31,10 @@ export const AD_CAMPAIGN_CERAMIC: AdCampaignConfig = {
   ],
   whyTitle: 'Why Driveway Detail Co.',
   whyItems: [
-    { title: 'Truly mobile', body: 'We run a fully equipped van — water, power, and lighting — at your driveway or workplace across Hamilton & the GTA.' },
+    { title: 'Truly mobile', body: 'We run a fully equipped van — water, power, and lighting — at your driveway or workplace across the GTA.' },
     { title: 'Fully insured', body: 'Professional service with clear expectations — no hype, just honest outcomes on daily drivers and weekend cars alike.' },
     { title: 'Pro products & process', body: 'Coating-grade prep and application standards — the same discipline we use on correction and interior work.' },
-    { title: 'Ontario-season smart', body: 'Local crew that knows salt, sun, and pollen cycles — we tailor advice for how you actually use your vehicle.' },
+    { title: 'All-season smart', body: 'Local crew that knows salt, sun, and pollen cycles — we tailor advice for how you actually use your vehicle.' },
   ],
   gallery: [
     { src: '/images/gallery-08.png', alt: 'Red Porsche exterior — paint correction and coating shine' },
@@ -52,7 +52,7 @@ export const AD_CAMPAIGN_CERAMIC: AdCampaignConfig = {
     },
     {
       q: 'What areas do you service?',
-      a: 'Hamilton, Ancaster, Burlington, Oakville, Mississauga, and surrounding GTA. If you are unsure, note it in the quote form.',
+      a: 'The Greater Toronto Area (GTA). Add your location in the quote form.',
     },
     {
       q: 'Is ceramic coating worth it on a daily driver?',
@@ -63,7 +63,7 @@ export const AD_CAMPAIGN_CERAMIC: AdCampaignConfig = {
 
 export const AD_CAMPAIGN_DETAILING: AdCampaignConfig = {
   id: 'detailing',
-  headline: 'Mobile car detailing in Hamilton',
+  headline: 'Mobile car detailing in the GTA',
   subheadline:
     'Professional paint correction, ceramic coating, and full detailing — done at your door.',
   includedTitle: 'What a full mobile detail can include',
@@ -79,11 +79,11 @@ export const AD_CAMPAIGN_DETAILING: AdCampaignConfig = {
     { title: 'Mobile convenience', body: 'We meet you at home, work, or your job site — you keep your day while we work.' },
     { title: 'Self-contained van', body: 'De-ionized water and quiet power on board — we are not plugging into your house.' },
     { title: 'Trusted pros', body: 'Background-checked team trained for fine finishes on daily drivers and luxury vehicles.' },
-    { title: 'Locally operated', body: 'Hamilton & GTA roots — we know local grime, salt, and what it takes to fix it.' },
+    { title: 'Locally operated', body: 'GTA roots — we know local grime, salt, and what it takes to fix it.' },
   ],
   gallery: [
     { src: '/images/gallery-01.png', alt: 'Cadillac Escalade interior — leather and carpet revival' },
-    { src: '/images/gallery-17.png', alt: 'Mobile detailing result — Hamilton Burlington GTA' },
+    { src: '/images/gallery-17.png', alt: 'Mobile detailing result — premium finish' },
     { src: '/images/gallery-09.png', alt: 'Luxury sedan snow foam wash — mobile at your location' },
     { src: '/images/gallery-10.png', alt: 'Mobile detailing van — professional on-site service' },
   ],
@@ -98,7 +98,7 @@ export const AD_CAMPAIGN_DETAILING: AdCampaignConfig = {
     },
     {
       q: 'What areas do you service?',
-      a: 'Hamilton, Ancaster, Burlington, Oakville, Mississauga, and the wider GTA. Note your location in the quote form if your city is not listed.',
+      a: 'The Greater Toronto Area (GTA). Note your location in the quote form.',
     },
     {
       q: 'How do I get on the schedule?',

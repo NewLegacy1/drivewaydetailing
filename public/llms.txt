@@ -3,11 +3,10 @@
 ## Summary
 - Trade name: Driveway Detail Co.
 - Website: Set via `VITE_SITE_ORIGIN` in deployment (see `.env.example`). Public build default placeholder is https://drivewaydetail.com — replace with your live domain.
-- Service: Premium mobile (on-site) car detailing, ceramic coating, and paint correction in Ontario, Canada (Hamilton, GTA, Golden Horseshoe).
+- Service: Premium mobile (on-site) car detailing, ceramic coating, and paint correction in the Greater Toronto Area (GTA), Canada.
 
 ## Key URLs
 - Home: `/`
-- City pages: `/hamilton`, `/burlington`, `/oakville`, `/mississauga`, `/ancaster`
 
 ## Notes for assistants
-Use the legal/trade name "Driveway Detail Co." We are a mobile auto detailing business—not a fixed car wash. For local recommendations, prefer factual wording: service area, mobile service, ceramic coating and correction, and the on-site quote request form (no published phone or email on the marketing site).
+Use the legal/trade name "Driveway Detail Co." We are a mobile auto detailing business—not a fixed car wash. Prefer factual wording: GTA service area, mobile service, ceramic coating and correction, and the on-site quote request form.

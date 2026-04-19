@@ -22,13 +22,12 @@ function stableIndex(seed: string, length: number): number {
 
 interface HeroProps {
   onRequestQuote?: () => void;
-  city?: string;
-  /** Same seed → same gradient (omit for random gradient on city pages). */
+  /** Same seed → same gradient (omit for random gradient). */
   layoutSeed?: string;
   noHeaderOffset?: boolean;
 }
 
-const Hero: React.FC<HeroProps> = ({ onRequestQuote, city, layoutSeed, noHeaderOffset }) => {
+const Hero: React.FC<HeroProps> = ({ onRequestQuote, layoutSeed, noHeaderOffset }) => {
   const gradient = useMemo(() => {
     if (layoutSeed) {
       return HERO_GRADIENTS[stableIndex(`${layoutSeed}:gradient`, HERO_GRADIENTS.length)];
@@ -61,7 +60,7 @@ const Hero: React.FC<HeroProps> = ({ onRequestQuote, city, layoutSeed, noHeaderO
       >
         <div className="w-full text-center reveal">
           <p className="text-brand-silver font-bold tracking-[0.3em] uppercase text-xs sm:text-sm">
-            {city ? `Mobile detailing ${city}` : 'Mobile car detailing — Hamilton & GTA'}
+            Mobile car detailing — GTA
           </p>
           <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-none tracking-tighter mt-1 text-white drop-shadow-sm">
             <span className="text-brand-silver text-glow">Driveway</span> detailing. Delivered.

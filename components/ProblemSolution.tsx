@@ -38,10 +38,7 @@ function TrustedAvatar({ photo, photoUrl, name }: { photo: string; photoUrl: str
   );
 }
 
-interface ProblemSolutionProps {
-  city?: string;
-}
-const ProblemSolution: React.FC<ProblemSolutionProps> = ({ city = 'Hamilton' }) => {
+const ProblemSolution: React.FC = () => {
   return (
     <section className="bg-brand-dark py-24 lg:py-32 relative overflow-hidden border-t border-slate-200">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-yellow/30 to-transparent" />
@@ -54,7 +51,7 @@ const ProblemSolution: React.FC<ProblemSolutionProps> = ({ city = 'Hamilton' }) 
               <span className="text-brand-yellow">Don&apos;t let it fade.</span>
             </h2>
             <p className="text-lg text-slate-600 leading-relaxed">
-              {`${city}'s roads are tough on your vehicle. From winter salt and road grime to UV damage and bird droppings, your paint is under constant attack.`}
+              GTA roads are tough on your vehicle. From winter salt and road grime to UV damage and bird droppings, your paint is under constant attack.
             </p>
           </div>
 

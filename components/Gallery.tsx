@@ -2,13 +2,13 @@ import React from 'react';
 
 // Curated gallery — uniform grid for a clean, premium feel
 export const GALLERY_IMAGES = [
-  { src: '/images/gallery-01.png', alt: 'Cadillac Escalade interior – tan leather, vacuum lines, Hamilton GTA' },
-  { src: '/images/gallery-05.png', alt: 'Porsche Carrera GTS interior – mirror-gloss finish Hamilton' },
+  { src: '/images/gallery-01.png', alt: 'Cadillac Escalade interior – tan leather, vacuum lines, mobile detailing' },
+  { src: '/images/gallery-05.png', alt: 'Porsche Carrera GTS interior – mirror-gloss finish' },
   { src: '/images/gallery-08.png', alt: 'Red Porsche GTS exterior – paint correction and coating' },
   { src: '/images/gallery-09.png', alt: 'Luxury sedan snow foam wash – mobile detailing at your location' },
   { src: '/images/gallery-10.png', alt: 'Mobile detailing van – blue Dodge Challenger at customer location' },
   { src: '/images/gallery-16.png', alt: 'Porsche 911 Carrera interior – professional detailing finish' },
-  { src: '/images/gallery-17.png', alt: 'Mobile car detailing result – Hamilton Burlington Oakville Mississauga' },
+  { src: '/images/gallery-17.png', alt: 'Mobile car detailing result – premium finish' },
 ];
 
 const Gallery: React.FC = () => {

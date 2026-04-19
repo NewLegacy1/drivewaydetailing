@@ -1,7 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { BUSINESS } from '@/lib/site';
-import { CITY_SLUGS, CITY_NAMES, type CitySlug } from '@/lib/cities';
 
 const Footer: React.FC = () => {
   const openQuote = () => {
@@ -11,33 +9,19 @@ const Footer: React.FC = () => {
   return (
     <footer id="get-quote" className="bg-brand-navy border-t border-white/10 pt-16 pb-10 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 mb-14">
+        <div className="grid md:grid-cols-2 gap-12 mb-14">
           <div className="space-y-5">
             <div className="flex items-center gap-2">
               <img src="/logo.png" alt={BUSINESS.name} className="h-10 w-auto max-h-12 drop-shadow-md" />
             </div>
             <p className="text-white/60 text-sm leading-relaxed font-medium">
-              Premium mobile detailing, ceramic coating &amp; paint restoration at your driveway or workplace.
+              Premium mobile detailing, ceramic coating &amp; paint restoration at your driveway or workplace across the GTA.
             </p>
           </div>
 
           <div>
-            <h4 className="font-display font-black uppercase text-brand-silver text-xs tracking-[0.2em] mb-5">Locations</h4>
-            <ul className="space-y-2">
-              {CITY_SLUGS.map((slug) => (
-                <li key={slug}>
-                  <Link
-                    to={`/${slug}`}
-                    className="text-white font-semibold hover:text-brand-silver transition-colors text-sm uppercase tracking-wider"
-                  >
-                    {CITY_NAMES[slug as CitySlug]}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
+            <h4 className="font-display font-black uppercase text-brand-silver text-xs tracking-[0.2em] mb-5">Service area</h4>
+            <p className="text-white font-semibold text-sm uppercase tracking-wider mb-5">Greater Toronto Area (GTA)</p>
             <h4 className="font-display font-black uppercase text-brand-silver text-xs tracking-[0.2em] mb-5">Quote</h4>
             <p className="text-white/60 text-sm leading-relaxed mb-5">
               To reach us, submit the quote form — we reply with options and scheduling.

@@ -5,7 +5,6 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import LeadForm from './components/LeadForm';
 import HomePage from './components/HomePage';
-import CityPage from './components/CityPage';
 import SeoHead from './components/SeoHead';
 import MetaPixelRouteTracker from './components/MetaPixelRouteTracker';
 
@@ -58,7 +57,6 @@ const AppRoutes: React.FC = () => {
       <main>
         <Routes>
           <Route path="/" element={<HomePage onRequestQuote={openQuote} />} />
-          <Route path="/:city" element={<CityPage onRequestQuote={openQuote} />} />
         </Routes>
       </main>
       <Footer />

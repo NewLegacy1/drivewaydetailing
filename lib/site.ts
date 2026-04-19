@@ -1,5 +1,3 @@
-import { CITY_NAMES, CITY_SLUGS, type CitySlug } from './cities';
-
 const trimTrailingSlash = (s: string) => s.replace(/\/$/, '');
 
 /**
@@ -15,22 +13,14 @@ export const BUSINESS = {
   jsonLdId: `${SITE_ORIGIN}/#business`,
   name: 'Driveway Detail Co.',
   description:
-    'Premium mobile car detailing, ceramic coating, and paint correction across Hamilton, Ancaster, Burlington, Oakville, Mississauga and the Greater Toronto Area. We come to you — request a quote online.',
+    'Premium mobile car detailing, ceramic coating, and paint correction throughout the Greater Toronto Area (GTA). We come to you — request a quote online.',
 } as const;
 
-/** Cities named in copy and city landing routes (Ontario). */
-export const AREA_SERVED = [
-  'Hamilton',
-  'Ancaster',
-  'Burlington',
-  'Oakville',
-  'Mississauga',
-  'Waterdown',
-  'Caledonia',
-  'Brantford',
-] as const;
+/** Service area label for structured data and copy (GTA only). */
+export const AREA_SERVED = ['Greater Toronto Area'] as const;
 
-export const GEO = { latitude: 43.2557, longitude: -79.8711 } as const;
+/** Representative coordinates for the GTA (downtown Toronto). */
+export const GEO = { latitude: 43.653226, longitude: -79.383184 } as const;
 
 export const WEBSITE_JSONLD_ID = `${SITE_ORIGIN}/#website`;
 
@@ -45,12 +35,6 @@ export function canonicalUrl(pathname: string): string {
   return p === '/' ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}${p}`;
 }
 
-function isCityPath(p: string): p is `/${CitySlug}` {
-  if (!p.startsWith('/') || p === '/') return false;
-  const slug = p.slice(1);
-  return CITY_SLUGS.includes(slug as CitySlug);
-}
-
 export type PageWebMeta = { name: string; description: string; ogImage?: string };
 
 const BRAND = 'Driveway Detail Co.';
@@ -59,17 +43,9 @@ export function pageWebMeta(pathname: string): PageWebMeta {
   const p = normalizePath(pathname);
   if (p === '/') {
     return {
-      name: `Mobile Car Detailing Hamilton & GTA | ${BRAND}`,
+      name: `Mobile Car Detailing GTA | ${BRAND}`,
       description:
-        'Professional mobile detailing, ceramic coating & paint correction across Hamilton, Burlington, Oakville & Mississauga. We come to you. Request a quote.',
-    };
-  }
-  if (isCityPath(p)) {
-    const slug = p.slice(1) as CitySlug;
-    const city = CITY_NAMES[slug];
-    return {
-      name: `Mobile Detailing ${city} | Ceramic Coating & Paint Correction | ${BRAND}`,
-      description: `Mobile car detailing ${city}. We come to you for ceramic coating, paint correction & interior detailing. Premium mobile detailing ${city} and GTA. Request a quote.`,
+        'Professional mobile detailing, ceramic coating & paint correction across the GTA. We come to you. Request a quote.',
     };
   }
   return {
@@ -78,12 +54,12 @@ export function pageWebMeta(pathname: string): PageWebMeta {
   };
 }
 
-/** Visible + schema-aligned FAQs (homepage + city pages). */
+/** Visible + schema-aligned FAQs (homepage). */
 export const HOME_FAQ = [
   {
-    question: `What cities does ${BRAND} serve for mobile detailing?`,
+    question: `What area does ${BRAND} serve?`,
     answer:
-      'We provide mobile car detailing across Hamilton, Ancaster, Burlington, Oakville, Mississauga, and surrounding GTA communities. We come to your home or office.',
+      'We provide mobile car detailing throughout the Greater Toronto Area (GTA). We come to your home or office.',
   },
   {
     question: 'Do you offer ceramic coating as a mobile service?',
@@ -140,7 +116,7 @@ export function buildDynamicJsonLd(pathname: string): Record<string, unknown> {
 
   const graph: Record<string, unknown>[] = [website, webPage];
 
-  if (p === '/' || isCityPath(p)) {
+  if (p === '/') {
     graph.push({
       '@type': 'FAQPage',
       '@id': `${url}#faq`,
@@ -175,20 +151,8 @@ export function buildDynamicJsonLd(pathname: string): Record<string, unknown> {
   };
 }
 
-/** Breadcrumb trail for JSON-LD (city pages only). */
-export function breadcrumbItemsForPath(pathname: string): { name: string; path: string }[] | null {
-  const p = normalizePath(pathname);
-  if (p === '/') return null;
-
-  if (isCityPath(p)) {
-    const slug = p.slice(1) as CitySlug;
-    const city = CITY_NAMES[slug];
-    return [
-      { name: 'Home', path: '/' },
-      { name: `Mobile detailing ${city}`, path: p },
-    ];
-  }
-
+/** Breadcrumb trail for JSON-LD (none for single-page home focus). */
+export function breadcrumbItemsForPath(_pathname: string): { name: string; path: string }[] | null {
   return null;
 }
 

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { fetchBlogPosts, blogPostPath, type BlogPost } from '../lib/blog';
 import { AREA_SERVED, BUSINESS, SITE_ORIGIN, pageWebMeta } from '../lib/site';
 import { setDocumentSeo } from '../lib/socialMeta';
-import { CITY_SLUGS, CITY_NAMES, type CitySlug } from '../lib/cities';
 
 const SEO_LD_ATTR = 'data-ddc-blog-list-ld';
 
@@ -22,7 +21,7 @@ function buildBlogListJsonLd(posts: BlogPost[]): Record<string, unknown> {
         '@id': `${SITE_ORIGIN}/blog#blog`,
         name: `${BUSINESS.name} Detailing Blog`,
         description:
-          'Mobile car detailing, ceramic coating, and paint care tips for Hamilton, Burlington, Oakville, Mississauga, Ancaster and the GTA.',
+          'Mobile car detailing, ceramic coating, and paint care tips for drivers in the Greater Toronto Area (GTA).',
         url: `${SITE_ORIGIN}/blog`,
         publisher: { '@id': `${SITE_ORIGIN}/#business` },
         blogPost: posts.slice(0, 12).map((p) => {
@@ -97,30 +96,13 @@ const BlogListPage: React.FC = () => {
             Local expertise
           </p>
           <h1 className="font-display font-black text-3xl sm:text-4xl md:text-5xl uppercase tracking-tight text-white mb-6">
-            Detailing and ceramic coating blog for Hamilton and the GTA
+            Detailing and ceramic coating blog for the GTA
           </h1>
           <p className="text-white/65 text-lg max-w-3xl leading-relaxed">
-            Practical guides on mobile detailing, ceramic coating care, and paint protection for drivers in{' '}
-            {AREA_SERVED.slice(0, 5).join(', ')}
-            , and nearby Ontario communities. New articles are added on a regular schedule. Use the city
-            links below for localized service pages.
+            Practical guides on mobile detailing, ceramic coating care, and paint protection for drivers in the{' '}
+            {AREA_SERVED.join(', ')}. New articles are added on a regular schedule.
           </p>
         </header>
-
-        <nav
-          className="flex flex-wrap gap-2 mb-12 reveal"
-          aria-label="Service area city pages"
-        >
-          {CITY_SLUGS.map((slug: CitySlug) => (
-            <Link
-              key={slug}
-              to={`/${slug}`}
-              className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider border border-white/15 text-white/80 hover:border-brand-yellow hover:text-brand-yellow transition-colors"
-            >
-              Mobile detailing {CITY_NAMES[slug]}
-            </Link>
-          ))}
-        </nav>
 
         {loading && (
           <p className="text-white/50 font-semibold uppercase tracking-widest text-sm">Loading articles</p>

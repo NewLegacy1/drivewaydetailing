@@ -33,7 +33,7 @@ const AdCampaignLp: React.FC<AdCampaignLpProps> = ({ config }) => {
               Driveway Detail Co.
             </p>
             <p className="text-brand-yellow font-bold uppercase tracking-[0.28em] text-[10px] sm:text-[11px] mb-2">
-              Hamilton &amp; GTA
+              GTA
             </p>
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-[1.05] tracking-tighter text-white">
               {config.headline}

@@ -8,7 +8,7 @@ const AdMinimalFooter: React.FC = () => {
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
         <div className="text-white/50 text-xs uppercase tracking-wider">
           <p className="font-bold text-white/70 mb-1">{BUSINESS.name}</p>
-          <p>Mobile detailing & ceramic coating · Hamilton & GTA</p>
+          <p>Mobile detailing & ceramic coating · GTA</p>
         </div>
         <div className="flex flex-col sm:items-end gap-2 text-sm">
           <p className="text-white/60 text-xs max-w-xs sm:text-right leading-relaxed">

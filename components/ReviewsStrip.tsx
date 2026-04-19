@@ -4,17 +4,17 @@ const REVIEWS = [
   {
     text: 'They coordinated the date and time, showed up on time in a fully equipped van with everything needed for the work, including water. Polite, thorough, and the cars looked incredible inside and out.',
     author: 'Local SUV owner',
-    location: 'Hamilton',
+    location: 'GTA',
   },
   {
     text: 'Interior revival after months of pet hair and road grime — it honestly looked new again. Clear communication and no rush job.',
     author: 'GTA commuter',
-    location: 'Burlington',
+    location: 'GTA',
   },
   {
     text: 'Five stars. Got my vehicle detailed while I worked from home — no waiting room, no hassle. The finish on the paint and interior exceeded what I expected.',
     author: 'Pickup owner',
-    location: 'Oakville',
+    location: 'GTA',
   },
 ];
 

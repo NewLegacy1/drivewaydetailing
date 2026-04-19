@@ -1,9 +1,5 @@
 import React from 'react';
 
-interface WhyChooseUsProps {
-  city?: string;
-}
-
 const ICONS = {
   mobile: (
     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -39,12 +35,12 @@ const ICONS = {
   ),
 };
 
-const WhyChooseUs: React.FC<WhyChooseUsProps> = ({ city = 'Hamilton' }) => {
+const WhyChooseUs: React.FC = () => {
   const reasons = [
     { title: 'Mobile convenience', desc: 'We come to you (home, office, or job site). Save time while we perfect your ride.', icon: 'mobile' as const },
     { title: 'Fully independent', desc: 'We bring our own de-ionized water and quiet power. No need to plug into your house.', icon: 'independent' as const },
     { title: 'Trusted professionals', desc: 'All staff are background-checked and hand-picked for their surgical attention to detail.', icon: 'trusted' as const },
-    { title: `${city} grown`, desc: 'Locally owned and operated since 2021. We know the local grime and how to beat it.', icon: 'local' as const },
+    { title: 'GTA grown', desc: 'Locally owned and operated since 2021. We know the local grime and how to beat it.', icon: 'local' as const },
   ];
 
   return (
