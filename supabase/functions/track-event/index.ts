@@ -12,13 +12,13 @@ function isValidEventName(s: string): boolean {
   return /^[a-z][a-z0-9_]{1,63}$/.test(s);
 }
 
-type EventsTable = 'showroom_organic_events' | 'showroom_ads_events';
+type EventsTable = 'ddc_organic_events' | 'ddc_ads_events';
 
 /** Path without query string; /ads/* → ad tracking table, else organic. */
 function eventsTableForPath(path: string | null): EventsTable {
   const base = path?.split('?')[0]?.trim() ?? '';
-  if (base.startsWith('/ads')) return 'showroom_ads_events';
-  return 'showroom_organic_events';
+  if (base.startsWith('/ads')) return 'ddc_ads_events';
+  return 'ddc_organic_events';
 }
 
 function sanitizeMeta(raw: unknown): Record<string, string | number | boolean | null> {

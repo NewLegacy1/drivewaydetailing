@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { BUSINESS } from '@/lib/site';
+import { useVisitorGeo } from '@/context/VisitorGeoContext';
+import { serviceAreasHeadingFromGeo, serviceAreasSublineFromGeo } from '@/lib/visitorGeoCopy';
 
 const ServiceAreas: React.FC = () => {
+  const { geo } = useVisitorGeo();
+  const heading = useMemo(() => serviceAreasHeadingFromGeo(geo), [geo]);
+  const subline = useMemo(() => serviceAreasSublineFromGeo(geo), [geo]);
+
   return (
     <section id="areas" className="py-24 bg-brand-page border-t border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="reveal mb-12">
           <h2 className="font-display text-3xl md:text-4xl font-black uppercase tracking-tighter text-brand-navy">
-            Proudly serving <span className="text-brand-yellow">the GTA</span>
+            {heading.lead}
+            <span className="text-brand-yellow">{heading.highlight}</span>
           </h2>
-          <p className="text-slate-500 mt-4 uppercase tracking-[0.2em] font-bold text-sm">Mobile detailing where you are</p>
+          <p className="text-slate-500 mt-4 uppercase tracking-[0.2em] font-bold text-sm max-w-2xl mx-auto leading-relaxed">
+            {subline}
+          </p>
         </div>
 
         <div className="flex flex-wrap justify-center gap-4 reveal">

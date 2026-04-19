@@ -10,8 +10,8 @@ const corsHeaders = {
 type LeadSource = 'website' | 'ads';
 
 /** Must match your Supabase public tables for organic vs ads leads. */
-const ORGANIC_LEADS_TABLE = 'showroom_organic';
-const ADS_LEADS_TABLE = 'showroom_ads';
+const ORGANIC_LEADS_TABLE = 'ddc_organic_leads';
+const ADS_LEADS_TABLE = 'ddc_ads_leads';
 
 interface LeadBody {
   name: string;

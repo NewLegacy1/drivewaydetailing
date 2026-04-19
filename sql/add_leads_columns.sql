@@ -1,7 +1,6 @@
--- Only if your EXISTING public.showroom_organic table is missing these columns
--- (Edge Function error: unknown column). Skip if your CRM already has them.
--- Target: public.showroom_organic (rename table in this file if you still use public.leads).
+-- Only if your EXISTING public.ddc_organic_leads table is missing these columns
+-- (adjust table name in this file if you have not migrated yet).
 
-alter table public.showroom_organic
+alter table public.ddc_organic_leads
   add column if not exists car_make_model text,
   add column if not exists service_notes text;

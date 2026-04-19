@@ -26,34 +26,34 @@ The lead form saves submissions to Supabase and sends a notification email via R
 1. **Env:** Copy [.env.example](.env.example) to `.env` and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (from Supabase Dashboard → Project Settings → API).
 
 2. **Database:** In Supabase SQL Editor, run:
-   - [sql/create_leads_table.sql](sql/create_leads_table.sql) — main site modal (`showroom_organic`)
-   - [sql/create_ad_leads_table.sql](sql/create_ad_leads_table.sql) — paid `/ads/*` pages (`showroom_ads`)  
-   The Edge Function writes to `showroom_organic` or `showroom_ads` based on `lead_source` in the request body.  
+   - [sql/create_leads_table.sql](sql/create_leads_table.sql) — main site modal (`ddc_organic_leads`)
+   - [sql/create_ad_leads_table.sql](sql/create_ad_leads_table.sql) — paid `/ads/*` pages (`ddc_ads_leads`)  
+   The Edge Function writes to `ddc_organic_leads` or `ddc_ads_leads` based on `lead_source` in the request body.  
    If you already use the old names `leads` / `ad_leads` / `site_events`, follow the steps in [sql/rename_legacy_tables.sql](sql/rename_legacy_tables.sql) (BLOCK A → create event tables → BLOCK B).
 
 3. **Edge Function:** The form calls the `resend-email` Edge Function. If you deploy from this repo, rename or deploy as `resend-email`, or change the app to invoke `submit-lead` (see LeadForm.tsx).
    - Install [Supabase CLI](https://supabase.com/docs/guides/cli) and log in: `supabase login`
-   - Link the project: `supabase link --project-ref gxhsgqwkfaicuqlrssed`
+   - Link the project: `supabase link --project-ref <your-project-ref>` (from Supabase Dashboard → Project Settings → General)
    - Deploy: `supabase functions deploy submit-lead --name resend-email` (or deploy the function that lives at `supabase/functions/submit-lead/` with name `resend-email`)
    - In Dashboard → Edge Functions → **resend-email** → **Secrets**, set:
      - `SUPABASE_SERVICE_ROLE_KEY` (Project Settings → API → service_role)
      - `RESEND_API_KEY` (from resend.com)
-     - `LEAD_EMAIL_TO` = `contact@showroomautocare.ca`
-     - `LEAD_EMAIL_FROM` = `leads@contact.newlegacyai.ca`
+     - `LEAD_EMAIL_TO` = inbox that should receive lead notifications (e.g. `quotes@yourdomain.com`)
+     - `LEAD_EMAIL_FROM` = a sender address verified in Resend for your domain
 
 If you see **"Failed to send a request to the Edge Function"**, the `resend-email` function is not deployed or not reachable—complete step 3 above.
 
 ### Optional: button / funnel tracking in Supabase
 
-Clicks on main CTAs (header, hero, ad header/footer) and successful lead submits are stored in **`showroom_organic_events`** (regular / main-site paths) or **`showroom_ads_events`** (paths under `/ads/*`) via the **`track-event`** Edge Function.
+Clicks on main CTAs (header, hero, ad header/footer) and successful lead submits are stored in **`ddc_organic_events`** (regular / main-site paths) or **`ddc_ads_events`** (paths under `/ads/*`) via the **`track-event`** Edge Function.
 
 1. Run [sql/create_site_events_table.sql](sql/create_site_events_table.sql) in the SQL Editor (creates both event tables).
 2. Deploy: `supabase functions deploy track-event` (same secrets as other functions: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`).
 3. Event names are defined in [lib/siteEvents.ts](lib/siteEvents.ts). Add `trackClientEvent('my_event')` anywhere in the app, or extend that file with new constants.
 
 Query examples:  
-`select event_name, path, count(*) from showroom_organic_events group by 1, 2 order by 3 desc;`  
-`select event_name, path, count(*) from showroom_ads_events group by 1, 2 order by 3 desc;`
+`select event_name, path, count(*) from ddc_organic_events group by 1, 2 order by 3 desc;`  
+`select event_name, path, count(*) from ddc_ads_events group by 1, 2 order by 3 desc;`
 
 ## Blog (no database)
 
@@ -76,4 +76,4 @@ The site is set up for local SEO and social sharing:
 
 **Before going live:**
 
-1. **Domain:** Canonical origin is `https://showroomautocare.ca` (`lib/site.ts`, `index.html`, `public/robots.txt`, sitemap build). Override with `SITE_ORIGIN` when generating the sitemap if needed. Social share uses `hero3.png`.
+1. **Domain:** Set the canonical origin in `lib/site.ts` and `index.html` to your live site (default in code is `https://drivewaydetail.com`). The sitemap build reads `SITE_ORIGIN` from the environment when present. Align `public/robots.txt` and social preview URLs with the same origin.

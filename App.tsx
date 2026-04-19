@@ -7,6 +7,7 @@ import LeadForm from './components/LeadForm';
 import HomePage from './components/HomePage';
 import SeoHead from './components/SeoHead';
 import MetaPixelRouteTracker from './components/MetaPixelRouteTracker';
+import { VisitorGeoProvider } from './context/VisitorGeoContext';
 
 const OPEN_QUOTE_EVENT = 'ddc-open-quote';
 
@@ -67,10 +68,12 @@ const AppRoutes: React.FC = () => {
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <Analytics />
-      <SeoHead />
-      <MetaPixelRouteTracker />
-      <AppRoutes />
+      <VisitorGeoProvider>
+        <Analytics />
+        <SeoHead />
+        <MetaPixelRouteTracker />
+        <AppRoutes />
+      </VisitorGeoProvider>
     </BrowserRouter>
   );
 };

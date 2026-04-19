@@ -1,4 +1,6 @@
 import React, { useMemo } from 'react';
+import { useVisitorGeo } from '@/context/VisitorGeoContext';
+import { heroEyebrowFromGeo } from '@/lib/visitorGeoCopy';
 
 /** Primary hero art — snow foam wash at a residential driveway. */
 const HERO_IMAGE = '/hero-driveway-911.png';
@@ -28,6 +30,9 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ onRequestQuote, layoutSeed, noHeaderOffset }) => {
+  const { geo } = useVisitorGeo();
+  const eyebrow = useMemo(() => heroEyebrowFromGeo(geo), [geo]);
+
   const gradient = useMemo(() => {
     if (layoutSeed) {
       return HERO_GRADIENTS[stableIndex(`${layoutSeed}:gradient`, HERO_GRADIENTS.length)];
@@ -60,7 +65,7 @@ const Hero: React.FC<HeroProps> = ({ onRequestQuote, layoutSeed, noHeaderOffset 
       >
         <div className="w-full text-center reveal">
           <p className="text-brand-silver font-bold tracking-[0.3em] uppercase text-xs sm:text-sm">
-            Mobile car detailing — GTA
+            {eyebrow}
           </p>
           <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-none tracking-tighter mt-1 text-white drop-shadow-sm">
             <span className="text-brand-silver text-glow">Driveway</span> detailing. Delivered.

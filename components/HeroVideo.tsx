@@ -15,7 +15,7 @@ const HeroVideo: React.FC = () => {
         </div>
         <div className="reveal relative rounded-xl overflow-hidden border-2 border-slate-200 shadow-xl bg-slate-50">
           <video
-            src="/video.mp4"
+            src="/see-us-in-action.mp4"
             controls
             playsInline
             className="w-full aspect-video object-cover"

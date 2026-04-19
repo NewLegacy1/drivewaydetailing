@@ -9,8 +9,8 @@ const corsHeaders = {
 
 type LeadSource = 'website' | 'ads';
 
-const ORGANIC_LEADS_TABLE = 'showroom_organic';
-const ADS_LEADS_TABLE = 'showroom_ads';
+const ORGANIC_LEADS_TABLE = 'ddc_organic_leads';
+const ADS_LEADS_TABLE = 'ddc_ads_leads';
 
 interface LeadBody {
   name: string;
